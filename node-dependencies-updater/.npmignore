@@ -4,3 +4,5 @@ __tests__
 git_ignore
 jest.config.mjs
 node_modules
+package-lock.json
+package.json

@@ -1,6 +1,6 @@
 {
   "name": "@createdbyjurand/node-dependencies-updater",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Node dependencies updater and reinstaller",
   "main": "update-dependencies.node.mjs",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@createdbyjurand/node-scripts": "0.2.0"
+    "@createdbyjurand/node-scripts": "0.3.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
