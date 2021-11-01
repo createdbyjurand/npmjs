@@ -1,0 +1,15 @@
+{
+  "name": "@createdbyjurand/node-scripts",
+  "version": "0.3.0",
+  "description": "Node scripts",
+  "main": "index.node.mjs",
+  "scripts": {
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs"
+  },
+  "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^27.3.1"
+  }
+}

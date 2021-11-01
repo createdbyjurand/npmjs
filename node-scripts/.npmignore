@@ -1,0 +1,6 @@
+__tests__
+.idea
+.vscode
+git_ignore
+jest.config.mjs
+node_modules
