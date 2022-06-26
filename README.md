@@ -1,5 +1,7 @@
 # @createdbyjurand npm packages
 
+[https://www.npmjs.com/search?q=createdbyjurand](https://www.npmjs.com/search?q=createdbyjurand)
+
 ## creating scoped packages
 
 `npm init --scope=@createdbyjurand`

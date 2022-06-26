@@ -1,4 +1,4 @@
-import { run } from './run.node.mjs';
+import { run } from '../node-scripts/run.node.mjs';
 import { openAndParseJsonFile, stringifyAndSaveJsonFile } from './json.node.mjs';
 
 export const removePrefix = value => (/^\d/.test(value) ? value : value.slice(1));
