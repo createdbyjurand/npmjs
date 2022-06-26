@@ -1,33 +1,111 @@
-import { run } from '../node-scripts/run.node.mjs';
-import { openAndParseJsonFile, stringifyAndSaveJsonFile } from './json.node.mjs';
+import fs from 'fs';
+import {throwError} from './error.node.mjs';
+import {display, displayInTheMiddle} from './display.node.mjs';
 
-export const removePrefix = value => (/^\d/.test(value) ? value : value.slice(1));
+displayInTheMiddle('package.json.node.mjs version 0.4.0');
 
-export const removePrefixesFromDependenciesInPackageJson = () => {
-  const parsedPackageJson = openAndParseJsonFile('package.json');
-  Object.entries(parsedPackageJson.dependencies).map(
-    ([key, value]) => (parsedPackageJson.dependencies[key] = removePrefix(value)),
+export const installTheLatestVersionsOfDependencies = dependenciesNamesArray =>
+    //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
+    dependenciesNamesArray === undefined || dependenciesNamesArray === []
+        ? throwError('Array of dependencies is empty')
+        : 'npm i --legacy-peer-deps --save' +
+        dependenciesNamesArray.map(dependency => `${dependency}@latest`).join(' ');
+
+export const installTheLatestVersionsOfDevDependencies = devDependenciesNamesArray =>
+    //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
+    devDependenciesNamesArray === undefined || devDependenciesNamesArray === []
+        ? throwError('Array of devDependencies is empty')
+        : 'npm i --legacy-peer-deps --save-dev ' +
+        devDependenciesNamesArray.map(dependency => `${dependency}@latest`).join(' ');
+
+export const updateAllDependenciesToTheLatestWantedPatchVersion = (dependenciesNamesArrayToBeOmitted = []) => {
+  const packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
+  display('package.json: Reading File Synchronously', '[   OK   ]');
+
+  const parsedPackageJsonFile = JSON.parse(packageJsonFile);
+  display('package.json: Parsing', '[   OK   ]');
+
+  let patchReleases = '';
+
+  const dependenciesAIO = Object.assign(
+      {},
+      parsedPackageJsonFile.dependencies,
+      parsedPackageJsonFile.devDependencies
   );
-  Object.entries(parsedPackageJson.devDependencies).map(
-    ([key, value]) => (parsedPackageJson.devDependencies[key] = removePrefix(value)),
-  );
-  stringifyAndSaveJsonFile(parsedPackageJson, 'package.json');
+
+  Object.keys(dependenciesAIO).map(key => {
+    if (dependenciesAIO[key][0] === '~') {
+      patchReleases += ` ${key}@${dependenciesAIO[key]}`;
+    }
+  });
+
+  // TODO: Not ready yet
+  return '';
+  return 'npm i --legacy-peer-deps' + patchReleases;
+  //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
+  //--save-exact
 };
 
-export const updateAllDependenciesFromPackageJsonExcept = (skipDependencies, npmArguments) => {
-  const parsedPackageJson = openAndParseJsonFile('package.json');
-  let dependenciesToUpdate = '';
+export const updateAllDependenciesWithSemVerMinorPrefix = (dependenciesNamesArrayToBeOmitted = []) => {
+  const packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
+  display('package.json: Reading File Synchronously', '[   OK   ]');
 
-  for (let [key, value] of Object.entries({
-    ...parsedPackageJson.dependencies,
-    ...parsedPackageJson.devDependencies,
-  })) {
-    if (skipDependencies.includes(key)) {
-      dependenciesToUpdate += ` ${key}@${value}`;
-    } else {
-      dependenciesToUpdate += ` ${key}@latest`;
+  const parsedPackageJsonFile = JSON.parse(packageJsonFile);
+  display('package.json: Parsing', '[   OK   ]');
+
+  let listOfDependenciesWithSemVerMinorPrefix = '';
+
+  const dependenciesAIO = Object.assign(
+      {},
+      parsedPackageJsonFile.dependencies,
+      parsedPackageJsonFile.devDependencies
+  );
+
+  Object.keys(dependenciesAIO).map(key => {
+    if (!dependenciesNamesArrayToBeOmitted.includes(key)) {
+      if (dependenciesAIO[key][0] === '^') {
+        listOfDependenciesWithSemVerMinorPrefix += ` ${key}@${dependenciesAIO[key].slice(
+            0,
+            dependenciesAIO[key].indexOf('.')
+        )}`;
+      }
     }
-  }
+  });
 
-  run(`npm i${npmArguments}${dependenciesToUpdate}`);
+  return 'npm i --legacy-peer-deps' + listOfDependenciesWithSemVerMinorPrefix;
+  //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
+};
+
+export const cleanupAllDependenciesVersions = (dependenciesNamesArrayToBeOmitted = []) => {
+  let packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
+  display('package.json: Reading File Synchronously', '[   OK   ]');
+
+  let parsedPackageJsonFile = JSON.parse(packageJsonFile);
+  display('package.json: Parsing', '[   OK   ]');
+
+  let listOfDependenciesToUpdate = '';
+
+  Object.keys(Object.assign({}, parsedPackageJsonFile.dependencies,
+      parsedPackageJsonFile.devDependencies)).map(
+      (key, index, dependenciesAIO) => {
+        if (dependenciesAIO[key][0] === '~' || dependenciesAIO[key][0] === '^') {
+          let prefix = dependencies[key][0];
+          dependenciesAIO[key] = dependenciesAIO[key].slice(1);
+          console.log(`[ FIXING ] ${prefix}${dependenciesAIO[key]} -> ${dependenciesAIO[key]}`);
+        } else {
+          console.log(`[   OK   ] ${dependenciesAIO[key]}`);
+        }
+      }
+  );
+  packageJsonFile = JSON.stringify(parsedPackageJsonFile, null, 2);
+  display('package.json: Stringifying', '[   OK   ]');
+
+  packageJsonFile += '\n';
+  display('package.json: Adding empty line at EOF', '[   OK   ]');
+
+  fs.writeFileSync('./package.json', packageJsonFile, 'utf-8');
+  display('package.json: Writing File Synchronously', '[   OK   ]');
+
+  return 'npm i --legacy-peer-deps ' + listOfDependencies;
+  //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
 };

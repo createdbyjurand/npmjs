@@ -1,7 +1,7 @@
 import fs from 'fs';
-import { display, displayError, displayInTheMiddle } from './display.node.mjs';
+import { display, displayError, displayInTheMiddle } from '@createdbyjurand/node-display';
 
-displayInTheMiddle('delete.node.mjs version 1.0.0');
+displayInTheMiddle('delete.node.mjs version 0.4.0');
 
 export const deleteFile = fileName => {
   display(fileName + ': Deleting', '[   OK   ]');
@@ -16,7 +16,7 @@ export const deleteFile = fileName => {
 export const deleteFolder = folderName => {
   display(folderName + ': Deleting', '[   OK   ]');
   if (fs.existsSync(folderName)) {
-    fs.rmdirSync(folderName, { recursive: true });
+    fs.rmSync(folderName, { recursive: true });
     display(folderName + ': Deleted', '[   OK   ]');
   } else {
     displayError(folderName + ': Folder not found', '[ FAILED ]');

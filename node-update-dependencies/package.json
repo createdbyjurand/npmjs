@@ -1,7 +1,7 @@
 {
-  "name": "@createdbyjurand/node-dependencies-updater",
-  "version": "0.3.0",
-  "description": "Node dependencies updater and reinstaller",
+  "name": "@createdbyjurand/node-update-dependencies",
+  "version": "0.4.0",
+  "description": "@createdbyjurand/node-update-dependencies",
   "main": "update-dependencies.node.mjs",
   "scripts": {
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs"

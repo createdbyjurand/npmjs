@@ -1,8 +1,5 @@
-__tests__
 .idea
 .vscode
-git_ignore
+__tests__
 jest.config.mjs
 node_modules
-package-lock.json
-package.json

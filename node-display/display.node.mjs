@@ -1,4 +1,4 @@
-export const COLOR = {
+const COLOR = {
   reset: '\x1b[0m',
   bright: '\x1b[1m',
   dim: '\x1b[2m',
@@ -23,10 +23,10 @@ export const COLOR = {
   bgBlue: '\x1b[44m',
   bgMagenta: '\x1b[45m',
   bgCyan: '\x1b[46m',
-  bgWhite: '\x1b[47m',
+  bgWhite: '\x1b[47m'
 };
 
-export const fill = (char, numberOfRepetitions, str = '') => {
+const fill = (char, numberOfRepetitions, str = '') => {
   while (numberOfRepetitions > 0) {
     str += char;
     numberOfRepetitions--;
@@ -34,17 +34,17 @@ export const fill = (char, numberOfRepetitions, str = '') => {
   return str;
 };
 
-export const display = (left, right = '') => {
+export const display = (left, right) => {
   const dots = process.stdout.columns - left.length - 2 - right.length;
   console.log(`${COLOR.fgGreen}${left}${COLOR.reset} ${fill('.', dots)} ${COLOR.fgGreen}${right}${COLOR.reset}`);
 };
 
-export const displayError = (left, right = '') => {
+export const displayError = (left, right) => {
   const dots = process.stdout.columns - left.length - 2 - right.length;
   console.log(COLOR.fgRed + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
 };
 
-export const displayWarning = (left, right = '') => {
+export const displayWarning = (left, right) => {
   const dots = process.stdout.columns - left.length - 2 - right.length;
   console.log(COLOR.fgYellow + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
 };
@@ -53,8 +53,8 @@ export const displayInTheMiddle = centre => {
   const half = (process.stdout.columns - centre.length - 2) / 2;
   console.log(
     COLOR.fgCyan + '%s' + COLOR.reset,
-    `${fill('-', Math.floor(half))} ${centre} ${fill('-', Math.ceil(half))}`,
+    `${fill('-', Math.floor(half))} ${centre} ${fill('-', Math.ceil(half))}`
   );
 };
 
-displayInTheMiddle('display.node.mjs version 1.0.0');
+displayInTheMiddle('display.node.mjs version 0.4.0');
