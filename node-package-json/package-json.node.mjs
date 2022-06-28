@@ -1,22 +1,21 @@
 import fs from 'fs';
-import {throwError} from './error.node.mjs';
-import {display, displayInTheMiddle} from './display.node.mjs';
+import {throwError} from '@createdbyjurand/node-error';
+import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
 
 displayInTheMiddle('package.json.node.mjs version 0.4.0');
 
 export const installTheLatestVersionsOfDependencies = dependenciesNamesArray =>
-    //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
-    dependenciesNamesArray === undefined || dependenciesNamesArray === []
-        ? throwError('Array of dependencies is empty')
-        : 'npm i --legacy-peer-deps --save' +
-        dependenciesNamesArray.map(dependency => `${dependency}@latest`).join(' ');
+  //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
+  dependenciesNamesArray === undefined || dependenciesNamesArray === []
+    ? throwError('Array of dependencies is empty')
+    : 'npm i --legacy-peer-deps --save' + dependenciesNamesArray.map(dependency => `${dependency}@latest`).join(' ');
 
 export const installTheLatestVersionsOfDevDependencies = devDependenciesNamesArray =>
-    //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
-    devDependenciesNamesArray === undefined || devDependenciesNamesArray === []
-        ? throwError('Array of devDependencies is empty')
-        : 'npm i --legacy-peer-deps --save-dev ' +
-        devDependenciesNamesArray.map(dependency => `${dependency}@latest`).join(' ');
+  //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
+  devDependenciesNamesArray === undefined || devDependenciesNamesArray === []
+    ? throwError('Array of devDependencies is empty')
+    : 'npm i --legacy-peer-deps --save-dev ' +
+      devDependenciesNamesArray.map(dependency => `${dependency}@latest`).join(' ');
 
 export const updateAllDependenciesToTheLatestWantedPatchVersion = (dependenciesNamesArrayToBeOmitted = []) => {
   const packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
@@ -27,11 +26,7 @@ export const updateAllDependenciesToTheLatestWantedPatchVersion = (dependenciesN
 
   let patchReleases = '';
 
-  const dependenciesAIO = Object.assign(
-      {},
-      parsedPackageJsonFile.dependencies,
-      parsedPackageJsonFile.devDependencies
-  );
+  const dependenciesAIO = Object.assign({}, parsedPackageJsonFile.dependencies, parsedPackageJsonFile.devDependencies);
 
   Object.keys(dependenciesAIO).map(key => {
     if (dependenciesAIO[key][0] === '~') {
@@ -55,18 +50,14 @@ export const updateAllDependenciesWithSemVerMinorPrefix = (dependenciesNamesArra
 
   let listOfDependenciesWithSemVerMinorPrefix = '';
 
-  const dependenciesAIO = Object.assign(
-      {},
-      parsedPackageJsonFile.dependencies,
-      parsedPackageJsonFile.devDependencies
-  );
+  const dependenciesAIO = Object.assign({}, parsedPackageJsonFile.dependencies, parsedPackageJsonFile.devDependencies);
 
   Object.keys(dependenciesAIO).map(key => {
     if (!dependenciesNamesArrayToBeOmitted.includes(key)) {
       if (dependenciesAIO[key][0] === '^') {
         listOfDependenciesWithSemVerMinorPrefix += ` ${key}@${dependenciesAIO[key].slice(
-            0,
-            dependenciesAIO[key].indexOf('.')
+          0,
+          dependenciesAIO[key].indexOf('.')
         )}`;
       }
     }
@@ -85,17 +76,16 @@ export const cleanupAllDependenciesVersions = (dependenciesNamesArrayToBeOmitted
 
   let listOfDependenciesToUpdate = '';
 
-  Object.keys(Object.assign({}, parsedPackageJsonFile.dependencies,
-      parsedPackageJsonFile.devDependencies)).map(
-      (key, index, dependenciesAIO) => {
-        if (dependenciesAIO[key][0] === '~' || dependenciesAIO[key][0] === '^') {
-          let prefix = dependencies[key][0];
-          dependenciesAIO[key] = dependenciesAIO[key].slice(1);
-          console.log(`[ FIXING ] ${prefix}${dependenciesAIO[key]} -> ${dependenciesAIO[key]}`);
-        } else {
-          console.log(`[   OK   ] ${dependenciesAIO[key]}`);
-        }
+  Object.keys(Object.assign({}, parsedPackageJsonFile.dependencies, parsedPackageJsonFile.devDependencies)).map(
+    (key, index, dependenciesAIO) => {
+      if (dependenciesAIO[key][0] === '~' || dependenciesAIO[key][0] === '^') {
+        let prefix = dependencies[key][0];
+        dependenciesAIO[key] = dependenciesAIO[key].slice(1);
+        console.log(`[ FIXING ] ${prefix}${dependenciesAIO[key]} -> ${dependenciesAIO[key]}`);
+      } else {
+        console.log(`[   OK   ] ${dependenciesAIO[key]}`);
       }
+    }
   );
   packageJsonFile = JSON.stringify(parsedPackageJsonFile, null, 2);
   display('package.json: Stringifying', '[   OK   ]');

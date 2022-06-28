@@ -1,4 +1,4 @@
-import { display, displayInTheMiddle } from './display.node.mjs';
+import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
 
 displayInTheMiddle('arguments.node.mjs version 0.4.0');
 
@@ -40,7 +40,7 @@ export const argumentExperimantal = {
       details: id => `${baseUrl}/${id}`,
       contacts: number => `${baseUrl}/${id}/contacts`,
       pageWithSearch: (pageNumber, searchText) => `${baseUrl}?page=${pageNumber}&search=${searchText}`,
-      page: pageNumber => `${baseUrl}?page=${pageNumber}`,
+      page: pageNumber => `${baseUrl}?page=${pageNumber}`
     };
   })(),
   exists: (
@@ -52,9 +52,9 @@ export const argumentExperimantal = {
       () => (processArgv, argumentName) =>
         processArgv.includes(`--${argumentName}=`)
     )(),
-    isNotEmpty: (processArgv, argumentName) => processArgv.includes(`--${argumentName}=`),
+    isNotEmpty: (processArgv, argumentName) => processArgv.includes(`--${argumentName}=`)
   },
   parse: {
-    asDependencies: () => '',
-  },
+    asDependencies: () => ''
+  }
 };

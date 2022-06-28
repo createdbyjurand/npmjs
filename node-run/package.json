@@ -1,11 +1,11 @@
 {
-  "name": "@createdbyjurand/node-delete",
-  "version": "0.4.0",
-  "description": "Node shared scripts",
-  "main": "delete.node.mjs",
   "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
-  "license": "ISC",
   "dependencies": {
     "@createdbyjurand/node-display": "0.4.0"
-  }
+  },
+  "description": "@createdbyjurand/node-run",
+  "license": "ISC",
+  "main": "run.node.mjs",
+  "name": "@createdbyjurand/node-run",
+  "version": "0.4.0"
 }
