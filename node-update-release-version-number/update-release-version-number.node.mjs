@@ -1,4 +1,7 @@
 const fs = require('fs');
+import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
+
+displayInTheMiddle('update-release-version-number.node.mjs version 0.4.0');
 
 const pathToPackageJsonFile = './package.json';
 const pathToPackageLockJsonFile = './package-lock.json';
@@ -28,27 +31,38 @@ console.log(`[   OK   ] packageLockJson parse complete`);
 const parsedReleaseVersionNumberJsonFile = JSON.parse(releaseVersionNumberJsonFile);
 console.log(`[   OK   ] releaseVersionNumberJson parse complete`);
 
-
 console.log(`[   OK   ] Release version number in package.json before update: ${parsedPackageJsonFile.version}`);
-console.log(`[   OK   ] Release version number in package-lock.json before update: ${parsedPackageLockJsonFile.version}`);
-console.log(`[   OK   ] Release version number in release-version-number.json before update: ${parsedReleaseVersionNumberJsonFile.version}`);
-console.log(`[   OK   ] Release date in release-version-number.json before update: ${parsedReleaseVersionNumberJsonFile.date}`);
+console.log(
+  `[   OK   ] Release version number in package-lock.json before update: ${parsedPackageLockJsonFile.version}`
+);
+console.log(
+  `[   OK   ] Release version number in release-version-number.json before update: ${parsedReleaseVersionNumberJsonFile.version}`
+);
+console.log(
+  `[   OK   ] Release date in release-version-number.json before update: ${parsedReleaseVersionNumberJsonFile.date}`
+);
 
-parsedReleaseVersionNumberJsonFile.version = parsedReleaseVersionNumberJsonFile.version.split('.').map((value, index) => index === 2
-  ? +value + 1
-  : value
-).join('.');
+parsedReleaseVersionNumberJsonFile.version = parsedReleaseVersionNumberJsonFile.version
+  .split('.')
+  .map((value, index) => (index === 2 ? +value + 1 : value))
+  .join('.');
 
 parsedPackageJsonFile.version = parsedReleaseVersionNumberJsonFile.version;
 parsedPackageLockJsonFile.version = parsedReleaseVersionNumberJsonFile.version;
 
 console.log(`[   OK   ] Release version number in package.json after update: ${parsedPackageJsonFile.version}`);
-console.log(`[   OK   ] Release version number in package-lock.json after update: ${parsedPackageLockJsonFile.version}`);
-console.log(`[   OK   ] Release version number in release-version-number.json after update: ${parsedReleaseVersionNumberJsonFile.version}`);
+console.log(
+  `[   OK   ] Release version number in package-lock.json after update: ${parsedPackageLockJsonFile.version}`
+);
+console.log(
+  `[   OK   ] Release version number in release-version-number.json after update: ${parsedReleaseVersionNumberJsonFile.version}`
+);
 
 const date = new Date();
 parsedReleaseVersionNumberJsonFile.date = date.toJSON();
-console.log(`[   OK   ] Release date in release-version-number.json after update: ${parsedReleaseVersionNumberJsonFile.date}`);
+console.log(
+  `[   OK   ] Release date in release-version-number.json after update: ${parsedReleaseVersionNumberJsonFile.date}`
+);
 
 /**
  * JSON.stringify(parsedReleaseVersionNumberJsonFile, null, 2);

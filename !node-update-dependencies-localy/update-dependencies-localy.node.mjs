@@ -10,10 +10,10 @@ import {
   removePrefix,
   removePrefixesFromDependenciesInPackageJson,
   run,
-  updateAllDependenciesFromPackageJsonExcept,
+  updateAllDependenciesFromPackageJsonExcept
 } from '@createdbyjurand/node-scripts';
 
-displayInTheMiddle('update-dependencies.node.mjs version 1.0.0');
+displayInTheMiddle('update-dependencies-localy.node.mjs version 0.4.0');
 
 displayArguments(process.argv);
 
@@ -42,8 +42,8 @@ if (updateAllDependenciesExcept) {
     run(
       `npm i ${legacyPeerDeps} --save-dev ${parseDependenciesFromArgumentValue(
         process.argv,
-        'update-dev-dependencies',
-      )}`,
+        'update-dev-dependencies'
+      )}`
     );
   run(`npm ${npmCI} ${legacyPeerDeps}`);
 }

@@ -109,6 +109,16 @@ You can setup reinstalling all dependecies acording to package.json with options
 - `@param null` - represents the replacer function. (in this case we don't want to alter the process)
 - `@param 2` - represents the spaces to indent.
 
-### package-json.node.mjs
+## Changelog
 
-### run.node.mjs
+### 0.4.0
+
+- preparing for usage on the side of main node_modules folder
+
+### 0.3.0
+
+- bugfixes
+
+### 0.2.0
+
+- test resease

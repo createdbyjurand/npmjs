@@ -1,7 +1,7 @@
-import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
 import {spawnSync} from 'child_process';
+import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
 
-displayInTheMiddle('run.node.mjs version 0.4.0');
+displayInTheMiddle('run-localy.node.mjs version 0.4.0');
 
 export const run = command => {
   display(command, '[   OK   ]');

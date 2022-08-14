@@ -1,11 +1,13 @@
 {
-  "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
-  "dependencies": {
-    "@createdbyjurand/node-display": "0.4.0"
-  },
-  "description": "@createdbyjurand/node-delete",
-  "license": "ISC",
-  "main": "delete.node.mjs",
-  "name": "@createdbyjurand/node-delete",
-  "version": "0.4.0"
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "dependencies": {
+        "@createdbyjurand/node-display": "0.4.0",
+        "@createdbyjurand/node-node": "0.4.0",
+        "@createdbyjurand/prefix": "0.4.0"
+    },
+    "description": "@createdbyjurand/node-delete",
+    "license": "ISC",
+    "main": "delete.node.mjs",
+    "name": "@createdbyjurand/node-delete",
+    "version": "0.4.0"
 }

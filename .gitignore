@@ -1,9 +1,10 @@
+__tests__
 .idea
 .vscode
 /.prettierignore
 /.prettierrc.json5
 /package-lock.json
 /package.json
-__tests__
+git_ignore
 jest.config.mjs
 node_modules

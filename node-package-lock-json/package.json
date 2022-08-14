@@ -1,0 +1,13 @@
+{
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "dependencies": {
+        "@createdbyjurand/node-delete": "0.4.0",
+        "@createdbyjurand/node-display": "0.4.0",
+        "@createdbyjurand/node-prefix": "0.4.0"
+    },
+    "description": "@createdbyjurand/node-package-lock-json",
+    "license": "ISC",
+    "main": "package-lock-json.node.mjs",
+    "name": "@createdbyjurand/node-package-lock-json",
+    "version": "0.4.0"
+}

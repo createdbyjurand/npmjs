@@ -1,8 +1,8 @@
 {
-  "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
-  "description": "@createdbyjurand/node-display",
-  "license": "ISC",
-  "main": "display.node.mjs",
-  "name": "@createdbyjurand/node-display",
-  "version": "0.4.0"
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "description": "@createdbyjurand/node-display",
+    "license": "ISC",
+    "main": "display.node.mjs",
+    "name": "@createdbyjurand/node-display",
+    "version": "0.4.0"
 }

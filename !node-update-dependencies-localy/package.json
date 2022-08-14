@@ -1,16 +1,17 @@
 {
     "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
     "dependencies": {
+        "@createdbyjurand/node-arguments": "0.4.0",
         "@createdbyjurand/node-delete": "0.4.0",
         "@createdbyjurand/node-display": "0.4.0",
-        "@createdbyjurand/node-error": "0.4.0",
-        "@createdbyjurand/node-node": "0.4.0",
+        "@createdbyjurand/node-package-json": "0.4.0",
         "@createdbyjurand/node-package-lock-json": "0.4.0",
+        "@createdbyjurand/node-prefix": "0.4.0",
         "@createdbyjurand/node-run": "0.4.0"
     },
-    "description": "@createdbyjurand/node-reinstall-dependencies",
+    "description": "@createdbyjurand/node-update-dependencies-localy",
     "license": "ISC",
-    "main": "reinstall-dependencies.node.mjs",
-    "name": "@createdbyjurand/node-reinstall-dependencies",
+    "main": "update-dependencies-localy.node.mjs",
+    "name": "@createdbyjurand/node-update-dependencies-localy",
     "version": "0.4.0"
 }

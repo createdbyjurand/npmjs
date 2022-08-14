@@ -1,0 +1,22 @@
+{
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "dependencies": {
+        "@createdbyjurand/node-arguments": "0.4.0",
+        "@createdbyjurand/node-delete": "0.4.0",
+        "@createdbyjurand/node-display": "0.4.0",
+        "@createdbyjurand/node-error": "0.4.0",
+        "@createdbyjurand/node-generate-id": "0.4.0",
+        "@createdbyjurand/node-json": "0.4.0",
+        "@createdbyjurand/node-node": "0.4.0",
+        "@createdbyjurand/node-package-json": "0.4.0",
+        "@createdbyjurand/node-package-lock-json": "0.4.0",
+        "@createdbyjurand/node-prefix": "0.4.0",
+        "@createdbyjurand/node-run": "0.4.0",
+        "@createdbyjurand/node-update-release-version-number": "0.4.0"
+    },
+    "description": "@createdbyjurand/node-scripts",
+    "license": "ISC",
+    "main": "index.node.mjs",
+    "name": "@createdbyjurand/node-scripts",
+    "version": "0.4.0"
+}

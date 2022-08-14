@@ -3,9 +3,9 @@
     "dependencies": {
         "@createdbyjurand/node-display": "0.4.0"
     },
-    "description": "@createdbyjurand/node-run",
+    "description": "@createdbyjurand/node-node",
     "license": "ISC",
-    "main": "run.node.mjs",
-    "name": "@createdbyjurand/node-run",
+    "main": "node.node.mjs",
+    "name": "@createdbyjurand/node-node",
     "version": "0.4.0"
 }

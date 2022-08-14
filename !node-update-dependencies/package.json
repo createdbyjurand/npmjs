@@ -1,0 +1,18 @@
+{
+  "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+  "dependencies": {
+    "@createdbyjurand/node-scripts": "0.5.0"
+  },
+  "description": "@createdbyjurand/node-update-dependencies",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^27.3.1"
+  },
+  "license": "ISC",
+  "main": "update-dependencies.node.mjs",
+  "name": "@createdbyjurand/node-update-dependencies",
+  "scripts": {
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs"
+  },
+  "version": "0.5.0"
+}

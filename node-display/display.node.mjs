@@ -35,11 +35,15 @@ const fill = (char, numberOfRepetitions, str = '') => {
 };
 
 export const display = (left, right) => {
+  left += '';
+  right += '';
   const dots = process.stdout.columns - left.length - 2 - right.length;
   console.log(`${COLOR.fgGreen}${left}${COLOR.reset} ${fill('.', dots)} ${COLOR.fgGreen}${right}${COLOR.reset}`);
 };
 
 export const displayError = (left, right) => {
+  left += '';
+  right += '';
   const dots = process.stdout.columns - left.length - 2 - right.length;
   console.log(COLOR.fgRed + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
 };

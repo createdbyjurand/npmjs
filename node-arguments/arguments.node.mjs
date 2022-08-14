@@ -8,9 +8,9 @@ export const displayArguments = processArgv => {
   displayInTheMiddle('process.argv END');
 };
 
-export const argumentExists = (processArgv, argumentName) => processArgv.includes(`--${argumentName}`);
+export const argumentExists = (processArgv, argumentName) => processArgv.toString().includes(`--${argumentName}`);
 
-export const argumentValueExists = (processArgv, argumentName) => processArgv.includes(`--${argumentName}=`);
+export const argumentValueExists = (processArgv, argumentName) => processArgv.toString().includes(`--${argumentName}=`);
 
 export const argumentValueIsNotEmpty = (processArgv, argumentName) =>
   getArgumentValue(processArgv, argumentName) !== '' ? true : false;

@@ -1,0 +1,14 @@
+{
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "dependencies": {
+        "@createdbyjurand/node-arguments": "0.4.0",
+        "@createdbyjurand/node-delete": "0.4.0",
+        "@createdbyjurand/node-display": "0.4.0",
+        "@createdbyjurand/node-run": "0.4.0"
+    },
+    "description": "@createdbyjurand/node-rebuild-modules",
+    "license": "ISC",
+    "main": "rebuild-modules.node.mjs",
+    "name": "@createdbyjurand/node-rebuild-modules",
+    "version": "0.4.0"
+}

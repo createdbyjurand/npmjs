@@ -1,0 +1,11 @@
+{
+  "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+  "dependencies": {
+    "@createdbyjurand/node-display": "0.5.0"
+  },
+  "description": "Node shared scripts",
+  "license": "ISC",
+  "main": "delete.node.mjs",
+  "name": "@createdbyjurand/node-delete",
+  "version": "0.5.0"
+}

@@ -1,8 +1,11 @@
 {
-  "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
-  "description": "@createdbyjurand/node-json",
-  "license": "ISC",
-  "main": "json.node.mjs",
-  "name": "@createdbyjurand/node-json",
-  "version": "0.4.0"
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "dependencies": {
+        "@createdbyjurand/node-display": "0.4.0"
+    },
+    "description": "@createdbyjurand/node-json",
+    "license": "ISC",
+    "main": "json.node.mjs",
+    "name": "@createdbyjurand/node-json",
+    "version": "0.4.0"
 }

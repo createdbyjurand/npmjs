@@ -2,7 +2,7 @@ import fs from 'fs';
 import {throwError} from '@createdbyjurand/node-error';
 import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
 
-displayInTheMiddle('package.json.node.mjs version 0.4.0');
+displayInTheMiddle('package-json.node.mjs version 0.4.0');
 
 export const installTheLatestVersionsOfDependencies = dependenciesNamesArray =>
   //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
@@ -18,11 +18,13 @@ export const installTheLatestVersionsOfDevDependencies = devDependenciesNamesArr
       devDependenciesNamesArray.map(dependency => `${dependency}@latest`).join(' ');
 
 export const updateAllDependenciesToTheLatestWantedPatchVersion = (dependenciesNamesArrayToBeOmitted = []) => {
+  display('<package.json>: Reading File Synchronously...', '[   OK   ]');
   const packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
-  display('package.json: Reading File Synchronously', '[   OK   ]');
+  display('<package.json>: Reading File Synchronously Success', '[   OK   ]');
 
+  display('<package.json>: Parsing...', '[   OK   ]');
   const parsedPackageJsonFile = JSON.parse(packageJsonFile);
-  display('package.json: Parsing', '[   OK   ]');
+  display('<package.json>: Parsing Success', '[   OK   ]');
 
   let patchReleases = '';
 
@@ -87,6 +89,12 @@ export const cleanupAllDependenciesVersions = (dependenciesNamesArrayToBeOmitted
       }
     }
   );
+
+  /**
+   * JSON.stringify(parsedReleaseVersionNumberJson, null, 2);
+   * @param null - represents the replacer function. (in this case we don't want to alter the process)
+   * @param 2 - represents the spaces to indent.
+   */
   packageJsonFile = JSON.stringify(parsedPackageJsonFile, null, 2);
   display('package.json: Stringifying', '[   OK   ]');
 
