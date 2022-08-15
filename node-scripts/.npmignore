@@ -1,5 +1,8 @@
+__tests__
 .idea
 .vscode
-__tests__
+.prettierignore
+.prettierrc*
+git_ignore
 jest.config.mjs
 node_modules

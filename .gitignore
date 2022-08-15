@@ -1,10 +1,8 @@
 __tests__
 .idea
 .vscode
-/.prettierignore
-/.prettierrc.json5
-/package-lock.json
-/package.json
+.prettierignore
+.prettierrc*
 git_ignore
 jest.config.mjs
 node_modules
