@@ -4,16 +4,19 @@ import {
   deleteFolder,
   display,
   displayArguments,
+  displayHeader,
   displayInTheMiddle,
-  getArgumentValue,
   parseDependenciesFromArgumentValue,
-  removePrefix,
   removePrefixesFromDependenciesInPackageJson,
   run,
   updateAllDependenciesFromPackageJsonExcept
 } from './@shared/index.node.mjs';
 
-displayInTheMiddle('update-dependencies.node.mjs version 1.0.0');
+displayHeader();
+
+displayInTheMiddle(
+  `update-dependencies.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`
+);
 
 displayArguments(process.argv);
 

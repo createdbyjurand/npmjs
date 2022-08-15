@@ -1,6 +1,7 @@
 import {displayInTheMiddle} from '@createdbyjurand/node-display';
+import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle('generate-id.node.mjs version 0.4.0');
+displayInTheMiddle(`generate-id.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
 
 export const generateId = (idMinimumLength = 4, idMaximumLength = 8) => {
   const idLength = Math.round(Math.random() * (idMaximumLength - idMinimumLength)) + idMinimumLength;

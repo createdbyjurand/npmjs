@@ -1,9 +1,9 @@
-import fs from 'fs';
-import {throwError} from '@createdbyjurand/node-error';
 import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
+import {throwError} from '@createdbyjurand/node-error';
+import fs from 'fs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle('package-json.node.mjs version 0.4.0');
+displayInTheMiddle(`package-json.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
 
 export const readPackageJsonVersion = pathToPackageJsonFile => readAndParseJsonFile(pathToPackageJsonFile).version;
 

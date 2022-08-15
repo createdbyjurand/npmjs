@@ -1,6 +1,7 @@
+import {readAndParseJsonFile} from './json-file.node.mjs';
 import {display, displayInTheMiddle} from './node-display';
 
-displayInTheMiddle('arguments.node.mjs version 0.4.0');
+displayInTheMiddle(`arguments.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
 
 export const displayArguments = processArgv => {
   displayInTheMiddle('process.argv START');

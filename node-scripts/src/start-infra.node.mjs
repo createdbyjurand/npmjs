@@ -1,6 +1,8 @@
 import {display, displayInTheMiddle, run} from './@shared/index.node.mjs';
 
-displayInTheMiddle('start-infra.node.mjs version 2.0.1');
+displayInTheMiddle(
+  `start-infra.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`
+);
 
 process.chdir('../../../../../../../wpfe-infra/global-router/local');
 // run('dir /b');

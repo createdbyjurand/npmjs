@@ -1,9 +1,10 @@
-import {copyFileSync, readFileSync} from 'fs';
-import {deleteFile} from '@createdbyjurand/node-delete';
-import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
-import {prefix} from '@createdbyjurand/node-prefix';
+import { deleteFile } from '@createdbyjurand/node-delete';
+import { display, displayInTheMiddle } from '@createdbyjurand/node-display';
+import { prefix } from '@createdbyjurand/node-prefix';
+import { copyFileSync, readFileSync } from 'fs';
+import { readAndParseJsonFile } from './json-file.node.mjs';
 
-displayInTheMiddle('package-lock-json.node.mjs version 0.4.0');
+displayInTheMiddle(`package-lock-json.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
 
 /**
  * lockfileVersion

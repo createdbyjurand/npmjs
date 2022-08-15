@@ -1,3 +1,5 @@
+import {readAndParseJsonFile} from './json-file.node.mjs';
+
 const COLOR = {
   reset: '\x1b[0m',
   bright: '\x1b[1m',
@@ -61,4 +63,9 @@ export const displayInTheMiddle = centre => {
   );
 };
 
-displayInTheMiddle('display.node.mjs version 0.4.0');
+export const displayHeader = () =>
+  console.log(
+    "   ____                      _           _ _            _                           _\r\n  / __ \\  ___ _ __ ___  __ _| |_ ___  __| | |__  _   _ (_)_   _ _ __ __ _ _ __   __| |\r\n / / _` |/ __| '__/ _ \\/ _` | __/ _ \\/ _` | '_ \\| | | || | | | | '__/ _` | '_ \\ / _` |\r\n| | (_| | (__| | |  __/ (_| | ||  __/ (_| | |_) | |_| || | |_| | | | (_| | | | | (_| |\r\n \\ \\__,_|\\___|_|  \\___|\\__,_|\\__\\___|\\__,_|_.__/ \\__, |/ |\\__,_|_|  \\__,_|_| |_|\\__,_|\r\n  \\____/                                         |___/__/"
+  );
+
+displayInTheMiddle(`display.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);

@@ -1,7 +1,9 @@
 import fs from 'fs';
 import {deleteFile, display, displayInTheMiddle, getArgumentValue, run} from './@shared/index.node.mjs';
 
-displayInTheMiddle('rebuild-modules.node.mjs version 0.4.0');
+displayInTheMiddle(
+  `rebuild-modules.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`
+);
 
 const path = getArgumentValue(process.argv, 'path');
 

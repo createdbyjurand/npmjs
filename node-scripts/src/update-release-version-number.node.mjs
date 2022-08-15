@@ -1,7 +1,7 @@
 const fs = require('fs');
 import {display, displayInTheMiddle, getArgumentValue} from './@shared/index.node.mjs';
 
-displayInTheMiddle('update-release-version-number.node.mjs version 0.4.0');
+displayInTheMiddle(`update-release-version-number.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`);
 
 const pathToPackageJsonFile = getArgumentValue(process.argv, 'path-to-package-json') || './package.json';
 const pathToPackageLockJsonFile = getArgumentValue(process.argv, 'path-to-package-lock-json') || './package-lock.json';

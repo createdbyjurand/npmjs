@@ -15,7 +15,8 @@
     "name": "@createdbyjurand/node-scripts",
     "scripts": {
         "npm::install-dev-dependencies": "npm i --save-dev @prettier/plugin-xml@latest cross-env@latest jest@latest prettier-plugin-java@latest prettier-plugin-properties@latest prettier-plugin-sh@latest prettier@latest",
-        "node::update-release-version-number": "node src/update-release-version-number.node.mjs --path-to-@shared=src/@shared",
+        "node::update-release-version-number": "node src/update-dependencies.node.mjs --path-to-@shared=src/@shared",
+        "node::update-dependencies": "node src/update-release-version-number.node.mjs --path-to-@shared=src/@shared",
         "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs"
     },
     "version": "0.4.0-SNAPSHOT"
