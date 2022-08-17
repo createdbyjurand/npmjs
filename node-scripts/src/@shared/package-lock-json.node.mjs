@@ -1,10 +1,12 @@
-import { deleteFile } from '@createdbyjurand/node-delete';
-import { display, displayInTheMiddle } from '@createdbyjurand/node-display';
-import { prefix } from '@createdbyjurand/node-prefix';
-import { copyFileSync, readFileSync } from 'fs';
-import { readAndParseJsonFile } from './json-file.node.mjs';
+import {copyFileSync, readFileSync} from 'fs';
+import {deleteFile} from './delete.node.mjs';
+import {display, displayInTheMiddle} from './display.node.mjs';
+import {readAndParseJsonFile} from './json-file.node.mjs';
+import {prefix} from './prefix.node.mjs';
 
-displayInTheMiddle(`package-lock-json.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
+displayInTheMiddle(
+  `package-lock-json.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`
+);
 
 /**
  * lockfileVersion

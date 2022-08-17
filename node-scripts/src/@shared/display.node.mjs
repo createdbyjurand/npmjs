@@ -1,4 +1,4 @@
-import {readAndParseJsonFile} from './json-file.node.mjs';
+import fs from 'fs';
 
 const COLOR = {
   reset: '\x1b[0m',
@@ -63,9 +63,19 @@ export const displayInTheMiddle = centre => {
   );
 };
 
-export const displayHeader = () =>
+export const displayInTheMiddleWithVersion = centre =>
+  displayInTheMiddle(
+    `${centre} version ${JSON.parse(fs.readFileSync('./release-version-number.json', 'utf-8')).version}`
+  );
+
+export const displayHeaderCBJ = () =>
   console.log(
     "   ____                      _           _ _            _                           _\r\n  / __ \\  ___ _ __ ___  __ _| |_ ___  __| | |__  _   _ (_)_   _ _ __ __ _ _ __   __| |\r\n / / _` |/ __| '__/ _ \\/ _` | __/ _ \\/ _` | '_ \\| | | || | | | | '__/ _` | '_ \\ / _` |\r\n| | (_| | (__| | |  __/ (_| | ||  __/ (_| | |_) | |_| || | |_| | | | (_| | | | | (_| |\r\n \\ \\__,_|\\___|_|  \\___|\\__,_|\\__\\___|\\__,_|_.__/ \\__, |/ |\\__,_|_|  \\__,_|_| |_|\\__,_|\r\n  \\____/                                         |___/__/"
   );
 
-displayInTheMiddle(`display.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
+export const displayLogoCBJ = () =>
+  console.log(
+    '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  \r\n   @@@@@@@                 @@@@                 @@@                @@@@@@@   \r\n    @@@@@@@                  @@@       @@@       @@@@             @@@@@@@    \r\n      @@@@@@@@@@@@@@@@@       @@@@      @@@@       @@@@@@       @@@@@@@      \r\n       @@@@@@@@@@@@@@@@@@      @@@@       @@@       @@@@       @@@@@@@       \r\n         @@@@@@@@@@@@@@@@@       @@@       @@@@              @@@@@@@         \r\n          @@@@@@@@@@@@@@@@@       @@@@       @@@            @@@@@@@          \r\n            @@@@@@@@@@@@@@@@@       @@@       @@@@        @@@@@@@            \r\n             @@@@@@@@@@@@@@@@@       @@@@       @@@      @@@@@@@             \r\n              @@@@@@@@@@@@@@@@@@       @@@       @@@@  @@@@@@@               \r\n                @@@@@@@@@@@@@@@@@       @@@@       @@@@@@@@@@                \r\n                 @@@@@@@@@@@@@@@@@@       @@@       @@@@@@@                  \r\n                   @@@@@@@       @@@       @@@@    @@@@@@@                   \r\n                    @@@@@@@       @@@@       @@@  @@@@@@@                    \r\n                      @@@@@@@       @@@       @@@@@@@@@                      \r\n                       @@@@@@@       @@@       @@@@@@@                       \r\n                         @@@@@@@             @@@@@@@                         \r\n                          @@@@@@@           @@@@@@@                          \r\n                            @@@@@@@       @@@@@@@                            \r\n                             @@@@@@@     @@@@@@@                             \r\n                              @@@@@@@  @@@@@@@                               \r\n                                @@@@@@@@@@@@@                                \r\n                                 @@@@@@@@@@@                                 \r\n                                   @@@@@@@                                   \r\n                                    @@@@@                                    \r\n                                      @                                      '
+  );
+
+displayInTheMiddleWithVersion('display.node.mjs');

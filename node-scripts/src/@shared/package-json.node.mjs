@@ -1,6 +1,6 @@
-import {display, displayInTheMiddle} from '@createdbyjurand/node-display';
-import {throwError} from '@createdbyjurand/node-error';
 import fs from 'fs';
+import {display, displayInTheMiddle} from './display.node.mjs';
+import {throwError} from './error.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
 displayInTheMiddle(`package-json.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);

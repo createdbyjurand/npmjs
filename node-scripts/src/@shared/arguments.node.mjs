@@ -1,5 +1,5 @@
-import {readAndParseJsonFile} from './json-file.node.mjs';
-import {display, displayInTheMiddle} from './node-display';
+import { display, displayInTheMiddle } from './display.node.mjs';
+import { readAndParseJsonFile } from './json-file.node.mjs';
 
 displayInTheMiddle(`arguments.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
 

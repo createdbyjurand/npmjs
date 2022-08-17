@@ -1,8 +1,8 @@
 import fs from 'fs';
+import {display, displayError, displayInTheMiddle} from './display.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
-import {display, displayError, displayInTheMiddle} from './node-display';
-import {node} from './node-node';
-import {prefix} from './prefix';
+import {node} from './node.node.mjs';
+import {prefix} from './prefix.node.mjs';
 
 displayInTheMiddle(`delete.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
 

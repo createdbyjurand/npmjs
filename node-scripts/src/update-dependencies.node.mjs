@@ -4,15 +4,17 @@ import {
   deleteFolder,
   display,
   displayArguments,
-  displayHeader,
+  displayHeaderCBJ,
   displayInTheMiddle,
+  displayLogoCBJ,
   parseDependenciesFromArgumentValue,
   removePrefixesFromDependenciesInPackageJson,
   run,
   updateAllDependenciesFromPackageJsonExcept
 } from './@shared/index.node.mjs';
 
-displayHeader();
+displayLogoCBJ();
+displayHeaderCBJ();
 
 displayInTheMiddle(
   `update-dependencies.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`

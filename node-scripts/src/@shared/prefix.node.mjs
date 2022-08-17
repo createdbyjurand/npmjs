@@ -1,4 +1,4 @@
-import {displayInTheMiddle} from '@createdbyjurand/node-display';
+import {displayInTheMiddle} from './display.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
 displayInTheMiddle(`prefix.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
