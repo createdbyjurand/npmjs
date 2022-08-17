@@ -9,9 +9,7 @@ import {
   throwError
 } from './@shared/index.node.mjs';
 
-displayInTheMiddle(
-  `reinstall-dependencies.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`
-);
+displayInTheMiddle(`reinstall-dependencies.node.mjs version 2.0.1`);
 
 process.chdir('../../');
 // run('dir /b');

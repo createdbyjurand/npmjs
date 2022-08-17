@@ -1,6 +1,6 @@
 import {display, displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`arguments.node.mjs version 0.4.0`);
+displayInTheMiddle(`arguments.node.mjs version 1.0.0`);
 
 export const displayArguments = processArgv => {
   displayInTheMiddle('process.argv START');

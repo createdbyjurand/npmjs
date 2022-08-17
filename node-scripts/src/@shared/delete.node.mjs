@@ -3,7 +3,7 @@ import {display, displayError, displayInTheMiddle} from './display.node.mjs';
 import {node} from './node.node.mjs';
 import {prefix} from './prefix.node.mjs';
 
-displayInTheMiddle(`delete.node.mjs version 0.4.0`);
+displayInTheMiddle(`delete.node.mjs version 1.1.1`);
 
 export const deleteFile = fileName => {
   display(`${prefix(fileName)} Deleting`, '[   OK   ]');

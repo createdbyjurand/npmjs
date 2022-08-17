@@ -16,9 +16,7 @@ import {
 displayLogoCBJ();
 displayHeaderCBJ();
 
-displayInTheMiddle(
-  `update-dependencies.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`
-);
+displayInTheMiddle(`update-dependencies.node.mjs version 0.4.0`);
 
 displayArguments(process.argv);
 

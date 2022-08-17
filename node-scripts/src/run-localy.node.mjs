@@ -1,9 +1,7 @@
 import {spawnSync} from 'child_process';
 import {display, displayInTheMiddle} from './@shared/index.node.mjs';
 
-displayInTheMiddle(
-  `run-localy.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`
-);
+displayInTheMiddle(`run-localy.node.mjs version 0.4.0`);
 
 export const run = command => {
   display(command, '[   OK   ]');

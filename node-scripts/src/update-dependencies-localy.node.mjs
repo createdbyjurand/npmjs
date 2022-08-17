@@ -13,9 +13,7 @@ import {
   updateAllDependenciesFromPackageJsonExcept
 } from './@shared/index.node.mjs';
 
-displayInTheMiddle(
-  `update-dependencies-localy.node.mjs version ${readAndParseJsonFile('./@shared/release-version-number.json').version}`
-);
+displayInTheMiddle(`update-dependencies-localy.node.mjs version 0.4.0`);
 
 displayArguments(process.argv);
 

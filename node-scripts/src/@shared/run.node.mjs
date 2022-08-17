@@ -1,7 +1,7 @@
 import {spawnSync} from 'child_process';
 import {display, displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`run.node.mjs version 0.4.0`);
+displayInTheMiddle(`run.node.mjs version 1.0.3`);
 
 export const run = command => {
   display(command, '[   OK   ]');
