@@ -1,7 +1,6 @@
 import {displayInTheMiddle} from './display.node.mjs';
-import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle(`error.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
+displayInTheMiddle(`error.node.mjs version 0.4.0`);
 
 export const throwError = mssg => {
   throw new Error(mssg);

@@ -3,7 +3,7 @@ import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle(`package-json.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
+displayInTheMiddle(`package-json.node.mjs version 0.4.0`);
 
 export const readPackageJsonVersion = pathToPackageJsonFile => readAndParseJsonFile(pathToPackageJsonFile).version;
 

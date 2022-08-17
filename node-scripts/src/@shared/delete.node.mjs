@@ -1,10 +1,9 @@
 import fs from 'fs';
 import {display, displayError, displayInTheMiddle} from './display.node.mjs';
-import {readAndParseJsonFile} from './json-file.node.mjs';
 import {node} from './node.node.mjs';
 import {prefix} from './prefix.node.mjs';
 
-displayInTheMiddle(`delete.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
+displayInTheMiddle(`delete.node.mjs version 0.4.0`);
 
 export const deleteFile = fileName => {
   display(`${prefix(fileName)} Deleting`, '[   OK   ]');

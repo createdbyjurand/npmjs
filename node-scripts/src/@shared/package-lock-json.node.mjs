@@ -1,12 +1,9 @@
 import {copyFileSync, readFileSync} from 'fs';
 import {deleteFile} from './delete.node.mjs';
 import {display, displayInTheMiddle} from './display.node.mjs';
-import {readAndParseJsonFile} from './json-file.node.mjs';
 import {prefix} from './prefix.node.mjs';
 
-displayInTheMiddle(
-  `package-lock-json.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`
-);
+displayInTheMiddle(`package-lock-json.node.mjs version 0.4.0`);
 
 /**
  * lockfileVersion

@@ -11,4 +11,4 @@ export const stringifyAndSaveJsonFile = (parsedJsonFile, pathToJsonFile) =>
    */
   fs.writeFileSync(pathToJsonFile, JSON.stringify(parsedJsonFile, null, 2), 'utf-8');
 
-displayInTheMiddle(`json-file.node.mjs version ${readAndParseJsonFile('./release-version-number.json').version}`);
+displayInTheMiddle(`json-file.node.mjs version  0.4.0`);
