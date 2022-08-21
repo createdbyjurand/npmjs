@@ -1,5 +1,5 @@
 import fs from 'fs';
-import {deleteFolder, display, displayError, displayInTheMiddle, run} from './@shared/index.node.mjs';
+import {deleteFolder, display, displayError, displayInTheMiddle, run} from './index.node.mjs';
 
 displayInTheMiddle(`reinstall-dependencies-from-package-lock-json.node.mjs version 0.4.0`);
 

@@ -1,5 +1,5 @@
 const fs = require('fs');
-import {display, displayInTheMiddle, getArgumentValue} from './@shared/index.node.mjs';
+import {display, displayInTheMiddle, getArgumentValue} from './index.node.mjs';
 
 displayInTheMiddle(`update-release-version-number.node.mjs version 0.4.0`);
 

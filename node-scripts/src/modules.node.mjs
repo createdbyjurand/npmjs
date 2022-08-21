@@ -1,5 +1,5 @@
 import fs from 'fs';
-import {deleteFile, display, displayInTheMiddle, getArgumentValue, run} from './@shared/index.node.mjs';
+import {deleteFile, display, displayInTheMiddle, getArgumentValue, run} from './index.node.mjs';
 
 displayInTheMiddle(`rebuild-modules.node.mjs version 2.0.1`);
 

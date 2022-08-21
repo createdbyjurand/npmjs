@@ -11,12 +11,12 @@ import {
   node,
   run,
   throwError
-} from './@shared/index.node.mjs';
+} from './index.node.mjs';
 
 displayLogoCBJ();
 displayHeaderCBJ();
 
-displayInTheMiddle(`reinstall-dependencies.node.mjs version 2.1.0`);
+displayInTheMiddle(`dependencies.node.mjs version 3.0.0`);
 
 displayArguments(process.argv);
 
