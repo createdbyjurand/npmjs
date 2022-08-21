@@ -1,31 +1,40 @@
 import {
   deleteFolder,
   display,
+  displayArguments,
   displayError,
+  displayHeaderCBJ,
   displayInTheMiddle,
+  displayLogoCBJ,
+  getArgumentValueOrCrash,
   isPackageLockJsonCompatibleWithNodeVersion,
   node,
   run,
   throwError
 } from './@shared/index.node.mjs';
 
-displayInTheMiddle(`reinstall-dependencies.node.mjs version 2.0.1`);
+displayLogoCBJ();
+displayHeaderCBJ();
 
-process.chdir('../../');
-// run('dir /b');
+displayInTheMiddle(`reinstall-dependencies.node.mjs version 2.1.0`);
 
-run('node -v');
-run('npm -v');
-run('npm outdated');
+displayArguments(process.argv);
 
-deleteFolder('node_modules');
+const pathToAppPackageJson = getArgumentValueOrCrash(process.argv, 'path-to-app-package-json');
+
+process.chdir(pathToAppPackageJson);
+run('dir /b');
 
 if (!isPackageLockJsonCompatibleWithNodeVersion(node.version)) {
-  displayError('package-lock.json is not compatible with Node version', '[ FAILED ]');
-  throwError('package-lock.json is not compatible with Node version');
+  displayError('package-lock.json is not compatible with this Node version', '[ FAILED ]');
+  throwError('package-lock.json is not compatible with this Node version');
+} else {
+  run('node -v');
+  run('npm -v');
+  run('npm outdated');
+  deleteFolder('node_modules');
+  run('npm i --legacy-peer-deps');
+  run('npm outdated');
 }
-
-run('npm i --legacy-peer-deps');
-run('npm outdated');
 
 display('Script ended', '[  DONE  ]');

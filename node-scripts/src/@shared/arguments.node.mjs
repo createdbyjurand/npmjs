@@ -1,6 +1,7 @@
 import {display, displayInTheMiddle} from './display.node.mjs';
+import {throwError} from './error.node.mjs';
 
-displayInTheMiddle(`arguments.node.mjs version 1.0.0`);
+displayInTheMiddle(`arguments.node.mjs version 1.1.0`);
 
 export const displayArguments = processArgv => {
   displayInTheMiddle('process.argv START');
@@ -8,7 +9,14 @@ export const displayArguments = processArgv => {
   displayInTheMiddle('process.argv END');
 };
 
-export const argumentExists = (processArgv, argumentName) => processArgv.toString().includes(`--${argumentName}`);
+export const argumentExists = (processArgv, argumentName) =>
+  processArgv.some(element => element.match(new RegExp(`^--${argumentName}$`)));
+
+export const argumentWithValueExists = (processArgv, argumentName) =>
+  processArgv.some(element => new RegExp(`--${argumentName}=\S*`).test(element));
+
+export const argumentWithValueExistsOrCrash = (processArgv, argumentName) =>
+  argumentWithValueExists(processArgv, argumentName) || throwError(`Argument --${argumentName}=[value] is required`);
 
 export const argumentValueExists = (processArgv, argumentName) => processArgv.toString().includes(`--${argumentName}=`);
 
@@ -23,6 +31,10 @@ export const getArgumentValue = (processArgv, argumentName, defaultValue = '') =
   display(`getArgumentValue(${argumentName}) value=${value}`, `[   OK   ]`);
   return value.slice(argumentName.length + 3);
 };
+
+export const getArgumentValueOrCrash = (processArgv, argumentName) =>
+  argumentWithValueExistsOrCrash(processArgv, argumentName) &&
+  processArgv.find(element => new RegExp(`--${argumentName}=\S*`).test(element)).slice(argumentName.length + 3);
 
 export const parseDependenciesFromArgumentValue = (processArgv, argumentName, version = 'latest') =>
   getArgumentValue(processArgv, argumentName)
