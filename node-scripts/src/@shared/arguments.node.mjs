@@ -18,11 +18,6 @@ export const argumentWithValueExists = (processArgv, argumentName) =>
 export const argumentWithValueExistsOrCrash = (processArgv, argumentName) =>
   argumentWithValueExists(processArgv, argumentName) || throwError(`Argument --${argumentName}=[value] is required`);
 
-export const argumentValueExists = (processArgv, argumentName) => processArgv.toString().includes(`--${argumentName}=`);
-
-export const argumentValueIsNotEmpty = (processArgv, argumentName) =>
-  getArgumentValue(processArgv, argumentName) !== '' ? true : false;
-
 export const getArgumentValue = (processArgv, argumentName, defaultValue = '') => {
   display(`getArgumentValue(${argumentName})`, `[   OK   ]`);
   const regex = new RegExp(`--${argumentName}=`);

@@ -1,8 +1,9 @@
 __tests__
+.eslintrc.json
 .idea
-.vscode
 .prettierignore
 .prettierrc*
+.vscode
 git_ignore
 jest.config.mjs
 node_modules
