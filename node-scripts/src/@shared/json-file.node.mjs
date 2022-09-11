@@ -1,6 +1,8 @@
 import fs from 'fs';
 import {displayInTheMiddle} from './display.node.mjs';
 
+displayInTheMiddle(`json-file.node.mjs version  0.4.0`);
+
 export const readAndParseJsonFile = pathToJsonFile => JSON.parse(fs.readFileSync(pathToJsonFile, 'utf-8'));
 
 export const stringifyAndSaveJsonFile = (parsedJsonFile, pathToJsonFile) =>
@@ -11,4 +13,6 @@ export const stringifyAndSaveJsonFile = (parsedJsonFile, pathToJsonFile) =>
    */
   fs.writeFileSync(pathToJsonFile, JSON.stringify(parsedJsonFile, null, 2), 'utf-8');
 
-displayInTheMiddle(`json-file.node.mjs version  0.4.0`);
+export const parseJsonObjectIntoKeyArray = jsonObject => Object.keys(jsonObject);
+
+export const parseJsonObjectIntoValueArray = jsonObject => Object.values(jsonObject);

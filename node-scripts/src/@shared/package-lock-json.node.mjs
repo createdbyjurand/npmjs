@@ -1,6 +1,6 @@
 import {copyFileSync, readFileSync} from 'fs';
 import {deleteFile} from './delete.node.mjs';
-import {display, displayInTheMiddle} from './display.node.mjs';
+import {display, displayInTheMiddle, displayError} from './display.node.mjs';
 import {prefix} from './prefix.node.mjs';
 
 displayInTheMiddle(`package-lock-json.node.mjs version 1.1.0`);

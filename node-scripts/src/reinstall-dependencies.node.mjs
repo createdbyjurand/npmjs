@@ -2,20 +2,23 @@ import fs from 'fs';
 import {
   argumentExists,
   argumentWithValueExists,
-  argumentWithValueExistsOrCrash,
   deleteFile,
   deleteFolder,
   display,
   displayArguments,
-  displayError,
   displayHeaderCBJ,
   displayInTheMiddle,
   displayLogoCBJ,
+  getAllPackageJsonDependenciesAndDevDependenciesAsReadyToInstallList,
+  getAllPackageJsonDependenciesAndDevDependenciesAsReadyToInstallListExcept,
   getArgumentValue,
-  parseDependenciesFromArgumentValue,
-  removePrefixesFromDependenciesInPackageJson,
+  getArgumentValueOrCrash,
+  isPackageLockJsonCompatibleWithNodeVersion,
+  node,
+  parseDependenciesFromArgumentValueOrCrash,
+  removePrefixesFromAllDependenciesInPackageJson,
   run,
-  updateAllDependenciesFromPackageJsonExcept
+  throwError
 } from './@shared/index.node.mjs';
 
 displayLogoCBJ();
@@ -28,17 +31,17 @@ displayArguments(process.argv);
 const deleteNodeModules = argumentExists(process.argv, 'delete-node-modules');
 const deletePackageLockJson = argumentExists(process.argv, 'delete-package-lock-json');
 const legacyPeerDeps = argumentExists(process.argv, 'legacy-peer-deps') ? ' --legacy-peer-deps' : '';
-const npmCI = argumentExists(process.argv, 'npm-ci') ? ' ci' : ' i';
+const npmCI = argumentExists(process.argv, 'npm-ci');
 const packageLockJsonIsRequired = argumentExists(process.argv, 'package-lock-json-is-required');
 const removePrefixes = argumentExists(process.argv, 'remove-prefixes');
 const switchPathTo = argumentWithValueExists(process.argv, 'switch-path-to');
-const upgradeAllDependenciesToTheLatestVersion = argumentExists(
+const upgradeAllDependenciesAndDevDependenciesToTheLatestVersion = argumentExists(
   process.argv,
-  'upgrade-all-dependencies-to-the-latest-version'
+  'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version'
 );
-const upgradeAllDependenciesToTheLatestVersionExcept = argumentWithValueExists(
+const upgradeAllDependenciesAndDevDependenciesToTheLatestVersionExcept = argumentWithValueExists(
   process.argv,
-  'upgrade-all-dependencies-to-the-latest-version-except'
+  'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version-except'
 );
 const upgradeTheseDependenciesToTheLatestVersion = argumentWithValueExists(
   process.argv,
@@ -55,53 +58,52 @@ if (switchPathTo) {
   run('dir /b');
 }
 
-if (!isPackageLockJsonCompatibleWithNodeVersion(node.version)) {
-  displayError('package-lock.json is not compatible with this Node version', '[ FAILED ]');
-  throwError('package-lock.json is not compatible with this Node version');
-} else {
-  run('node -v');
-  run('npm -v');
-  run('npm outdated');
-  deleteFolder('node_modules');
-  run('npm i --legacy-peer-deps');
-  run('npm outdated');
+if (packageLockJsonIsRequired) {
+  !fs.existsSync('package-lock.json') && throwError('package-lock.json: File not found');
+  !isPackageLockJsonCompatibleWithNodeVersion(node.version) &&
+    throwError('package-lock.json is not compatible with this Node version');
 }
 
-if (!packageLockJsonIsRequired || (packageLockJsonIsRequired && fs.existsSync('package-lock.json'))) {
-  run('node -v');
-  run('npm -v');
-  run('npm outdated');
-  deletePackageLockJson && deleteFile('package-lock.json');
-  deleteNodeModules && deleteFolder('node_modules');
-  if (upgradeAllDependenciesToTheLatestVersion) {
-    console.log('TODO: upgradeAllDependenciesToTheLatestVersion');
-    run(`npm${npmCI}${legacyPeerDeps} ${parseDependenciesFromArgumentValue(getAll)}`);
-  } else if (upgradeAllDependenciesToTheLatestVersionExcept) {
-    console.log('TODO: upgradeAllDependenciesToTheLatestVersionExcept');
-    // updateAllDependenciesFromPackageJsonExcept(parseDependenciesFromArgumentValue(process.argv, 'skip-dependencies'));
-  } else {
-    upgradeTheseDependenciesToTheLatestVersion &&
-      run(
-        `npm${npmCI}${legacyPeerDeps} ${parseDependenciesFromArgumentValue(
-          process.argv,
-          'upgrade-these-dependencies-to-the-latest-version'
-        )}`
-      );
-    upgradeTheseDevDependenciesToTheLatestVersion &&
-      run(
-        `npm${npmCI}${legacyPeerDeps} --save-dev ${parseDependenciesFromArgumentValue(
-          process.argv,
-          'upgrade-these-dev-dependencies-to-the-latest-version'
-        )}`
-      );
-  }
-  run(`npm${npmCI}${legacyPeerDeps}`);
-  removePrefixes && removePrefixesFromDependenciesInPackageJson();
-  run('node -v');
-  run('npm -v');
-  run('npm outdated');
+run('node -v');
+run('npm -v');
+run('npm outdated');
+
+deletePackageLockJson && deleteFile('package-lock.json');
+deleteNodeModules && deleteFolder('node_modules');
+
+if (npmCI) {
+  run(`npm ci`);
+} else if (upgradeAllDependenciesAndDevDependenciesToTheLatestVersion) {
+  run(`npm i${legacyPeerDeps} ${getAllPackageJsonDependenciesAndDevDependenciesAsReadyToInstallList('package.json')}`);
+} else if (upgradeAllDependenciesAndDevDependenciesToTheLatestVersionExcept) {
+  run(
+    `npm i${legacyPeerDeps} ${getAllPackageJsonDependenciesAndDevDependenciesAsReadyToInstallListExcept(
+      'package.json',
+      getArgumentValueOrCrash(
+        process.argv,
+        'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version-except'
+      )
+    )}`
+  );
 } else {
-  displayError('package-lock.json: File not found', '[ FAILED ]');
+  upgradeTheseDependenciesToTheLatestVersion &&
+    run(
+      `npm i${legacyPeerDeps} ${parseDependenciesFromArgumentValueOrCrash(
+        process.argv,
+        'upgrade-these-dependencies-to-the-latest-version'
+      )}`
+    );
+  upgradeTheseDevDependenciesToTheLatestVersion &&
+    run(
+      `npm i${legacyPeerDeps} --save-dev ${parseDependenciesFromArgumentValueOrCrash(
+        process.argv,
+        'upgrade-these-dev-dependencies-to-the-latest-version'
+      )}`
+    );
+  run(`npm i${legacyPeerDeps}`);
 }
+
+removePrefixes && removePrefixesFromAllDependenciesInPackageJson('package.json');
+run('npm outdated');
 
 display('Script ended', '[  DONE  ]');

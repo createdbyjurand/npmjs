@@ -3,7 +3,7 @@ import {display, displayError, displayInTheMiddle} from './display.node.mjs';
 import {node} from './node.node.mjs';
 import {prefix} from './prefix.node.mjs';
 
-displayInTheMiddle(`delete.node.mjs version 1.1.1`);
+displayInTheMiddle(`delete.node.mjs version 1.1.2`);
 
 export const deleteFile = fileName => {
   display(`${prefix(fileName)} Deleting`, '[   OK   ]');
@@ -49,6 +49,8 @@ export const deleteFolder = folderName => {
   }
 };
 
+/*
+
 export const deleteFolderExcept = (folderName, except) => {
   display(folderName + ': Deleting', '[   OK   ]');
   if (fs.existsSync(folderName)) {
@@ -67,3 +69,5 @@ export const deleteFolderExcept = (folderName, except) => {
     displayError(folderName + ': Folder not found', '[ FAILED ]');
   }
 };
+
+*/

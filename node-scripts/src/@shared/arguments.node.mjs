@@ -9,14 +9,21 @@ export const displayArguments = processArgv => {
   displayInTheMiddle('process.argv END');
 };
 
+/////////////////////////// VERIFIERS ///////////////////////////
+
 export const argumentExists = (processArgv, argumentName) =>
   processArgv.some(element => element.match(new RegExp(`^--${argumentName}$`)));
 
+export const argumentExistsOrCrash = (processArgv, argumentName) =>
+  argumentExists(processArgv, argumentName) || throwError(`Argument --${argumentName} is required`);
+
 export const argumentWithValueExists = (processArgv, argumentName) =>
-  processArgv.some(element => new RegExp(`--${argumentName}=\S*`).test(element));
+  processArgv.some(element => new RegExp(`^--${argumentName}=\\S`).test(element));
 
 export const argumentWithValueExistsOrCrash = (processArgv, argumentName) =>
-  argumentWithValueExists(processArgv, argumentName) || throwError(`Argument --${argumentName}=[value] is required`);
+  argumentWithValueExists(processArgv, argumentName) || throwError(`Argument --${argumentName}=[value(s)] is required`);
+
+/////////////////////////// GETTERS ///////////////////////////
 
 export const getArgumentValue = (processArgv, argumentName, defaultValue = '') => {
   display(`getArgumentValue(${argumentName})`, `[   OK   ]`);
@@ -29,31 +36,21 @@ export const getArgumentValue = (processArgv, argumentName, defaultValue = '') =
 
 export const getArgumentValueOrCrash = (processArgv, argumentName) =>
   argumentWithValueExistsOrCrash(processArgv, argumentName) &&
-  processArgv.find(element => new RegExp(`--${argumentName}=\S*`).test(element)).slice(argumentName.length + 3);
+  processArgv.find(element => new RegExp(`--${argumentName}=\\S`).test(element)).slice(argumentName.length + 3);
 
-export const parseDependenciesFromArgumentValue = (processArgv, argumentName, version = 'latest') =>
-  getArgumentValue(processArgv, argumentName)
-    .split(',')
-    .map(dependency => `${dependency}@${version}`)
-    .join(' ');
+/////////////////////////// EXPERIMENTAL ///////////////////////////
 
-export const argumentExperimantal = {
-  applications: (() => {
-    const baseUrl = '/api/applications';
-
-    return {
-      baseUrl,
-      search: name => `${baseUrl}?search=${name}`,
-      details: id => `${baseUrl}/${id}`,
-      contacts: number => `${baseUrl}/${id}/contacts`,
-      pageWithSearch: (pageNumber, searchText) => `${baseUrl}?page=${pageNumber}&search=${searchText}`,
-      page: pageNumber => `${baseUrl}?page=${pageNumber}`
-    };
-  })(),
-  exists: (
-    () => (processArgv, argumentName) =>
-      processArgv.includes(`--${argumentName}`)
-  )(),
+export const argumentExperimental = {
+  exists: {
+    only: (
+      () => (processArgv, argumentName) =>
+        processArgv.includes(`--${argumentName}`)
+    )(),
+    orCrash: (
+      () => (processArgv, argumentName) =>
+        processArgv.includes(`--${argumentName}`)
+    )()
+  },
   value: {
     exists: (
       () => (processArgv, argumentName) =>

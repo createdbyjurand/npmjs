@@ -1,11 +1,53 @@
 import fs from 'fs';
+import {getArgumentValueOrCrash} from './arguments.node.mjs';
 import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
 displayInTheMiddle(`package-json.node.mjs version 1.2.1`);
 
-export const readPackageJsonVersion = pathToPackageJsonFile => readAndParseJsonFile(pathToPackageJsonFile).version;
+/////////////////////////// GETTERS ///////////////////////////
+
+export const getPackageJsonVersion = pathToPackageJsonFile => readAndParseJsonFile(pathToPackageJsonFile).version;
+
+export const getAllPackageJsonDependenciesNames = pathToPackageJsonFile =>
+  Object.keys(JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).dependencies);
+
+export const getAllPackageJsonDevDependenciesNames = pathToPackageJsonFile =>
+  Object.keys(JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies);
+
+export const getAllPackageJsonDependenciesAndDevDependenciesNames = pathToPackageJsonFile =>
+  Object.keys(
+    Object.assign(
+      {},
+      JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).dependencies,
+      JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies
+    )
+  );
+
+export const getAllPackageJsonDependenciesAndDevDependenciesAsReadyToInstallList = pathToPackageJsonFile =>
+  getAllPackageJsonDependenciesAndDevDependenciesNames(pathToPackageJsonFile)
+    .map(dependencyName => `${dependencyName}@latest`)
+    .join(' ');
+
+export const getAllPackageJsonDependenciesAndDevDependenciesAsReadyToInstallListExcept = (
+  pathToPackageJsonFile,
+  listOfDependenciesToOmit
+) =>
+  getAllPackageJsonDependenciesAndDevDependenciesNames(pathToPackageJsonFile)
+    .filter(dependencyName => !listOfDependenciesToOmit.some(elementToOmit => elementToOmit === dependencyName))
+    .map(dependencyName => `${dependencyName}@latest`)
+    .join(' ');
+
+/////////////////////////// PARSERS ///////////////////////////
+
+export const parseDependenciesFromArgumentValueOrCrash = (processArgv, argumentName, version = 'latest') =>
+  getArgumentValueOrCrash(processArgv, argumentName)
+    .split(',')
+    .map(dependencyName => `${dependencyName}@${version}`)
+    .join(' ');
+
+/////////////////////////// INSTALLERS ///////////////////////////
 
 export const installTheLatestVersionsOfDependencies = dependenciesNamesArray =>
   //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
@@ -72,7 +114,7 @@ export const updateAllDependenciesWithSemVerMinorPrefix = (dependenciesNamesArra
   //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
 };
 
-export const cleanupAllDependenciesVersions = (dependenciesNamesArrayToBeOmitted = []) => {
+export const removePrefixesFromAllDependenciesInPackageJson = (dependenciesNamesArrayToBeOmitted = []) => {
   let packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
   display('package.json: Reading File Synchronously', '[   OK   ]');
 
