@@ -21,10 +21,10 @@ import {
   throwError
 } from './@shared/index.node.mjs';
 
+displayInTheMiddle(`reinstall-dependencies.node.mjs version 0.4.0`);
+
 displayLogoCBJ();
 displayHeaderCBJ();
-
-displayInTheMiddle(`reinstall-dependencies.node.mjs version 0.4.0`);
 
 displayArguments(process.argv);
 
@@ -106,4 +106,4 @@ if (npmCI) {
 removePrefixes && removePrefixesFromAllDependenciesInPackageJson('package.json');
 run('npm outdated');
 
-display('Script ended', '[  DONE  ]');
+display('reinstall-dependencies.node.mjs script reached end', '[  DONE  ]');

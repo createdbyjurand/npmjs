@@ -1,6 +1,6 @@
 import {displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`time.node.js.js version 0.4.0`);
+displayInTheMiddle(`time.node.mjs version 0.4.0`);
 
 export const start = new Date().getTime();
 
