@@ -11,6 +11,5 @@ export * from './node.node.mjs';
 export * from './package-json.node.mjs';
 export * from './package-lock-json.node.mjs';
 export * from './prefix.node.mjs';
-export * from './release-version-number.node.mjs';
 export * from './run.node.mjs';
 export * from './time.node.mjs';

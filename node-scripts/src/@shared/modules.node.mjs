@@ -17,7 +17,9 @@ export const availableExtensions = {
   tsx: 'tsx',
 };
 
-export const rebuildModules = (pathToModulesRootDirectory, extension = 'mjs') => {
+export const rebuildModules = options => {
+  const extension = options.extension;
+  const pathToModulesRootDirectory = './';
   const directory = fs.readdirSync(pathToModulesRootDirectory);
   const indexFileContent = [];
 
@@ -25,18 +27,16 @@ export const rebuildModules = (pathToModulesRootDirectory, extension = 'mjs') =>
     const currentPath = pathToModulesRootDirectory.endsWith('/')
       ? `${pathToModulesRootDirectory.slice(0, -1)}/${element}`
       : `${pathToModulesRootDirectory}/${element}`;
+
     if (fs.lstatSync(currentPath).isDirectory()) {
       // recurse
       rebuildModules(currentPath);
     } else if (element === `index.${extension}`) {
       deleteFile(currentPath);
-      display(`[ ${currentPath} ] New content`, '[PREPARED]');
-    } else if (
-      element.endsWith('.cjs') ||
-      element.endsWith('.jsx') ||
-      element.endsWith('.mjs') ||
-      element.endsWith('.tsx')
-    ) {
+      display(`[ ${currentPath} ] Deleted`, '[   OK   ]');
+    } else if (element.endsWith('.cjs') || element.endsWith('.mjs')) {
+      indexFileContent.push(`export * from './${element}';`);
+    } else if (element.endsWith('.jsx') || element.endsWith('.tsx')) {
       indexFileContent.push(`export * from './${element.slice(0, -4)}';`);
     } else if (element.endsWith('.js') || element.endsWith('.ts')) {
       indexFileContent.push(`export * from './${element.slice(0, -3)}';`);
@@ -45,11 +45,12 @@ export const rebuildModules = (pathToModulesRootDirectory, extension = 'mjs') =>
 
   console.log(indexFileContent.join('\r\n'));
 
-  fs.writeFileSync(
-    pathToModulesRootDirectory.endsWith('/')
-      ? `${pathToModulesRootDirectory.slice(0, -1)}/index.${extension}`
-      : `${pathToModulesRootDirectory}/index.${extension}`,
-    indexFileContent.join('\r\n') + '\r\n',
-    {encoding: 'utf8'},
-  );
+  if (options.noRoot && pathToModulesRootDirectory !== './')
+    fs.writeFileSync(
+      pathToModulesRootDirectory.endsWith('/')
+        ? `${pathToModulesRootDirectory.slice(0, -1)}/index.${extension}`
+        : `${pathToModulesRootDirectory}/index.${extension}`,
+      indexFileContent.join('\r\n') + '\r\n',
+      {encoding: 'utf8'},
+    );
 };
