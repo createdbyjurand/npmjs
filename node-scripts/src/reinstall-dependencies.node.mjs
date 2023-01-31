@@ -18,7 +18,7 @@ import {
   parseDependenciesFromArgumentValueOrCrash,
   removePrefixesFromAllDependenciesInPackageJson,
   run,
-  throwError
+  throwError,
 } from './@shared/index.node.mjs';
 
 displayInTheMiddle(`reinstall-dependencies.node.mjs version 0.4.0`);
@@ -37,19 +37,19 @@ const removePrefixes = argumentExists(process.argv, 'remove-prefixes');
 const switchPathTo = argumentWithValueExists(process.argv, 'switch-path-to');
 const upgradeAllDependenciesAndDevDependenciesToTheLatestVersion = argumentExists(
   process.argv,
-  'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version'
+  'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version',
 );
 const upgradeAllDependenciesAndDevDependenciesToTheLatestVersionExcept = argumentWithValueExists(
   process.argv,
-  'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version-except'
+  'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version-except',
 );
 const upgradeTheseDependenciesToTheLatestVersion = argumentWithValueExists(
   process.argv,
-  'upgrade-these-dependencies-to-the-latest-version'
+  'upgrade-these-dependencies-to-the-latest-version',
 );
 const upgradeTheseDevDependenciesToTheLatestVersion = argumentWithValueExists(
   process.argv,
-  'upgrade-these-dev-dependencies-to-the-latest-version'
+  'upgrade-these-dev-dependencies-to-the-latest-version',
 );
 
 if (switchPathTo) {
@@ -81,24 +81,24 @@ if (npmCI) {
       'package.json',
       getArgumentValueOrCrash(
         process.argv,
-        'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version-except'
-      )
-    )}`
+        'upgrade-all-dependencies-and-dev-dependencies-to-the-latest-version-except',
+      ),
+    )}`,
   );
 } else {
   upgradeTheseDependenciesToTheLatestVersion &&
     run(
       `npm i${legacyPeerDeps} ${parseDependenciesFromArgumentValueOrCrash(
         process.argv,
-        'upgrade-these-dependencies-to-the-latest-version'
-      )}`
+        'upgrade-these-dependencies-to-the-latest-version',
+      )}`,
     );
   upgradeTheseDevDependenciesToTheLatestVersion &&
     run(
       `npm i${legacyPeerDeps} --save-dev ${parseDependenciesFromArgumentValueOrCrash(
         process.argv,
-        'upgrade-these-dev-dependencies-to-the-latest-version'
-      )}`
+        'upgrade-these-dev-dependencies-to-the-latest-version',
+      )}`,
     );
   run(`npm i${legacyPeerDeps}`);
 }

@@ -1,8 +1,8 @@
 import fs from 'fs';
-import {deleteFile} from './delete.node.mjs';
-import {display, displayInTheMiddle} from './display.node.mjs';
+import { deleteFile } from './delete.node.mjs';
+import { display, displayInTheMiddle } from './display.node.mjs';
 
-displayInTheMiddle(`modules.node.mjs version 3.0.0`);
+displayInTheMiddle(`modules.node.mjs version 4.0.0`);
 
 export const availableExtensions = {
   cjs: 'cjs',
@@ -18,19 +18,20 @@ export const availableExtensions = {
 };
 
 export const rebuildModules = options => {
-  const extension = options.extension;
-  const pathToModulesRootDirectory = './';
-  const directory = fs.readdirSync(pathToModulesRootDirectory);
+  const extension = options.extension ?? 'ts';
+  const noRoot = options.noRoot ?? false;
+  const path = options.path ?? './';
+  const directory = fs.readdirSync(path);
   const indexFileContent = [];
 
   directory.forEach(element => {
-    const currentPath = pathToModulesRootDirectory.endsWith('/')
-      ? `${pathToModulesRootDirectory.slice(0, -1)}/${element}`
-      : `${pathToModulesRootDirectory}/${element}`;
+    const currentPath = path.endsWith('/')
+      ? `${path}${element}`
+      : `${path}/${element}`;
 
     if (fs.lstatSync(currentPath).isDirectory()) {
       // recurse
-      rebuildModules(currentPath);
+      rebuildModules({ ...options, path: currentPath });
     } else if (element === `index.${extension}`) {
       deleteFile(currentPath);
       display(`[ ${currentPath} ] Deleted`, '[   OK   ]');
@@ -45,12 +46,12 @@ export const rebuildModules = options => {
 
   console.log(indexFileContent.join('\r\n'));
 
-  if (options.noRoot && pathToModulesRootDirectory !== './')
+  if (noRoot && path !== './')
     fs.writeFileSync(
-      pathToModulesRootDirectory.endsWith('/')
-        ? `${pathToModulesRootDirectory.slice(0, -1)}/index.${extension}`
-        : `${pathToModulesRootDirectory}/index.${extension}`,
+      path.endsWith('/')
+        ? `${path}index.${extension}`
+        : `${path}/index.${extension}`,
       indexFileContent.join('\r\n') + '\r\n',
-      {encoding: 'utf8'},
+      { encoding: 'utf8' },
     );
 };

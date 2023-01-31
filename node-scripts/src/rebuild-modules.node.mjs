@@ -20,6 +20,7 @@ run('dir /b');
 
 const extension = availableExtensions.node.mjs;
 const noRoot = false;
+
 const options = {extension, noRoot};
 
 argumentWithValueExists(process.argv, 'extension') && (options.extension = getArgumentValue(process.argv, 'extension'));
