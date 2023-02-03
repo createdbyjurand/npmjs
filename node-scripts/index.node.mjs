@@ -1,1 +1,1 @@
-export * from './src/@shared/index.node.mjs';
+export * from './@shared/index.node.mjs';

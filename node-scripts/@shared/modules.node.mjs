@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { deleteFile } from './delete.node.mjs';
-import { display, displayInTheMiddle } from './display.node.mjs';
+import {deleteFile} from './delete.node.mjs';
+import {display, displayInTheMiddle} from './display.node.mjs';
 
 displayInTheMiddle(`modules.node.mjs version 4.0.0`);
 
@@ -25,13 +25,11 @@ export const rebuildModules = options => {
   const indexFileContent = [];
 
   directory.forEach(element => {
-    const currentPath = path.endsWith('/')
-      ? `${path}${element}`
-      : `${path}/${element}`;
+    const currentPath = path.endsWith('/') ? `${path}${element}` : `${path}/${element}`;
 
     if (fs.lstatSync(currentPath).isDirectory()) {
       // recurse
-      rebuildModules({ ...options, path: currentPath });
+      rebuildModules({...options, path: currentPath});
     } else if (element === `index.${extension}`) {
       deleteFile(currentPath);
       display(`[ ${currentPath} ] Deleted`, '[   OK   ]');
@@ -45,13 +43,12 @@ export const rebuildModules = options => {
   });
 
   console.log(indexFileContent.join('\r\n'));
+  console.log('noRoot', noRoot);
 
-  if (noRoot && path !== './')
+  if ((noRoot && path !== './') || !noRoot)
     fs.writeFileSync(
-      path.endsWith('/')
-        ? `${path}index.${extension}`
-        : `${path}/index.${extension}`,
+      path.endsWith('/') ? `${path}index.${extension}` : `${path}/index.${extension}`,
       indexFileContent.join('\r\n') + '\r\n',
-      { encoding: 'utf8' },
+      {encoding: 'utf8'},
     );
 };

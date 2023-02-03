@@ -1,7 +1,9 @@
 {
     "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
     "bin": {
-        "@createdbyjurand/rebuild-module": "./bin/rebuild-modules.node.mjs"
+        "rebuild-modules@createdbyjurand": "./bin/rebuild-modules.node.mjs",
+        "reinstall-dependencies@createdbyjurand": "./bin/reinstall-dependencies.node.mjs",
+        "update-release-version-number@createdbyjurand": "./bin/update-release-version-number.node.mjs"
     },
     "description": "@createdbyjurand/node-scripts",
     "devDependencies": {
@@ -22,10 +24,11 @@
     "main": "index.node.mjs",
     "name": "@createdbyjurand/node-scripts",
     "scripts": {
-        "node::rebuild-modules": "node src/rebuild-modules.node.mjs --path=src --no-root",
-        "node::reinstall-dependencies": "node src/reinstall-dependencies.node.mjs",
-        "npm::install-dev-dependencies": "npm i --save-dev @prettier/plugin-xml@latest cross-env@latest eslint-config-prettier@latest eslint-plugin-jest@latest eslint-plugin-markdown@latest eslint-plugin-node@latest eslint@latest jest@latest prettier-plugin-java@latest prettier-plugin-properties@latest prettier-plugin-sh@latest prettier@latest",
-        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs"
+        "publish": "npm publish --access public",
+        "rebuild @shared module": "node bin/rebuild-modules.node.mjs --path=@shared",
+        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs",
+        "update dependencies": "npm i --save-dev @prettier/plugin-xml@latest cross-env@latest eslint-config-prettier@latest eslint-plugin-jest@latest eslint-plugin-markdown@latest eslint-plugin-node@latest eslint@latest jest@latest prettier-plugin-java@latest prettier-plugin-properties@latest prettier-plugin-sh@latest prettier@latest",
+        "update release version number": "node bin/update-release-version-number.node.mjs"
     },
-    "version": "0.5.0-SNAPSHOT"
+    "version": "0.5.3-SNAPSHOT"
 }
