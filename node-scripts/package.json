@@ -1,17 +1,20 @@
 {
     "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "bin": {
+        "@createdbyjurand/rebuild-module": "./bin/rebuild-modules.node.mjs"
+    },
     "description": "@createdbyjurand/node-scripts",
     "devDependencies": {
         "@prettier/plugin-xml": "^2.2.0",
         "cross-env": "^7.0.3",
-        "eslint": "^8.23.0",
-        "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-jest": "^27.0.1",
+        "eslint": "^8.33.0",
+        "eslint-config-prettier": "^8.6.0",
+        "eslint-plugin-jest": "^27.2.1",
         "eslint-plugin-markdown": "^3.0.0",
         "eslint-plugin-node": "^11.1.0",
-        "jest": "^29.0.2",
-        "prettier": "^2.7.1",
-        "prettier-plugin-java": "^1.6.2",
+        "jest": "^29.4.1",
+        "prettier": "^2.8.3",
+        "prettier-plugin-java": "^2.0.0",
         "prettier-plugin-properties": "^0.2.0",
         "prettier-plugin-sh": "^0.12.8"
     },
@@ -19,10 +22,10 @@
     "main": "index.node.mjs",
     "name": "@createdbyjurand/node-scripts",
     "scripts": {
-        "npm::install-dev-dependencies": "npm i --save-dev @prettier/plugin-xml@latest cross-env@latest eslint-config-prettier@latest eslint-plugin-jest@latest eslint-plugin-markdown@latest eslint-plugin-node@latest eslint@latest jest@latest prettier-plugin-java@latest prettier-plugin-properties@latest prettier-plugin-sh@latest prettier@latest",
         "node::rebuild-modules": "node src/rebuild-modules.node.mjs --path=src --no-root",
         "node::reinstall-dependencies": "node src/reinstall-dependencies.node.mjs",
+        "npm::install-dev-dependencies": "npm i --save-dev @prettier/plugin-xml@latest cross-env@latest eslint-config-prettier@latest eslint-plugin-jest@latest eslint-plugin-markdown@latest eslint-plugin-node@latest eslint@latest jest@latest prettier-plugin-java@latest prettier-plugin-properties@latest prettier-plugin-sh@latest prettier@latest",
         "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs"
     },
-    "version": "0.4.0-SNAPSHOT"
+    "version": "0.5.0-SNAPSHOT"
 }
