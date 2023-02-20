@@ -2,7 +2,7 @@ import fs from 'fs';
 import {deleteFile} from './delete.node.mjs';
 import {display, displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`modules.node.mjs version 4.1.0`);
+displayInTheMiddle(`modules.node.mjs version 4.2.0`);
 
 export const availableExtensions = {
   cjs: 'cjs',
@@ -28,8 +28,8 @@ export const rebuildModules = options => {
   directory.forEach(element => {
     const currentPath = path.endsWith('/') ? `${path}${element}` : `${path}/${element}`;
     const toPascalCase = str =>
-      (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join('');
-    const getFileName = e => e.split('.').splice(-1);
+      (String(str).match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join('');
+    const getFileName = e => e.split('.').slice(0, -1).join('');
     const getFileExtension = e => e.split('.').pop();
 
     if (fs.lstatSync(currentPath).isDirectory()) {
@@ -60,11 +60,26 @@ export const rebuildModules = options => {
 
   indexFileContent.sort((a, b) => {
     const A = a.split(' ')[0];
+    const AA = a.split(' ')[1];
     const B = b.split(' ')[0];
-    if (A === 'export' && B === 'import') return -1;
-    if (A === 'import' && B === 'export') return 1;
+    const BB = b.split(' ')[1];
+    if (A === 'import' && B === 'export') return -1;
+    if (A === 'export' && B === 'export' && AA === 'const' && BB === '*') return -1;
+    if (A === 'export' && B === 'import') return 1;
+    if (A === 'export' && B === 'export' && AA === '*' && BB === 'const') return 1;
     return 0;
   });
+
+  indexFileContent.splice(
+    indexFileContent.findIndex(e => e.split(' ')[0] === 'export'),
+    0,
+    '',
+  );
+  indexFileContent.splice(
+    indexFileContent.findLastIndex(e => e.split(' ')[1] === '*'),
+    0,
+    '',
+  );
 
   console.log(indexFileContent.join('\r\n'));
   console.log('noRoot', noRoot);
