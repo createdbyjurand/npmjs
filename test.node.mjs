@@ -1,10 +1,14 @@
 const directory = [
   'floating.ts',
-  'esfse-sefse.esfse.sef.json',
-  'grow.json',
+  // 'esfse-sefse.esfse.sef.json',
+  // 'grow.json',
+  'grow.json.ts',
+  // 'grow.json.tsx',
+  // 'grow.json.js',
+  // 'grow.json.jsx',
   'logo-cbj.svg',
-  'logo-ertggd.svg',
-  'lqweqwbj.svg',
+  // 'logo-ertggd.svg',
+  // 'lqweqwbj.svg',
 ];
 const indexFileContent = [];
 
@@ -45,16 +49,14 @@ indexFileContent.sort((a, b) => {
   return 0;
 });
 
-indexFileContent.splice(
-  indexFileContent.findIndex(e => e.split(' ')[0] === 'export'),
-  0,
-  '',
-);
-indexFileContent.splice(
-  indexFileContent.findLastIndex(e => e.split(' ')[1] === '*'),
-  0,
-  '',
-);
+const getImportIndex = arr => arr.findIndex(e => e.split(' ')[0] === 'import');
+const getConstIndex = arr => arr.findIndex(e => e.split(' ')[1] === 'const');
+const getStarIndex = arr => arr.findIndex(e => e.split(' ')[1] === '*');
+
+if (getImportIndex(indexFileContent) === 0) {
+  indexFileContent.splice(getConstIndex(indexFileContent), 0, '');
+  if (getStarIndex(indexFileContent) > 0) indexFileContent.splice(getStarIndex(indexFileContent), 0, '');
+}
 
 console.log(indexFileContent);
 console.log(indexFileContent.join('\r\n'));

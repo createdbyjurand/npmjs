@@ -70,16 +70,14 @@ export const rebuildModules = options => {
     return 0;
   });
 
-  indexFileContent.splice(
-    indexFileContent.findIndex(e => e.split(' ')[0] === 'export'),
-    0,
-    '',
-  );
-  indexFileContent.splice(
-    indexFileContent.findLastIndex(e => e.split(' ')[1] === '*'),
-    0,
-    '',
-  );
+  const getImportIndex = arr => arr.findIndex(e => e.split(' ')[0] === 'import');
+  const getConstIndex = arr => arr.findIndex(e => e.split(' ')[1] === 'const');
+  const getStarIndex = arr => arr.findIndex(e => e.split(' ')[1] === '*');
+
+  if (getImportIndex(indexFileContent) === 0) {
+    indexFileContent.splice(getConstIndex(indexFileContent), 0, '');
+    if (getStarIndex(indexFileContent) > 0) indexFileContent.splice(getStarIndex(indexFileContent), 0, '');
+  }
 
   console.log(indexFileContent.join('\r\n'));
   console.log('noRoot', noRoot);
