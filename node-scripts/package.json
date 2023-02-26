@@ -34,5 +34,5 @@
         "update dependencies": "npm i --save-dev @prettier/plugin-xml@latest cross-env@latest eslint-config-prettier@latest eslint-plugin-jest@latest eslint-plugin-markdown@latest eslint-plugin-node@latest eslint@latest jest@latest prettier-plugin-java@latest prettier-plugin-properties@latest prettier-plugin-sh@latest prettier@latest",
         "update release version number": "node bin/update-release-version-number.node.mjs"
     },
-    "version": "0.8.1-SNAPSHOT"
+    "version": "0.8.2-SNAPSHOT"
 }
