@@ -36,5 +36,5 @@ console.log('f', f);
 console.log('extensionsArray', extensionsArray);
 console.log('logMessage', logMessage);
 
-runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively(path, f, extensionsArray, logMessage);
+runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively('./', f, extensionsArray, logMessage);
 display('rebuild-modules.node.mjs script reached end', '[  DONE  ]');
