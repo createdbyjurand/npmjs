@@ -179,6 +179,11 @@ Script does not support:
 
 **Changelog**:
 
+**`0.8.6-SNAPSHOT`**
+
+- removed some console logs
+- added yellow color to console logs for directory
+
 **`0.8.5-SNAPSHOT`**
 
 - removed extensions support
