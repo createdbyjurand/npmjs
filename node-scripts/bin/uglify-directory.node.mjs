@@ -18,7 +18,6 @@ const uglifyjsOptions = process.argv.reduce((accumulator, currentValue) => {
   return accumulator;
 }, '');
 const f = path => `uglifyjs ${path} ${uglifyjsOptions} --output ${path}`;
-const extensionsArray = ['.js'];
 
 displayInTheMiddle('Directory change START');
 run('dir /b');
@@ -28,7 +27,6 @@ displayInTheMiddle('Directory change END');
 
 console.log('path:', path);
 console.log('uglifyjsOptions:', uglifyjsOptions);
-console.log('extensionsArray:', extensionsArray);
 
-runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively('./', f, extensionsArray);
+runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively('./', f, ['.js']);
 display('rebuild-modules.node.mjs script reached end', '[  DONE  ]');

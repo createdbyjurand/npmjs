@@ -1,8 +1,8 @@
 import fs from 'fs';
-import {display, displayInTheMiddle} from './display.node.mjs';
+import {displayInTheMiddle, displayWarning} from './display.node.mjs';
 import {run} from './run.node.mjs';
 
-displayInTheMiddle(`directories.node.mjs version 0.0.1`);
+displayInTheMiddle(`directories.node.mjs version 0.0.2`);
 
 export const runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively = (path, f, extensionsArray) => {
   const directory = fs.readdirSync(path);
@@ -17,7 +17,7 @@ export const runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively = (p
 
     if (fs.lstatSync(currentPath).isDirectory()) {
       // recurse
-      display(`[ ${currentPath} ] is directory (recurse)`, '[   OK   ]');
+      displayWarning(`[ ${currentPath} ] is directory (recurse)`, '[   OK   ]');
       runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively(currentPath, f, extensionsArray);
     } else if (foundExtension) {
       run(f(currentPath));
