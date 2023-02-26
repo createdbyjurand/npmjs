@@ -2,7 +2,6 @@
 
 import {
   display,
-  displayArguments,
   displayInTheMiddle,
   getArgumentValueOrCrash,
   run,
@@ -14,15 +13,12 @@ displayInTheMiddle(`uglify-directory.node.mjs version ${packageJson.version}`);
 
 const path = getArgumentValueOrCrash(process.argv, 'path');
 const uglifyjsOptions = process.argv.reduce((accumulator, currentValue) => {
-  if (currentValue.startsWith('--') && !currentValue.startsWith('--path=') && !currentValue.startsWith('--extensions='))
+  if (currentValue.startsWith('--') && !currentValue.startsWith('--path='))
     return accumulator === '' ? currentValue : `${accumulator} ${currentValue}`;
   return accumulator;
 }, '');
 const f = path => `uglifyjs ${path} ${uglifyjsOptions} --output ${path}`;
-const extensionsArray = getArgumentValueOrCrash(process.argv, 'extensions').split(',');
-const logMessage = 'Uglified';
-
-displayArguments(process.argv);
+const extensionsArray = ['.js'];
 
 displayInTheMiddle('Directory change START');
 run('dir /b');
@@ -30,11 +26,9 @@ process.chdir(path);
 run('dir /b');
 displayInTheMiddle('Directory change END');
 
-console.log('path', path);
-console.log('uglifyjsOptions', uglifyjsOptions);
-console.log('f', f);
-console.log('extensionsArray', extensionsArray);
-console.log('logMessage', logMessage);
+console.log('path:', path);
+console.log('uglifyjsOptions:', uglifyjsOptions);
+console.log('extensionsArray:', extensionsArray);
 
-runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively('./', f, extensionsArray, logMessage);
+runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively('./', f, extensionsArray);
 display('rebuild-modules.node.mjs script reached end', '[  DONE  ]');

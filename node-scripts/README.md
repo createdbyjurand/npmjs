@@ -59,21 +59,21 @@ Add script to `package.json`:
 
 _`--path=`_
 
-Path to module(s) directory from where the script was run.
+Path to module(s) directory.
 
 _`--no-root`_
 
-This can be set or not. If your root folder has no files, just subdirectories with modules, than you should add this to execution. It will not create empty index file in the root directory.
+This can be set or not. If your module root folder has no files, just subdirectories with submodules, than you should add this to execution. It will not create index file in the root directory where path is pointing.
 
 _`--extension=`_
 
-This sets the extension of index files in modules. Only those files will be deleted and recreated.
+This sets the extension of **index** files in modules. Only **index** files with specified extension will be removed and recreated.
 
 &nbsp;
 
 **Supported file extensions**:
 
-Those are file extensions that this script will include in index module file. Other files will bo omitted.
+Those are file extensions that this script will include in index module file. Other files will be omitted.
 
 - js
 - ts
@@ -146,7 +146,7 @@ Add script to `package.json`:
 ```json
 {
   "scripts": {
-    "uglify": "uglify-directory@createdbyjurand --path=dist --extensions=.js,.mjs,.cjs --compress --mangle --toplevel --v8"
+    "uglify": "uglify-directory@createdbyjurand --path=dist --compress --mangle --toplevel --v8"
   }
 }
 ```
@@ -158,24 +158,15 @@ Add script to `package.json`:
 | Parameter                                        | Required |
 | ------------------------------------------------ | -------- |
 | `--path=[PATH_TO_DIRECTORY_TO_BE_UGLIFIED]`      | yes      |
-| `--extensions=[EXTENSIONS_SEPARATED_BY_COMMA]`   | yes      |
 | `--[OTHER_ARGUMENTS_WILL_BE_PASSED_TO_UGLIFYJS]` | no       |
 
 _`--path=`_
 
-Path to module(s) directory from where the script was run.
-
-_`--extensions=`_
-
-Argument should be comma separated with no spaces: `.js,.mjs,.cjs,.node.js`.
-
-Script will `.split(',')` this string and use `uglifyjs` command for each file that will match `.endsWith(extension)`.
-
-Simple as that.
+Path to directory to be uglified.
 
 _`--[OTHER_ARGUMENTS]`_
 
-Any other argument that starts with `--` except `--path=` and `--extensions=` will be passed to uglifyjs command.
+Any other argument that starts with `--` except `--path=` will be passed to uglifyjs command.
 
 _Examples: `--compress --mangle --toplevel --v8`_
 
@@ -187,6 +178,10 @@ Script does not support:
 &nbsp;
 
 **Changelog**:
+
+**`0.8.5-SNAPSHOT`**
+
+- removed extensions support
 
 **`0.8.3-SNAPSHOT`**
 
