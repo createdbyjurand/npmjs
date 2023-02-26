@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 
-import {displayArguments, getArgumentValueOrCrash} from '../@shared/arguments.node.mjs';
-import {display, displayInTheMiddle} from '../@shared/display.node.mjs';
-import {run} from '../@shared/run.node.mjs';
-
+import {display, displayArguments, displayInTheMiddle, getArgumentValueOrCrash, run} from '../@shared';
 import packageJson from '../package.json' assert {type: 'json'};
 
 displayInTheMiddle(`uglify-directory.node.mjs version ${packageJson.version}`);

@@ -11,29 +11,16 @@ const getArgumentValue = (argumentName, defaultValue) => {
   return value.slice(argumentName.length + 3);
 };
 
-const build = getArgumentValue('build', 0); // CI/CD build number
+const build = getArgumentValue('build', 0);
 console.log(`[   OK   ] build=${build}`);
-const branch = getArgumentValue('branch', 'none'); // master || develop || none
+const branch = getArgumentValue('branch', 'other');
 console.log(`[   OK   ] branch=${branch}`);
 const release = getArgumentValue('release', 'minor'); // major || minor, any other value cancels release change
 console.log(`[   OK   ] release=${release}`);
 
-const fs = require('fs');
+import fs from 'fs';
 
 const access = {
-  none: {
-    'package.json': {
-      version: false,
-    },
-    'package-lock.json': {
-      version: false,
-    },
-    'release-version-number.json': {
-      version: false,
-      master: false,
-      develop: false,
-    },
-  },
   master: {
     'package.json': {
       version: false,
@@ -43,8 +30,7 @@ const access = {
     },
     'release-version-number.json': {
       version: false,
-      master: true,
-      develop: false,
+      date: false,
     },
   },
   develop: {
@@ -56,8 +42,19 @@ const access = {
     },
     'release-version-number.json': {
       version: true,
-      master: false,
-      develop: true,
+      date: true,
+    },
+  },
+  other: {
+    'package.json': {
+      version: false,
+    },
+    'package-lock.json': {
+      version: false,
+    },
+    'release-version-number.json': {
+      version: false,
+      date: false,
     },
   },
 };
@@ -115,36 +112,26 @@ if (
     console.log(`[   OK   ] getValueFromJsonFile(${jsonFileName}, ${jsonKey}) parse complete`);
     return parsedJsonFile[jsonKey];
   };
-
   const oldVersion = getValueFromJsonFile('release-version-number.json', 'version');
 
-  const newVersion = oldVersion
-    .split('.')
-    .map((value, index) => {
-      switch (index) {
-        case 0:
-          return release === 'major' ? +value + 1 : value;
-        case 1:
-          return release === 'minor' ? +value + 1 : value;
-        case 2:
-          return build;
-        default:
-          return value;
-      }
-    })
-    .join('.');
+  const newVersion = oldVersion.split('.').map((value, index) => {
+    switch (index) {
+      case 0:
+        return release === 'major' ? +value + 1 : value;
+      case 1:
+        return release === 'minor' ? +value + 1 : value;
+      case 2:
+        return build;
+      default:
+        return value;
+    }
+  }).join('.');
 
   if (verifyAccess('package.json', 'version')) updateJsonFile('package.json', 'version', newVersion);
   if (verifyAccess('package-lock.json', 'version')) updateJsonFile('package-lock.json', 'version', newVersion);
-  if (verifyAccess('release-version-number.json', 'version'))
-    updateJsonFile('release-version-number.json', 'version', newVersion);
+  if (verifyAccess('release-version-number.json', 'version')) updateJsonFile('release-version-number.json', 'version', newVersion);
 }
 
-const newDateToJSON = new Date().toJSON();
-
-if (verifyAccess('release-version-number.json', 'master'))
-  updateJsonFile('release-version-number.json', 'master', newDateToJSON);
-if (verifyAccess('release-version-number.json', 'develop'))
-  updateJsonFile('release-version-number.json', 'develop', newDateToJSON);
+if (verifyAccess('release-version-number.json', 'date')) updateJsonFile('release-version-number.json', 'date', (new Date()).toJSON());
 
 console.log(`[  DONE  ] update complete`);
