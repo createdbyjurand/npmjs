@@ -3,14 +3,12 @@
 import {
   argumentExists,
   argumentWithValueExists,
-  availableExtensions,
-  display,
-  displayInTheMiddle,
   getArgumentValue,
   getArgumentValueOrCrash,
-  rebuildModules,
-  run,
-} from '../@shared';
+} from '../@shared/arguments.node.mjs';
+import {display, displayInTheMiddle} from '../@shared/display.node.mjs';
+import {availableExtensions, rebuildModules} from '../@shared/modules.node.mjs';
+import {run} from '../@shared/run.node.mjs';
 import packageJson from '../package.json' assert {type: 'json'};
 
 displayInTheMiddle(`rebuild-modules.node.mjs version ${packageJson.version}`);

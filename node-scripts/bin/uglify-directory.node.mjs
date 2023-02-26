@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {display, displayArguments, displayInTheMiddle, getArgumentValueOrCrash, run} from '../@shared';
+import {display, displayArguments, displayInTheMiddle, getArgumentValueOrCrash, run} from '../@shared/index.node.mjs';
 import packageJson from '../package.json' assert {type: 'json'};
 
 displayInTheMiddle(`uglify-directory.node.mjs version ${packageJson.version}`);
@@ -12,7 +12,7 @@ const uglifyjsOptions = process.argv.reduce((accumulator, currentValue) => {
   return accumulator;
 }, '');
 const f = path => `uglifyjs ${path} ${uglifyjsOptions} --output ${path}`;
-const extensionsArray = getArgumentValueOrCrash(process.argv, 'extensions');
+const extensionsArray = getArgumentValueOrCrash(process.argv, 'extensions').split(',');
 const logMessage = 'Uglified';
 
 displayArguments(process.argv);
