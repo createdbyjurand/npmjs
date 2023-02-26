@@ -21,7 +21,7 @@ import {
   removePrefixesFromAllDependenciesInPackageJson,
   run,
   throwError,
-} from '../@shared';
+} from '../@shared/index.node.mjs';
 import packageJson from '../package.json' assert {type: 'json'};
 
 displayInTheMiddle(`reinstall-dependencies.node.mjs version ${packageJson.version}`);
