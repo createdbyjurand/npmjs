@@ -2,7 +2,7 @@ import fs from 'fs';
 import {deleteFile} from './delete.node.mjs';
 import {display, displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`modules.node.mjs version 4.2.0`);
+displayInTheMiddle(`modules.node.mjs version 4.3.0`);
 
 export const availableExtensions = {
   cjs: 'cjs',
@@ -82,7 +82,7 @@ export const rebuildModules = options => {
   console.log(indexFileContent.join('\r\n'));
   console.log('noRoot', noRoot);
 
-  if ((noRoot && path !== './') || !noRoot)
+  if (indexFileContent !== [] && (!noRoot || (noRoot && path !== './')))
     fs.writeFileSync(
       path.endsWith('/') ? `${path}index.${extension}` : `${path}/index.${extension}`,
       indexFileContent.join('\r\n') + '\r\n',
