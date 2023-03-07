@@ -2,7 +2,7 @@ import fs from 'fs';
 import {deleteFile} from './delete.node.mjs';
 import {display, displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`modules.node.mjs version 4.3.0`);
+displayInTheMiddle(`modules.node.mjs version 4.4.0`);
 
 export const availableExtensions = {
   cjs: 'cjs',
@@ -58,34 +58,36 @@ export const rebuildModules = options => {
     }
   });
 
-  indexFileContent.sort((a, b) => {
-    const A = a.split(' ')[0];
-    const AA = a.split(' ')[1];
-    const B = b.split(' ')[0];
-    const BB = b.split(' ')[1];
-    if (A === 'import' && B === 'export') return -1;
-    if (A === 'export' && B === 'export' && AA === 'const' && BB === '*') return -1;
-    if (A === 'export' && B === 'import') return 1;
-    if (A === 'export' && B === 'export' && AA === '*' && BB === 'const') return 1;
-    return 0;
-  });
+  if (indexFileContent !== []) {
+    indexFileContent.sort((a, b) => {
+      const A = a.split(' ')[0];
+      const AA = a.split(' ')[1];
+      const B = b.split(' ')[0];
+      const BB = b.split(' ')[1];
+      if (A === 'import' && B === 'export') return -1;
+      if (A === 'export' && B === 'export' && AA === 'const' && BB === '*') return -1;
+      if (A === 'export' && B === 'import') return 1;
+      if (A === 'export' && B === 'export' && AA === '*' && BB === 'const') return 1;
+      return 0;
+    });
 
-  const getImportIndex = arr => arr.findIndex(e => e.split(' ')[0] === 'import');
-  const getConstIndex = arr => arr.findIndex(e => e.split(' ')[1] === 'const');
-  const getStarIndex = arr => arr.findIndex(e => e.split(' ')[1] === '*');
+    const getImportIndex = arr => arr.findIndex(e => e.split(' ')[0] === 'import');
+    const getConstIndex = arr => arr.findIndex(e => e.split(' ')[1] === 'const');
+    const getStarIndex = arr => arr.findIndex(e => e.split(' ')[1] === '*');
 
-  if (getImportIndex(indexFileContent) === 0) {
-    indexFileContent.splice(getConstIndex(indexFileContent), 0, '');
-    if (getStarIndex(indexFileContent) > 0) indexFileContent.splice(getStarIndex(indexFileContent), 0, '');
+    if (getImportIndex(indexFileContent) === 0) {
+      indexFileContent.splice(getConstIndex(indexFileContent), 0, '');
+      if (getStarIndex(indexFileContent) > 0) indexFileContent.splice(getStarIndex(indexFileContent), 0, '');
+    }
+
+    console.log(indexFileContent.join('\r\n'));
+    console.log('noRoot', noRoot);
+
+    if (!noRoot || (noRoot && path !== './'))
+      fs.writeFileSync(
+        path.endsWith('/') ? `${path}index.${extension}` : `${path}/index.${extension}`,
+        indexFileContent.join('\r\n') + '\r\n',
+        {encoding: 'utf8'},
+      );
   }
-
-  console.log(indexFileContent.join('\r\n'));
-  console.log('noRoot', noRoot);
-
-  if (indexFileContent !== [] && (!noRoot || (noRoot && path !== './')))
-    fs.writeFileSync(
-      path.endsWith('/') ? `${path}index.${extension}` : `${path}/index.${extension}`,
-      indexFileContent.join('\r\n') + '\r\n',
-      {encoding: 'utf8'},
-    );
 };
