@@ -2,7 +2,7 @@ import fs from 'fs';
 import {deleteFile} from './delete.node.mjs';
 import {display, displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`modules.node.mjs version 4.4.0`);
+displayInTheMiddle(`modules.node.mjs version 4.4.1`);
 
 export const availableExtensions = {
   cjs: 'cjs',
@@ -58,7 +58,7 @@ export const rebuildModules = options => {
     }
   });
 
-  if (indexFileContent !== []) {
+  if (!indexFileContent.length) {
     indexFileContent.sort((a, b) => {
       const A = a.split(' ')[0];
       const AA = a.split(' ')[1];
