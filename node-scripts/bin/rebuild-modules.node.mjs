@@ -19,7 +19,7 @@ run('dir /b');
 process.chdir(path);
 run('dir /b');
 
-const extension = availableExtensions.node.mjs;
+const extension = availableExtensions.ts;
 const noRoot = false;
 
 const options = {extension, noRoot};
