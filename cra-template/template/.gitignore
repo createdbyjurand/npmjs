@@ -1,0 +1,8 @@
+.env
+.env.*
+.idea
+.vscode
+build
+dist
+git_ignore
+node_modules
