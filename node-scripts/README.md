@@ -63,7 +63,7 @@ Path to module(s) directory.
 
 _`--no-root`_
 
-This can be set or not. If your module root folder has no files, just subdirectories with submodules, than you should add this to execution. It will not create index file in the root directory where path is pointing.
+This can be set or not. It forces not to create index file in the root directory where path is pointing.
 
 _`--extension=`_
 
@@ -89,6 +89,12 @@ Those are file extensions that this script will include in index module file. Ot
 &nbsp;
 
 **Changelog**:
+
+**`0.8.11-SNAPSHOT`**
+
+- added: remove empty index files
+- added: do not create empty index files
+- info: `--no-root` still forces not to create index file for root directory even if there are files
 
 **`0.7.3-SNAPSHOT`**
 
