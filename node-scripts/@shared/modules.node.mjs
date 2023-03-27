@@ -2,7 +2,7 @@ import fs from 'fs';
 import {deleteFile} from './delete.node.mjs';
 import {display, displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`modules.node.mjs version 4.4.1`);
+displayInTheMiddle(`modules.node.mjs version 4.4.2`);
 
 export const availableExtensions = {
   cjs: 'cjs',
@@ -29,7 +29,8 @@ export const rebuildModules = options => {
     const currentPath = path.endsWith('/') ? `${path}${element}` : `${path}/${element}`;
     const toPascalCase = str =>
       (String(str).match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join('');
-    const getFileName = e => e.split('.').slice(0, -1).join('');
+    const getFileName = e => e.split('.').slice(0, -1).join('.');
+    const removeSpecialCharacters = str => str.replace(/[^a-zA-Z0-9]/g, '');
     const getFileExtension = e => e.split('.').pop();
 
     if (fs.lstatSync(currentPath).isDirectory()) {
@@ -38,6 +39,8 @@ export const rebuildModules = options => {
     } else if (element === `index.${extension}`) {
       deleteFile(currentPath);
       display(`[ ${currentPath} ] Deleted`, '[   OK   ]');
+    } else if (element.split('.').at(-2) === 'test') {
+      // skip test files
     } else if (element.endsWith('.cjs') || element.endsWith('.mjs')) {
       indexFileContent.push(`export * from './${element}';`);
     } else if (
@@ -58,7 +61,7 @@ export const rebuildModules = options => {
     }
   });
 
-  if (!indexFileContent.length) {
+  if (indexFileContent.length) {
     indexFileContent.sort((a, b) => {
       const A = a.split(' ')[0];
       const AA = a.split(' ')[1];
