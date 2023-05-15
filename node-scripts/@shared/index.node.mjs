@@ -1,5 +1,6 @@
 export * from './arguments.node.mjs';
 export * from './async.node.mjs';
+export * from './bash.node.mjs';
 export * from './date.node.mjs';
 export * from './delete.node.mjs';
 export * from './directories.node.mjs';

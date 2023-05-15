@@ -4,7 +4,7 @@ import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle(`package-json.node.mjs version 1.2.1`);
+displayInTheMiddle(`package-json.node.mjs version 1.3.0`);
 
 /////////////////////////// GETTERS ///////////////////////////
 
@@ -21,20 +21,54 @@ export const getAllPackageJsonDependenciesAndDevDependenciesNames = pathToPackag
     Object.assign(
       {},
       JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).dependencies,
-      JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies
-    )
+      JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies,
+    ),
   );
 
-export const getAllPackageJsonDependenciesAndDevDependenciesAsReadyToInstallList = pathToPackageJsonFile =>
+export const getAllPackageJsonDependenciesAndDevDependenciesAsLatestReadyToInstallList = pathToPackageJsonFile =>
   getAllPackageJsonDependenciesAndDevDependenciesNames(pathToPackageJsonFile)
     .map(dependencyName => `${dependencyName}@latest`)
     .join(' ');
 
-export const getAllPackageJsonDependenciesAndDevDependenciesAsReadyToInstallListExcept = (
+export const getAllPackageJsonDependenciesAsLatestReadyToInstallList = pathToPackageJsonFile =>
+  getAllPackageJsonDependenciesNames(pathToPackageJsonFile)
+    .map(dependencyName => `${dependencyName}@latest`)
+    .join(' ');
+
+export const getAllPackageJsonDevDependenciesAsLatestReadyToInstallList = pathToPackageJsonFile =>
+  getAllPackageJsonDevDependenciesNames(pathToPackageJsonFile)
+    .map(dependencyName => `${dependencyName}@latest`)
+    .join(' ');
+
+export const getAllPackageJsonDependenciesAndDevDependenciesAsLatestReadyToInstallListExcept = (
   pathToPackageJsonFile,
-  listOfDependenciesToOmit
+  listOfDependenciesToOmit,
 ) =>
   getAllPackageJsonDependenciesAndDevDependenciesNames(pathToPackageJsonFile)
+    .filter(dependencyName => !listOfDependenciesToOmit.some(elementToOmit => elementToOmit === dependencyName))
+    .map(dependencyName => `${dependencyName}@latest`)
+    .join(' ');
+
+export const getAllPackageJsonDependenciesAsLatestReadyToInstallListExcept = (
+  pathToPackageJsonFile,
+  listOfDependenciesToOmit,
+) =>
+  getAllPackageJsonDependenciesNames(pathToPackageJsonFile)
+    .filter(dependencyName => !listOfDependenciesToOmit.some(elementToOmit => elementToOmit === dependencyName))
+    .map(dependencyName => `${dependencyName}@latest`)
+    .join(' ');
+
+/**
+ *
+ * @param {*} pathToPackageJsonFile string
+ * @param {*} listOfDependenciesToOmit string[]
+ * @returns string
+ */
+export const getAllPackageJsonDevDependenciesAsLatestReadyToInstallListExcept = (
+  pathToPackageJsonFile,
+  listOfDependenciesToOmit,
+) =>
+  getAllPackageJsonDevDependenciesNames(pathToPackageJsonFile)
     .filter(dependencyName => !listOfDependenciesToOmit.some(elementToOmit => elementToOmit === dependencyName))
     .map(dependencyName => `${dependencyName}@latest`)
     .join(' ');
@@ -82,7 +116,7 @@ export const updateAllDependenciesToTheLatestWantedPatchVersion = (dependenciesN
   });
 
   // TODO: Not ready yet
-  return '';
+  // return '';
   return 'npm i --legacy-peer-deps' + patchReleases;
   //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
   //--save-exact
@@ -104,7 +138,7 @@ export const updateAllDependenciesWithSemVerMinorPrefix = (dependenciesNamesArra
       if (dependenciesAIO[key][0] === '^') {
         listOfDependenciesWithSemVerMinorPrefix += ` ${key}@${dependenciesAIO[key].slice(
           0,
-          dependenciesAIO[key].indexOf('.')
+          dependenciesAIO[key].indexOf('.'),
         )}`;
       }
     }
@@ -132,7 +166,7 @@ export const removePrefixesFromAllDependenciesInPackageJson = (dependenciesNames
       } else {
         console.log(`[   OK   ] ${dependenciesAIO[key]}`);
       }
-    }
+    },
   );
 
   /**

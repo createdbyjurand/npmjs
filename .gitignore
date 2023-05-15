@@ -1,6 +1,7 @@
 __tests__
 .eslintrc.json
 .idea
+.markdownlint.json
 .prettierignore
 .prettierrc*
 .vscode

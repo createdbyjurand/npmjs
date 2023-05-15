@@ -34,6 +34,12 @@ export const getArgumentValue = (processArgv, argumentName, defaultValue = '') =
   return value.slice(argumentName.length + 3);
 };
 
+/**
+ *
+ * @param {*} processArgv string[]
+ * @param {*} argumentName string
+ * @returns string
+ */
 export const getArgumentValueOrCrash = (processArgv, argumentName) =>
   argumentWithValueExistsOrCrash(processArgv, argumentName) &&
   processArgv.find(element => new RegExp(`--${argumentName}=\\S`).test(element)).slice(argumentName.length + 3);
@@ -49,16 +55,16 @@ export const argumentExperimental = {
     orCrash: (
       () => (processArgv, argumentName) =>
         processArgv.includes(`--${argumentName}`)
-    )()
+    )(),
   },
   value: {
     exists: (
       () => (processArgv, argumentName) =>
         processArgv.includes(`--${argumentName}=`)
     )(),
-    isNotEmpty: (processArgv, argumentName) => processArgv.includes(`--${argumentName}=`)
+    isNotEmpty: (processArgv, argumentName) => processArgv.includes(`--${argumentName}=`),
   },
   parse: {
-    asDependencies: () => ''
-  }
+    asDependencies: () => '',
+  },
 };

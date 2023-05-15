@@ -25,8 +25,11 @@ const COLOR = {
   bgBlue: '\x1b[44m',
   bgMagenta: '\x1b[45m',
   bgCyan: '\x1b[46m',
-  bgWhite: '\x1b[47m'
+  bgWhite: '\x1b[47m',
 };
+
+const reduceWidthForJestConsole = 4;
+const reduceWidthForSpaces = 2;
 
 const fill = (char, numberOfRepetitions, str = '') => {
   while (numberOfRepetitions > 0) {
@@ -39,43 +42,43 @@ const fill = (char, numberOfRepetitions, str = '') => {
 export const display = (left, right) => {
   left += '';
   right += '';
-  const dots = process.stdout.columns - left.length - 2 - right.length;
+  const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
   console.log(`${COLOR.fgGreen}${left}${COLOR.reset} ${fill('.', dots)} ${COLOR.fgGreen}${right}${COLOR.reset}`);
 };
 
 export const displayError = (left, right) => {
   left += '';
   right += '';
-  const dots = process.stdout.columns - left.length - 2 - right.length;
+  const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
   console.log(COLOR.fgRed + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
 };
 
 export const displayWarning = (left, right) => {
-  const dots = process.stdout.columns - left.length - 2 - right.length;
+  const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
   console.log(COLOR.fgYellow + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
 };
 
 export const displayInTheMiddle = centre => {
-  const half = (process.stdout.columns - centre.length - 2) / 2;
+  const half = (process.stdout.columns - reduceWidthForJestConsole - centre.length - reduceWidthForSpaces) / 2;
   console.log(
     COLOR.fgCyan + '%s' + COLOR.reset,
-    `${fill('-', Math.floor(half))} ${centre} ${fill('-', Math.ceil(half))}`
+    `${fill('-', Math.floor(half))} ${centre} ${fill('-', Math.ceil(half))}`,
   );
 };
 
 export const displayInTheMiddleWithVersion = centre =>
   displayInTheMiddle(
-    `${centre} version ${JSON.parse(fs.readFileSync('./release-version-number.json', 'utf-8')).version}`
+    `${centre} version ${JSON.parse(fs.readFileSync('./release-version-number.json', 'utf-8')).version}`,
   );
 
 export const displayHeaderCBJ = () =>
   console.log(
-    "   ____                      _           _ _            _                           _\r\n  / __ \\  ___ _ __ ___  __ _| |_ ___  __| | |__  _   _ (_)_   _ _ __ __ _ _ __   __| |\r\n / / _` |/ __| '__/ _ \\/ _` | __/ _ \\/ _` | '_ \\| | | || | | | | '__/ _` | '_ \\ / _` |\r\n| | (_| | (__| | |  __/ (_| | ||  __/ (_| | |_) | |_| || | |_| | | | (_| | | | | (_| |\r\n \\ \\__,_|\\___|_|  \\___|\\__,_|\\__\\___|\\__,_|_.__/ \\__, |/ |\\__,_|_|  \\__,_|_| |_|\\__,_|\r\n  \\____/                                         |___/__/"
+    "   ____                      _           _ _            _                           _\r\n  / __ \\  ___ _ __ ___  __ _| |_ ___  __| | |__  _   _ (_)_   _ _ __ __ _ _ __   __| |\r\n / / _` |/ __| '__/ _ \\/ _` | __/ _ \\/ _` | '_ \\| | | || | | | | '__/ _` | '_ \\ / _` |\r\n| | (_| | (__| | |  __/ (_| | ||  __/ (_| | |_) | |_| || | |_| | | | (_| | | | | (_| |\r\n \\ \\__,_|\\___|_|  \\___|\\__,_|\\__\\___|\\__,_|_.__/ \\__, |/ |\\__,_|_|  \\__,_|_| |_|\\__,_|\r\n  \\____/                                         |___/__/",
   );
 
 export const displayLogoCBJ = () =>
   console.log(
-    '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  \r\n   @@@@@@@                 @@@@                 @@@                @@@@@@@   \r\n    @@@@@@@                  @@@       @@@       @@@@             @@@@@@@    \r\n      @@@@@@@@@@@@@@@@@       @@@@      @@@@       @@@@@@       @@@@@@@      \r\n       @@@@@@@@@@@@@@@@@@      @@@@       @@@       @@@@       @@@@@@@       \r\n         @@@@@@@@@@@@@@@@@       @@@       @@@@              @@@@@@@         \r\n          @@@@@@@@@@@@@@@@@       @@@@       @@@            @@@@@@@          \r\n            @@@@@@@@@@@@@@@@@       @@@       @@@@        @@@@@@@            \r\n             @@@@@@@@@@@@@@@@@       @@@@       @@@      @@@@@@@             \r\n              @@@@@@@@@@@@@@@@@@       @@@       @@@@  @@@@@@@               \r\n                @@@@@@@@@@@@@@@@@       @@@@       @@@@@@@@@@                \r\n                 @@@@@@@@@@@@@@@@@@       @@@       @@@@@@@                  \r\n                   @@@@@@@       @@@       @@@@    @@@@@@@                   \r\n                    @@@@@@@       @@@@       @@@  @@@@@@@                    \r\n                      @@@@@@@       @@@       @@@@@@@@@                      \r\n                       @@@@@@@       @@@       @@@@@@@                       \r\n                         @@@@@@@             @@@@@@@                         \r\n                          @@@@@@@           @@@@@@@                          \r\n                            @@@@@@@       @@@@@@@                            \r\n                             @@@@@@@     @@@@@@@                             \r\n                              @@@@@@@  @@@@@@@                               \r\n                                @@@@@@@@@@@@@                                \r\n                                 @@@@@@@@@@@                                 \r\n                                   @@@@@@@                                   \r\n                                    @@@@@                                    \r\n                                      @                                      '
+    '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  \r\n   @@@@@@@                 @@@@                 @@@                @@@@@@@   \r\n    @@@@@@@                  @@@       @@@       @@@@             @@@@@@@    \r\n      @@@@@@@@@@@@@@@@@       @@@@      @@@@       @@@@@@       @@@@@@@      \r\n       @@@@@@@@@@@@@@@@@@      @@@@       @@@       @@@@       @@@@@@@       \r\n         @@@@@@@@@@@@@@@@@       @@@       @@@@              @@@@@@@         \r\n          @@@@@@@@@@@@@@@@@       @@@@       @@@            @@@@@@@          \r\n            @@@@@@@@@@@@@@@@@       @@@       @@@@        @@@@@@@            \r\n             @@@@@@@@@@@@@@@@@       @@@@       @@@      @@@@@@@             \r\n              @@@@@@@@@@@@@@@@@@       @@@       @@@@  @@@@@@@               \r\n                @@@@@@@@@@@@@@@@@       @@@@       @@@@@@@@@@                \r\n                 @@@@@@@@@@@@@@@@@@       @@@       @@@@@@@                  \r\n                   @@@@@@@       @@@       @@@@    @@@@@@@                   \r\n                    @@@@@@@       @@@@       @@@  @@@@@@@                    \r\n                      @@@@@@@       @@@       @@@@@@@@@                      \r\n                       @@@@@@@       @@@       @@@@@@@                       \r\n                         @@@@@@@             @@@@@@@                         \r\n                          @@@@@@@           @@@@@@@                          \r\n                            @@@@@@@       @@@@@@@                            \r\n                             @@@@@@@     @@@@@@@                             \r\n                              @@@@@@@  @@@@@@@                               \r\n                                @@@@@@@@@@@@@                                \r\n                                 @@@@@@@@@@@                                 \r\n                                   @@@@@@@                                   \r\n                                    @@@@@                                    \r\n                                      @                                      ',
   );
 
-displayInTheMiddle(`display.node.mjs version 1.0.3`);
+displayInTheMiddle(`display.node.mjs version 2.0.0`);
