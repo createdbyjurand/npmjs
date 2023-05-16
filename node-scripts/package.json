@@ -4,6 +4,7 @@
         "rebuild-modules@createdbyjurand": "./bin/rebuild-modules.node.mjs",
         "reinstall-dependencies@createdbyjurand": "./bin/reinstall-dependencies.node.mjs",
         "uglify-directory@createdbyjurand": "./bin/uglify-directory.node.mjs",
+        "update-dependencies@createdbyjurand": "./bin/update-dependencies.node.mjs",
         "update-release-version-number@createdbyjurand": "./bin/update-release-version-number.node.mjs"
     },
     "description": "@createdbyjurand/node-scripts",
@@ -38,5 +39,5 @@
         "update": "npm i --save-dev @babel/eslint-parser@latest @babel/plugin-syntax-import-assertions@latest @prettier/plugin-xml@latest cross-env@latest eslint@latest eslint-config-prettier@latest eslint-plugin-jest@latest eslint-plugin-markdown@latest eslint-plugin-node@latest jest@latest prettier@latest prettier-plugin-java@latest prettier-plugin-properties@latest prettier-plugin-sh@latest rewire@latest",
         "update release version number": "node bin/update-release-version-number.node.mjs"
     },
-    "version": "0.9.0-SNAPSHOT"
+    "version": "0.9.1-SNAPSHOT"
 }
