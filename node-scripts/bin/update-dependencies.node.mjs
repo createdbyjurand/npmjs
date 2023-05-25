@@ -105,4 +105,5 @@ if (devDependenciesToInstall !== '') run(`npm i${legacyPeerDeps} -D ${devDepende
 removePrefixes && removePrefixesFromAllDependenciesInPackageJson('package.json');
 run('npm outdated');
 
+display('');
 display('reinstall-dependencies.node.mjs script reached end', '[  DONE  ]');

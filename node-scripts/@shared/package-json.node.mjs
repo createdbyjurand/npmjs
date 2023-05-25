@@ -4,7 +4,7 @@ import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle(`package-json.node.mjs version 2.0.1`);
+displayInTheMiddle(`package-json.node.mjs version 2.0.2`);
 
 /////////////////////////// VALIDATORS ///////////////////////////
 
@@ -234,8 +234,7 @@ export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJson
 
   if (parsedPackageJsonFile.dependencies) {
     display('│');
-    display('├ Removing prefixes from dependencies');
-    display('│');
+    display('├ Removing prefixes from dependencies...');
     Object.keys(parsedPackageJsonFile.dependencies).map(dependencyName => {
       if (
         parsedPackageJsonFile.dependencies[dependencyName][0] === '~' ||
@@ -251,12 +250,12 @@ export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJson
         display(`├ [ [   OK   ] ${dependencyName}: ${parsedPackageJsonFile.dependencies[dependencyName]}`);
       }
     });
+    display('├ Removed prefixes from dependencies', '[   OK   ]');
   }
 
   if (parsedPackageJsonFile.devDependencies) {
     display('│');
-    display('├ Removing prefixes from devDependencies');
-    display('│');
+    display('├ Removing prefixes from devDependencies...');
     Object.keys(parsedPackageJsonFile.devDependencies).map(dependencyName => {
       if (
         parsedPackageJsonFile.devDependencies[dependencyName][0] === '~' ||
@@ -272,16 +271,17 @@ export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJson
         display(`├ [   OK   ] ${dependencyName}: ${parsedPackageJsonFile.devDependencies[dependencyName]}`);
       }
     });
+    display('├ Removed prefixes from devDependencies', '[   OK   ]');
   }
 
   /**
-   * JSON.stringify(parsedReleaseVersionNumberJson, null, 2);
+   * JSON.stringify(parsedReleaseVersionNumberJson, null, 4);
    * @param null - represents the replacer function. (in this case we don't want to alter the process)
-   * @param 2 - represents the spaces to indent.
+   * @param 4 - represents the spaces to indent.
    */
   display('│');
   display('├ Stringifying package.json data...');
-  packageJsonFile = JSON.stringify(parsedPackageJsonFile, null, 2);
+  packageJsonFile = JSON.stringify(parsedPackageJsonFile, null, 4);
   display('├ Stringifying finished', '[   OK   ]');
   display('│');
   display('├ Adding empty line at the end of file...');

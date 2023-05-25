@@ -31,4 +31,5 @@ console.log(options);
 
 rebuildModules(options);
 
+display('');
 display('rebuild-modules.node.mjs script reached end', '[  DONE  ]');
