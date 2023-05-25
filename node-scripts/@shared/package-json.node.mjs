@@ -4,7 +4,7 @@ import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle(`package-json.node.mjs version 2.0.0`);
+displayInTheMiddle(`package-json.node.mjs version 2.0.1`);
 
 /////////////////////////// VALIDATORS ///////////////////////////
 
@@ -234,6 +234,8 @@ export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJson
 
   if (parsedPackageJsonFile.dependencies) {
     display('│');
+    display('├ Removing prefixes from dependencies');
+    display('│');
     Object.keys(parsedPackageJsonFile.dependencies).map(dependencyName => {
       if (
         parsedPackageJsonFile.dependencies[dependencyName][0] === '~' ||
@@ -252,6 +254,8 @@ export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJson
   }
 
   if (parsedPackageJsonFile.devDependencies) {
+    display('│');
+    display('├ Removing prefixes from devDependencies');
     display('│');
     Object.keys(parsedPackageJsonFile.devDependencies).map(dependencyName => {
       if (

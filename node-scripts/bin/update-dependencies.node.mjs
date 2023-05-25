@@ -99,7 +99,7 @@ if (overwrite) {
   }
 }
 
-if (dependenciesToInstall !== '') run(`npm i${legacyPeerDeps} ${dependenciesToInstall}`);
+if (dependenciesToInstall !== '') run(`npm i${legacyPeerDeps} -S ${dependenciesToInstall}`);
 if (devDependenciesToInstall !== '') run(`npm i${legacyPeerDeps} -D ${devDependenciesToInstall}`);
 
 removePrefixes && removePrefixesFromAllDependenciesInPackageJson('package.json');
