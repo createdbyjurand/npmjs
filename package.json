@@ -1,35 +1,35 @@
 {
-  "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
-  "description": "@createdbyjurand",
-  "devDependencies": {
-    "@babel/eslint-parser": "7.21.8",
-    "@babel/plugin-syntax-import-assertions": "7.20.0",
-    "@prettier/plugin-xml": "2.2.0",
-    "cross-env": "7.0.3",
-    "eslint": "8.41.0",
-    "eslint-config-prettier": "8.8.0",
-    "eslint-plugin-jest": "27.2.1",
-    "eslint-plugin-markdown": "3.0.0",
-    "eslint-plugin-node": "11.1.0",
-    "jest": "29.5.0",
-    "prettier": "2.8.8",
-    "prettier-plugin-java": "2.1.0",
-    "prettier-plugin-properties": "0.2.0",
-    "prettier-plugin-sh": "0.12.8",
-    "rewire": "6.0.0"
-  },
-  "license": "ISC",
-  "name": "@createdbyjurand",
-  "scripts": {
-    "cra-template : create": "cd cra-template && npx create-react-app template --template typescript",
-    "cra-template : outdated": "cd cra-template/template && npm outdated && ls -1",
-    "cra-template : publish": "cd cra-template && npm publish --access public",
-    "node-scripts : publish": "cd node-scripts && npm publish --access public",
-    "node-scripts : rebuild @shared module": "node node-scripts/bin/rebuild-modules.node.mjs --path=node-scripts/@shared --extension=node.mjs",
-    "node-scripts : update release version number": "node node-scripts/bin/update-release-version-number.node.mjs",
-    "outdated": "npm outdated",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs",
-    "update-dependencies@createdbyjurand  --all --remove-prefixes": "node node-scripts/bin/update-dependencies.node.mjs --all --remove-prefixes"
-  },
-  "version": "0.0.0-SNAPSHOT"
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "description": "@createdbyjurand",
+    "devDependencies": {
+        "@babel/eslint-parser": "7.21.8",
+        "@babel/plugin-syntax-import-assertions": "7.20.0",
+        "@prettier/plugin-xml": "2.2.0",
+        "cross-env": "7.0.3",
+        "eslint": "8.41.0",
+        "eslint-config-prettier": "8.8.0",
+        "eslint-plugin-jest": "27.2.1",
+        "eslint-plugin-markdown": "3.0.0",
+        "eslint-plugin-node": "11.1.0",
+        "jest": "29.5.0",
+        "prettier": "2.8.8",
+        "prettier-plugin-java": "2.1.0",
+        "prettier-plugin-properties": "0.2.0",
+        "prettier-plugin-sh": "0.12.8",
+        "rewire": "6.0.0"
+    },
+    "license": "ISC",
+    "name": "@createdbyjurand",
+    "scripts": {
+        "cra-template : create": "cd cra-template && npx create-react-app template --template typescript",
+        "cra-template : outdated": "cd cra-template/template && npm outdated && ls -1",
+        "cra-template : publish": "cd cra-template && npm publish --access public",
+        "node-scripts : publish": "cd node-scripts && npm publish --access public",
+        "node-scripts : rebuild @shared module": "node node-scripts/bin/rebuild-modules.node.mjs --path=node-scripts/@shared --extension=node.mjs",
+        "node-scripts : update release version number": "node node-scripts/bin/update-release-version-number.node.mjs",
+        "outdated": "npm outdated",
+        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.mjs",
+        "update-dependencies@createdbyjurand  --all --remove-prefixes": "node node-scripts/bin/update-dependencies.node.mjs --all --remove-prefixes"
+    },
+    "version": "0.0.0-SNAPSHOT"
 }
