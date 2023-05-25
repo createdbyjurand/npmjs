@@ -6,12 +6,18 @@
 
 ## creating scoped packages
 
-`npm init --scope=@createdbyjurand`
+```bash
+npm init --scope=@createdbyjurand
+```
 
 &nbsp;
 
 ## publishing scoped packages
 
-`npm adduser`
+```bash
+npm adduser
+```
 
-`npm publish --access public`
+```bash
+npm publish --access public
+```

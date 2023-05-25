@@ -4,24 +4,32 @@ import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle(`package-json.node.mjs version 1.3.0`);
+displayInTheMiddle(`package-json.node.mjs version 2.0.0`);
+
+/////////////////////////// VALIDATORS ///////////////////////////
+
+export const packageJsonDependenciesExist = pathToPackageJsonFile =>
+  Object.hasOwn(JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')), 'dependencies');
+
+export const packageJsonDevDependenciesExist = pathToPackageJsonFile =>
+  Object.hasOwn(JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')), 'devDependencies');
 
 /////////////////////////// GETTERS ///////////////////////////
 
 export const getPackageJsonVersion = pathToPackageJsonFile => readAndParseJsonFile(pathToPackageJsonFile).version;
 
 export const getAllPackageJsonDependenciesNames = pathToPackageJsonFile =>
-  Object.keys(JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).dependencies);
+  Object.keys(JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).dependencies ?? {});
 
 export const getAllPackageJsonDevDependenciesNames = pathToPackageJsonFile =>
-  Object.keys(JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies);
+  Object.keys(JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies ?? {});
 
 export const getAllPackageJsonDependenciesAndDevDependenciesNames = pathToPackageJsonFile =>
   Object.keys(
     Object.assign(
       {},
-      JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).dependencies,
-      JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies,
+      JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).dependencies ?? {},
+      JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies ?? {},
     ),
   );
 
@@ -49,6 +57,11 @@ export const getAllPackageJsonDependenciesAndDevDependenciesAsLatestReadyToInsta
     .map(dependencyName => `${dependencyName}@latest`)
     .join(' ');
 
+/**
+ * @param {*} pathToPackageJsonFile string
+ * @param {*} listOfDependenciesToOmit string[]
+ * @returns string
+ */
 export const getAllPackageJsonDependenciesAsLatestReadyToInstallListExcept = (
   pathToPackageJsonFile,
   listOfDependenciesToOmit,
@@ -59,7 +72,6 @@ export const getAllPackageJsonDependenciesAsLatestReadyToInstallListExcept = (
     .join(' ');
 
 /**
- *
  * @param {*} pathToPackageJsonFile string
  * @param {*} listOfDependenciesToOmit string[]
  * @returns string
@@ -80,6 +92,50 @@ export const parseDependenciesFromArgumentValueOrCrash = (processArgv, argumentN
     .split(',')
     .map(dependencyName => `${dependencyName}@${version}`)
     .join(' ');
+
+/**
+ *   ┌ ─ ┬ ─ ┐
+ *
+ *   │   │   │
+ *
+ *   ├ ─ ┼ ─ ┤
+ *
+ *   │   │   │
+ *
+ *   └ ─ ┴ ─ ┘
+ *
+ * @param {*} dependencies string[]
+ * @param {*} dependenciesToOverwrite string[]
+ * @returns string
+ */
+export const overwriteDependencyVersions = (dependencies, dependenciesToOverwrite, title = 'dependencies') => {
+  display('');
+  display(`┌─── Overwriting ${title}`);
+  display('│');
+
+  const overwrittenDependencies = dependencies
+    .map(dependency => {
+      const dependencyName = dependency[0] === '@' ? `@${dependency.split('@')[1]}` : dependency.split('@')[0];
+      for (let dependencyToOverwrite of dependenciesToOverwrite) {
+        const dependencyNameToOverwrite =
+          dependencyToOverwrite[0] === '@'
+            ? `@${dependencyToOverwrite.split('@')[1]}`
+            : dependencyToOverwrite.split('@')[0];
+        if (dependencyName === dependencyNameToOverwrite) {
+          display(`├ [ FIXED ] ${dependency} ->  ${dependencyToOverwrite}`);
+          return dependencyToOverwrite;
+        }
+      }
+      display(`├ [SKIPPED] ${dependencyName}`);
+      return dependency;
+    })
+    .join(' ');
+
+  display('│');
+  display('└─── Finished');
+  display('');
+  return overwrittenDependencies;
+};
 
 /////////////////////////// INSTALLERS ///////////////////////////
 
@@ -122,12 +178,14 @@ export const updateAllDependenciesToTheLatestWantedPatchVersion = (dependenciesN
   //--save-exact
 };
 
-export const updateAllDependenciesWithSemVerMinorPrefix = (dependenciesNamesArrayToBeOmitted = []) => {
-  const packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
-  display('package.json: Reading File Synchronously', '[   OK   ]');
-
-  const parsedPackageJsonFile = JSON.parse(packageJsonFile);
-  display('package.json: Parsing', '[   OK   ]');
+export const updateAllDependenciesWithSemVerMinorPrefix = (
+  pathToPackageJsonFile,
+  dependenciesNamesArrayToBeOmitted = [],
+) => {
+  const parsedPackageJsonFile = JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8'));
+  const allDependencyNames = Object.keys(
+    Object.assign({}, parsedPackageJsonFile.dependencies ?? {}, parsedPackageJsonFile.devDependencies ?? {}),
+  );
 
   let listOfDependenciesWithSemVerMinorPrefix = '';
 
@@ -148,41 +206,88 @@ export const updateAllDependenciesWithSemVerMinorPrefix = (dependenciesNamesArra
   //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
 };
 
-export const removePrefixesFromAllDependenciesInPackageJson = (dependenciesNamesArrayToBeOmitted = []) => {
-  let packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
-  display('package.json: Reading File Synchronously', '[   OK   ]');
+/**
+ *   ┌ ─ ┬ ─ ┐
+ *
+ *   │   │   │
+ *
+ *   ├ ─ ┼ ─ ┤
+ *
+ *   │   │   │
+ *
+ *   └ ─ ┴ ─ ┘
+ *
+ * @param {*} pathToPackageJsonFile
+ * @param {*} except
+ */
+export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJsonFile, except = []) => {
+  display('');
+  display('┌─── Removing prefixes');
+  display('│');
+  display('├ Reading package.json file...');
+  let packageJsonFile = fs.readFileSync(pathToPackageJsonFile, 'utf-8');
+  display('├ Reading finished', '[   OK   ]');
+  display('│');
+  display('├ Parsing package.json file...');
+  const parsedPackageJsonFile = JSON.parse(packageJsonFile);
+  display('├ Parsing finished', '[   OK   ]');
 
-  let parsedPackageJsonFile = JSON.parse(packageJsonFile);
-  display('package.json: Parsing', '[   OK   ]');
-
-  let listOfDependenciesToUpdate = '';
-
-  Object.keys(Object.assign({}, parsedPackageJsonFile.dependencies, parsedPackageJsonFile.devDependencies)).map(
-    (key, index, dependenciesAIO) => {
-      if (dependenciesAIO[key][0] === '~' || dependenciesAIO[key][0] === '^') {
-        let prefix = dependencies[key][0];
-        dependenciesAIO[key] = dependenciesAIO[key].slice(1);
-        console.log(`[ FIXING ] ${prefix}${dependenciesAIO[key]} -> ${dependenciesAIO[key]}`);
+  if (parsedPackageJsonFile.dependencies) {
+    display('│');
+    Object.keys(parsedPackageJsonFile.dependencies).map(dependencyName => {
+      if (
+        parsedPackageJsonFile.dependencies[dependencyName][0] === '~' ||
+        parsedPackageJsonFile.dependencies[dependencyName][0] === '^'
+      ) {
+        const prefix = parsedPackageJsonFile.dependencies[dependencyName][0];
+        parsedPackageJsonFile.dependencies[dependencyName] =
+          parsedPackageJsonFile.dependencies[dependencyName].slice(1);
+        display(
+          `├ [ FIXING ] ${dependencyName}: ${prefix}${parsedPackageJsonFile.dependencies[dependencyName]} -> ${parsedPackageJsonFile.dependencies[dependencyName]}`,
+        );
       } else {
-        console.log(`[   OK   ] ${dependenciesAIO[key]}`);
+        display(`├ [ [   OK   ] ${dependencyName}: ${parsedPackageJsonFile.dependencies[dependencyName]}`);
       }
-    },
-  );
+    });
+  }
+
+  if (parsedPackageJsonFile.devDependencies) {
+    display('│');
+    Object.keys(parsedPackageJsonFile.devDependencies).map(dependencyName => {
+      if (
+        parsedPackageJsonFile.devDependencies[dependencyName][0] === '~' ||
+        parsedPackageJsonFile.devDependencies[dependencyName][0] === '^'
+      ) {
+        const prefix = parsedPackageJsonFile.devDependencies[dependencyName][0];
+        parsedPackageJsonFile.devDependencies[dependencyName] =
+          parsedPackageJsonFile.devDependencies[dependencyName].slice(1);
+        display(
+          `├ [ FIXING ] ${dependencyName}: ${prefix}${parsedPackageJsonFile.devDependencies[dependencyName]} -> ${parsedPackageJsonFile.devDependencies[dependencyName]}`,
+        );
+      } else {
+        display(`├ [   OK   ] ${dependencyName}: ${parsedPackageJsonFile.devDependencies[dependencyName]}`);
+      }
+    });
+  }
 
   /**
    * JSON.stringify(parsedReleaseVersionNumberJson, null, 2);
    * @param null - represents the replacer function. (in this case we don't want to alter the process)
    * @param 2 - represents the spaces to indent.
    */
+  display('│');
+  display('├ Stringifying package.json data...');
   packageJsonFile = JSON.stringify(parsedPackageJsonFile, null, 2);
-  display('package.json: Stringifying', '[   OK   ]');
-
+  display('├ Stringifying finished', '[   OK   ]');
+  display('│');
+  display('├ Adding empty line at the end of file...');
   packageJsonFile += '\n';
-  display('package.json: Adding empty line at EOF', '[   OK   ]');
-
-  fs.writeFileSync('./package.json', packageJsonFile, 'utf-8');
-  display('package.json: Writing File Synchronously', '[   OK   ]');
-
-  return 'npm i --legacy-peer-deps ' + listOfDependencies;
-  //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
+  display('├ Added', '[   OK   ]');
+  display('│');
+  display('├ Saving file...');
+  fs.writeFileSync(pathToPackageJsonFile, packageJsonFile, 'utf-8');
+  display('├ File saved', '[   OK   ]');
+  display('│');
+  display('└─── Finished');
+  display('');
 };

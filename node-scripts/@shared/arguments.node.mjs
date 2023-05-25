@@ -1,7 +1,7 @@
 import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 
-displayInTheMiddle(`arguments.node.mjs version 1.1.0`);
+displayInTheMiddle(`arguments.node.mjs version 1.2.0`);
 
 export const displayArguments = processArgv => {
   displayInTheMiddle('process.argv START');
@@ -43,6 +43,9 @@ export const getArgumentValue = (processArgv, argumentName, defaultValue = '') =
 export const getArgumentValueOrCrash = (processArgv, argumentName) =>
   argumentWithValueExistsOrCrash(processArgv, argumentName) &&
   processArgv.find(element => new RegExp(`--${argumentName}=\\S`).test(element)).slice(argumentName.length + 3);
+
+export const getArgumentValuesOrCrash = (processArgv, argumentName) =>
+  getArgumentValueOrCrash(processArgv, argumentName).split(',');
 
 /////////////////////////// EXPERIMENTAL ///////////////////////////
 

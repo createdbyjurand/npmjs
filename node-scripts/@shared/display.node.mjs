@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import fs from 'fs';
 
 const COLOR = {
@@ -39,11 +41,15 @@ const fill = (char, numberOfRepetitions, str = '') => {
   return str;
 };
 
-export const display = (left, right) => {
+export const display = (left, right = '') => {
   left += '';
   right += '';
-  const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
-  console.log(`${COLOR.fgGreen}${left}${COLOR.reset} ${fill('.', dots)} ${COLOR.fgGreen}${right}${COLOR.reset}`);
+  if (right === '') {
+    console.log(`${COLOR.fgGreen}${left}${COLOR.reset}`);
+  } else {
+    const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
+    console.log(`${COLOR.fgGreen}${left}${COLOR.reset} ${fill('.', dots)} ${COLOR.fgGreen}${right}${COLOR.reset}`);
+  }
 };
 
 export const displayError = (left, right) => {
@@ -81,4 +87,4 @@ export const displayLogoCBJ = () =>
     '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  \r\n   @@@@@@@                 @@@@                 @@@                @@@@@@@   \r\n    @@@@@@@                  @@@       @@@       @@@@             @@@@@@@    \r\n      @@@@@@@@@@@@@@@@@       @@@@      @@@@       @@@@@@       @@@@@@@      \r\n       @@@@@@@@@@@@@@@@@@      @@@@       @@@       @@@@       @@@@@@@       \r\n         @@@@@@@@@@@@@@@@@       @@@       @@@@              @@@@@@@         \r\n          @@@@@@@@@@@@@@@@@       @@@@       @@@            @@@@@@@          \r\n            @@@@@@@@@@@@@@@@@       @@@       @@@@        @@@@@@@            \r\n             @@@@@@@@@@@@@@@@@       @@@@       @@@      @@@@@@@             \r\n              @@@@@@@@@@@@@@@@@@       @@@       @@@@  @@@@@@@               \r\n                @@@@@@@@@@@@@@@@@       @@@@       @@@@@@@@@@                \r\n                 @@@@@@@@@@@@@@@@@@       @@@       @@@@@@@                  \r\n                   @@@@@@@       @@@       @@@@    @@@@@@@                   \r\n                    @@@@@@@       @@@@       @@@  @@@@@@@                    \r\n                      @@@@@@@       @@@       @@@@@@@@@                      \r\n                       @@@@@@@       @@@       @@@@@@@                       \r\n                         @@@@@@@             @@@@@@@                         \r\n                          @@@@@@@           @@@@@@@                          \r\n                            @@@@@@@       @@@@@@@                            \r\n                             @@@@@@@     @@@@@@@                             \r\n                              @@@@@@@  @@@@@@@                               \r\n                                @@@@@@@@@@@@@                                \r\n                                 @@@@@@@@@@@                                 \r\n                                   @@@@@@@                                   \r\n                                    @@@@@                                    \r\n                                      @                                      ',
   );
 
-displayInTheMiddle(`display.node.mjs version 2.0.0`);
+displayInTheMiddle(`display.node.mjs version 2.1.0`);
