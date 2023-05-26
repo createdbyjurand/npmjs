@@ -4,7 +4,7 @@ import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 import {readAndParseJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle(`package-json.node.mjs version 2.0.2`);
+displayInTheMiddle(`package-json.node.mjs version 2.0.3`);
 
 /////////////////////////// VALIDATORS ///////////////////////////
 
@@ -109,7 +109,6 @@ export const parseDependenciesFromArgumentValueOrCrash = (processArgv, argumentN
  * @returns string
  */
 export const overwriteDependencyVersions = (dependencies, dependenciesToOverwrite, title = 'dependencies') => {
-  display('');
   display(`┌─── Overwriting ${title}`);
   display('│');
 
@@ -133,7 +132,6 @@ export const overwriteDependencyVersions = (dependencies, dependenciesToOverwrit
 
   display('│');
   display('└─── Finished');
-  display('');
   return overwrittenDependencies;
 };
 
@@ -221,7 +219,6 @@ export const updateAllDependenciesWithSemVerMinorPrefix = (
  * @param {*} except
  */
 export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJsonFile, except = []) => {
-  display('');
   display('┌─── Removing prefixes');
   display('│');
   display('├ Reading package.json file...');
@@ -293,5 +290,4 @@ export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJson
   display('├ File saved', '[   OK   ]');
   display('│');
   display('└─── Finished');
-  display('');
 };
