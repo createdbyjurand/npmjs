@@ -123,15 +123,15 @@ if (overwrite) {
 
 if (dependenciesToInstall !== '') {
   display('');
-  displayInTheMiddle('Installing dependencies START');
+  displayInTheMiddle('Updating dependencies START');
   run(`npm i${legacyPeerDeps} -S ${dependenciesToInstall}`);
-  displayInTheMiddle('Installing dependencies END');
+  displayInTheMiddle('Updating dependencies END');
 }
 if (devDependenciesToInstall !== '') {
   display('');
-  displayInTheMiddle('Installing devDependencies START');
+  displayInTheMiddle('Updating devDependencies START');
   run(`npm i${legacyPeerDeps} -D ${devDependenciesToInstall}`);
-  displayInTheMiddle('Installing devDependencies END');
+  displayInTheMiddle('Updating devDependencies END');
 }
 
 display('');
