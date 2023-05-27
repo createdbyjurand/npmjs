@@ -41,9 +41,44 @@ const fill = (char, numberOfRepetitions, str = '') => {
   return str;
 };
 
+export const displayLong = (
+  left,
+  right = '',
+  prefix = '',
+  color = COLOR.fgCyan,
+  maxWidth = process.stdout.columns - reduceWidthForJestConsole,
+) => {
+  left += '';
+  right += '';
+  let output = [];
+
+  for (let i = 0; left.length > maxWidth; i++) {
+    while (left[0] === ' ') left = left.slice(1);
+    if (i > 0) left = prefix + left;
+    let lastIndexOfSpace = left.lastIndexOf(' ', maxWidth);
+    if (lastIndexOfSpace < maxWidth / 10 + prefix.length) lastIndexOfSpace = maxWidth;
+    output[i] = left.slice(0, lastIndexOfSpace);
+    console.log(`${color}${output[i]}${COLOR.reset}`);
+    left = left.slice(lastIndexOfSpace);
+  }
+
+  while (left[0] === ' ') left = left.slice(1);
+  if (output.length > 0) left = prefix + left;
+
+  if (right === '') {
+    console.log(`${color}${left}${COLOR.reset}`);
+  } else {
+    const dots = maxWidth - left.length - reduceWidthForSpaces - right.length;
+    console.log(`${color}${left}${COLOR.reset} ${fill('.', dots)} ${color}${right}${COLOR.reset}`);
+  }
+
+  return output;
+};
+
 export const display = (left, right = '') => {
   left += '';
   right += '';
+
   if (right === '') {
     console.log(`${COLOR.fgGreen}${left}${COLOR.reset}`);
   } else {
@@ -52,16 +87,40 @@ export const display = (left, right = '') => {
   }
 };
 
-export const displayError = (left, right) => {
+export const displayError = (left, right = '') => {
   left += '';
   right += '';
-  const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
-  console.log(COLOR.fgRed + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
+
+  if (right === '') {
+    console.log(COLOR.fgRed + '%s' + COLOR.reset, left);
+  } else {
+    const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
+    console.log(COLOR.fgRed + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
+  }
 };
 
-export const displayWarning = (left, right) => {
-  const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
-  console.log(COLOR.fgYellow + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
+export const displayWarning = (left, right = '') => {
+  left += '';
+  right += '';
+
+  if (right === '') {
+    console.log(COLOR.fgYellow + '%s' + COLOR.reset, left);
+  } else {
+    const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
+    console.log(COLOR.fgYellow + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
+  }
+};
+
+export const displayCommand = (left, right = '') => {
+  left += '';
+  right += '';
+
+  if (right === '') {
+    console.log(COLOR.fgCyan + '%s' + COLOR.reset, left);
+  } else {
+    const dots = process.stdout.columns - reduceWidthForJestConsole - left.length - reduceWidthForSpaces - right.length;
+    console.log(COLOR.fgCyan + '%s' + COLOR.reset, `${left} ${fill('.', dots)} ${right}`);
+  }
 };
 
 export const displayInTheMiddle = centre => {
@@ -112,4 +171,4 @@ export const displayList = (array, title) => {
   display('└─── Finished');
 };
 
-displayInTheMiddle(`display.node.mjs version 2.2.0`);
+displayInTheMiddle(`display.node.mjs version 3.0.0`);

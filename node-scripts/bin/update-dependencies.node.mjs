@@ -60,7 +60,9 @@ display('');
 run('npm -v');
 
 display('');
+displayInTheMiddle('Outdated dependencies START');
 run('npm outdated');
+displayInTheMiddle('Outdated dependencies END');
 
 let dependenciesToInstall = '';
 let devDependenciesToInstall = '';
@@ -143,7 +145,9 @@ if (removePrefixes) {
 }
 
 display('');
+displayInTheMiddle('Outdated dependencies START');
 run('npm outdated');
+displayInTheMiddle('Outdated dependencies END');
 
 display('');
 display('reinstall-dependencies.node.mjs script reached end', '[  DONE  ]');
