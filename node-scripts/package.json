@@ -2,7 +2,6 @@
     "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
     "bin": {
         "rebuild-modules@createdbyjurand": "./bin/rebuild-modules.node.mjs",
-        "reinstall-dependencies@createdbyjurand": "./bin/reinstall-dependencies.node.mjs",
         "uglify-directory@createdbyjurand": "./bin/uglify-directory.node.mjs",
         "update-dependencies@createdbyjurand": "./bin/update-dependencies.node.mjs",
         "update-release-version-number@createdbyjurand": "./bin/update-release-version-number.node.mjs"
@@ -10,5 +9,5 @@
     "description": "@createdbyjurand/node-scripts",
     "license": "ISC",
     "name": "@createdbyjurand/node-scripts",
-    "version": "0.10.5-SNAPSHOT"
+    "version": "0.11.0-SNAPSHOT"
 }

@@ -150,4 +150,4 @@ run('npm outdated');
 displayInTheMiddle('Outdated dependencies END');
 
 display('');
-display('reinstall-dependencies.node.mjs script reached end', '[  DONE  ]');
+display('update-dependencies.node.mjs script reached end', '[  DONE  ]');

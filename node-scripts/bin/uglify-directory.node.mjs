@@ -29,4 +29,4 @@ console.log('path:', path);
 console.log('uglifyjsOptions:', uglifyjsOptions);
 
 runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively('./', f, ['.js']);
-display('rebuild-modules.node.mjs script reached end', '[  DONE  ]');
+display('uglify-directory.node.mjs script reached end', '[  DONE  ]');
