@@ -1,10 +1,9 @@
 __tests__
-.eslintrc.json
+.eslintrc*
 .idea
-.markdownlint.json
-.prettierignore
-.prettierrc*
+.markdownlint*
+.prettier*
 .vscode
 git_ignore
-jest.config.mjs
+jest*
 node_modules
