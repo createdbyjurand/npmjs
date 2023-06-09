@@ -1,6 +1,4 @@
-# @createdbyjurand/node-scripts
-
-## Table of contents
+# Table of contents
 
 - [Description](#description)
 - [Installation](#installation)
@@ -29,13 +27,13 @@ npm i -D @createdbyjurand/node-scripts
 
 &nbsp;
 
-## Scripts
+## **Scripts**
 
 &nbsp;
 
 ---
 
-## Rebuild modules
+### Rebuild modules
 
 [Back to table of contents](#table-of-contents)
 
