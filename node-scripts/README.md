@@ -12,7 +12,7 @@
 
 ## Description
 
-Node scripts with beautiful colorful logging :)
+Node scripts with amazing beautiful colorful logging :)
 
 &nbsp;
 
@@ -27,13 +27,11 @@ npm i -D @createdbyjurand/node-scripts
 
 &nbsp;
 
-## **Scripts**
+## Scripts
 
 &nbsp;
 
----
-
-### Rebuild modules
+## Rebuild modules
 
 [Back to table of contents](#table-of-contents)
 
@@ -236,8 +234,6 @@ export const Sth11Json = Sth11;
 
 &nbsp;
 
----
-
 ## Uglify directory
 
 [Back to table of contents](#table-of-contents)
@@ -250,20 +246,11 @@ This script runs [UglifyJS](https://github.com/mishoo/UglifyJS) command for ever
 
 > !!! &nbsp; :warning: &nbsp; BE CAREFUL, THIS SCRIPT OVERWRITES FILES &nbsp; :warning: &nbsp; !!!
 
-> Use it on `dist` or `build` directories. For this it was build for.
+Use it on `dist` or `build` directories. For this it was intended for.
 
 &nbsp;
 
-**Installation**:
-
-`npm i -D @createdbyjurand/node-scripts uglify-js`
-
-> - `i` is substitute of `install`
-> - `-D` is substitute of `--save-dev`
-
-&nbsp;
-
-**Usage**:
+**Configuration**:
 
 Add script to `package.json`:
 
@@ -284,17 +271,22 @@ Add script to `package.json`:
 | `--path=[PATH_TO_DIRECTORY_TO_BE_UGLIFIED]`      | yes      |
 | `--[OTHER_ARGUMENTS_WILL_BE_PASSED_TO_UGLIFYJS]` | no       |
 
+&nbsp;
+
 _`--path=`_
 
 Path to directory to be uglified.
 
+&nbsp;
+
 _`--[OTHER_ARGUMENTS]`_
 
 Any other argument that starts with `--` except `--path=` will be passed to uglifyjs command.
-
 _Examples: `--compress --mangle --toplevel --v8`_
 
-Script does not support:
+&nbsp;
+
+**Script does not support**:
 
 - arguments with one `-` (like `-p` or `-w`). Only two `--` arguments work
 - arguments that have spaces, space is the end of an argument
@@ -330,11 +322,142 @@ Script does not support:
 
 &nbsp;
 
----
-
 ## Update dependencies
 
 [Back to table of contents](#table-of-contents)
+
+&nbsp;
+
+**Description**:
+
+This script updates dependencies to the `@latest` version by default, but that can be changed with parameters.
+
+&nbsp;
+
+**Configuration**:
+
+Add script to `package.json`:
+
+```json
+{
+  "scripts": {
+    "update": "update-dependencies@createdbyjurand --all"
+  }
+}
+```
+
+&nbsp;
+
+**Parameters**:
+
+| Parameter                                                        | Required |
+| ---------------------------------------------------------------- | -------- |
+| `--all`                                                          | no       |
+| `--deps`                                                         | no       |
+| `--dev-deps`                                                     | no       |
+| `--except=[DEPENDENCY_NAMES_SEPARATED_BY_COMMA]`                 | no       |
+| `--legacy-peer-deps`                                             | no       |
+| `--overwrite=[DEPENDENCY_NAMES_WITH_VERSION_SEPARATED_BY_COMMA]` | no       |
+| `--path=[PATH_TO_package.json_DIRECTORY]`                        | no       |
+| `--remove-prefixes`                                              | no       |
+
+&nbsp;
+
+_`--all`_
+
+Update all **dependencies** and **devDependencies** to the `@latest` version.
+
+&nbsp;
+
+_`--deps`_
+
+Update all **dependencies** to the `@latest` version.
+
+&nbsp;
+
+_`--dev-deps`_
+
+Update all **devDependencies** to the `@latest` version.
+
+&nbsp;
+
+_`--except=[DEPENDENCY_NAMES_SEPARATED_BY_COMMA]`_
+
+Exclude **dependencies**.
+
+&nbsp;
+
+_`--legacy-peer-deps`_
+
+Add `--legacy-peer-deps` argument to installation.
+
+&nbsp;
+
+_`--overwrite=[DEPENDENCY_NAMES_WITH_VERSION_SEPARATED_BY_COMMA]`_
+
+Overwrite **dependencies** with the specified version.
+
+&nbsp;
+
+_`--path=[PATH_TO_package.json_DIRECTORY]`_
+
+Set path to `package.json` if the script is run elsewhere.
+
+&nbsp;
+
+_`--remove-prefixes`_
+
+Remove prefixes from dependency versions in `package.json` file.
+
+&nbsp;
+
+**Examples**:
+
+`package.json` scripts:
+
+```json
+{
+  "scripts": {
+    "update": "update-dependencies@createdbyjurand --all"
+  }
+}
+```
+
+```json
+{
+  "scripts": {
+    "update": "update-dependencies@createdbyjurand --all --overwrite=typescript@^4 --remove-prefixes"
+  }
+}
+```
+
+```json
+{
+  "scripts": {"update": "update-dependencies@createdbyjurand --deps --overwrite=typescript@^4.0"}
+}
+```
+
+```json
+{
+  "scripts": {
+    "update": "update-dependencies@createdbyjurand --dev-deps --except=rimraf,dotenv --overwrite=typescript@^4,rimraf@1 --remove-prefixes"
+  }
+}
+```
+
+```json
+{
+  "scripts": {"update": "update-dependencies@createdbyjurand --path=frontend --all"}
+}
+```
+
+```json
+{
+  "scripts": {
+    "update": "update-dependencies@createdbyjurand --all --legacy-peer-deps"
+  }
+}
+```
 
 &nbsp;
 
@@ -345,8 +468,6 @@ Script does not support:
 - stable release of **update dependencies** script
 
 &nbsp;
-
----
 
 ## Update release version number
 
