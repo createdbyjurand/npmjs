@@ -1,0 +1,79 @@
+{
+    "browserslist": {
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ],
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ]
+    },
+    "dependencies": {
+        "@emotion/react": "^11.11.0",
+        "@emotion/styled": "^11.11.0",
+        "@fontsource/fira-code": "^4.5.13",
+        "@fontsource/roboto": "^4.5.8",
+        "@formkit/auto-animate": "^1.0.0-beta.6",
+        "@lottiefiles/react-lottie-player": "^3.5.3",
+        "@mui/icons-material": "^5.11.16",
+        "@mui/material": "^5.13.0",
+        "@react-pdf/renderer": "^3.1.9",
+        "axios": "^1.4.0",
+        "i18next": "^22.4.15",
+        "i18next-browser-languagedetector": "^7.0.1",
+        "json5": "^2.2.3",
+        "jspdf": "^2.5.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-i18next": "^12.2.2",
+        "react-router-dom": "^6.11.1",
+        "react-scripts": "^5.0.1",
+        "web-vitals": "^3.3.1"
+    },
+    "devDependencies": {
+        "@createdbyjurand/node-scripts": "^0.8.12-SNAPSHOT",
+        "@react-pdf/types": "^2.3.1",
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^14.0.0",
+        "@testing-library/user-event": "^14.4.3",
+        "@types/jest": "^29.5.1",
+        "@types/node": "^20.1.3",
+        "@types/react": "^18.2.6",
+        "@types/react-dom": "^18.2.4",
+        "eslint": "^8.40.0",
+        "prettier": "^2.8.8",
+        "rimraf": "^5.0.0",
+        "sass": "^1.62.1",
+        "typescript": "^4.9.5"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "homepage": ".",
+    "name": "apps.garage.createdbyjurand.com",
+    "private": true,
+    "scripts": {
+        "build development and production": "npm run build_development && npm run rimraf_production && npm run copy_development_production",
+        "build_development": "react-scripts build",
+        "copy_development_production": "cp -r ../environments/development/public_nodejs/public ../environments/production/public_nodejs/public",
+        "eject": "react-scripts eject",
+        "nodemon": "nodemon",
+        "npm i": "npm i",
+        "npm outdated": "npm outdated",
+        "rebuild @io modules": "rebuild-modules@createdbyjurand --path=src/@io",
+        "rebuild node_modules": "rimraf node_modules && npm i",
+        "rimraf_production": "rimraf ../environments/production/public_nodejs/public",
+        "start": "react-scripts start",
+        "test": "react-scripts test",
+        "update": "npm i @emotion/react@latest @emotion/styled@latest @fontsource/fira-code@latest @fontsource/roboto@latest @formkit/auto-animate@latest @lottiefiles/react-lottie-player@latest @mui/icons-material@latest @mui/material@latest @react-pdf/renderer@latest axios@latest i18next@latest i18next-browser-languagedetector@latest json5@latest jspdf@latest react@latest react-dom@latest react-i18next@latest react-router-dom@latest react-scripts@latest web-vitals@latest @createdbyjurand/node-scripts@latest @react-pdf/types@latest @testing-library/jest-dom@latest @testing-library/react@latest @testing-library/user-event@latest @types/jest@latest @types/node@latest @types/react@latest @types/react-dom@latest eslint@latest prettier@latest rimraf@latest sass@latest typescript@latest",
+        "update with typescript 4": "npm i @emotion/react@latest @emotion/styled@latest @fontsource/fira-code@latest @fontsource/roboto@latest @formkit/auto-animate@latest @lottiefiles/react-lottie-player@latest @mui/icons-material@latest @mui/material@latest @react-pdf/renderer@latest axios@latest i18next@latest i18next-browser-languagedetector@latest json5@latest jspdf@latest react@latest react-dom@latest react-i18next@latest react-router-dom@latest react-scripts@latest web-vitals@latest @createdbyjurand/node-scripts@latest @react-pdf/types@latest @testing-library/jest-dom@latest @testing-library/react@latest @testing-library/user-event@latest @types/jest@latest @types/node@latest @types/react@latest @types/react-dom@latest eslint@latest prettier@latest rimraf@latest sass@latest typescript@^4"
+    },
+    "type": "module",
+    "version": "0.0.1-SNAPSHOT"
+}

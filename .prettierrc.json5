@@ -1,0 +1,25 @@
+{
+  arrowParens: 'avoid',
+  bracketSpacing: false,
+  endOfLine: 'crlf',
+  printWidth: 120,
+  singleAttributePerLine: true,
+  singleQuote: true,
+  trailingComma: 'all',
+  overrides: [
+    {
+      files: '*.java',
+      options: {
+        bracketSpacing: true,
+        singleQuote: false,
+        tabWidth: 4
+      }
+    },
+    {
+      files: '*.json',
+      options: {
+        tabWidth: 4
+      }
+    }
+  ]
+}

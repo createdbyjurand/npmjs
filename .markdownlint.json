@@ -1,0 +1,8 @@
+{
+    "emphasis-style": {
+        "style": "underscore"
+    },
+    "line_length": false,
+    "no-blanks-blockquote": false,
+    "no-inline-html": false
+}
