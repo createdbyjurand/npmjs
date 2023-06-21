@@ -2,9 +2,10 @@ import fs from 'fs';
 import {getArgumentValueOrCrash} from './arguments.node.mjs';
 import {display, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
-import {readAndParseJsonFile} from './json-file.node.mjs';
+import {fileExists} from './files.none.mjs';
+import {readAndParseJsonFile, stringifyAndSaveJsonFile} from './json-file.node.mjs';
 
-displayInTheMiddle(`package-json.node.mjs version 2.0.3`);
+displayInTheMiddle(`package-json.node.mjs version 3.0.0`);
 
 /////////////////////////// VALIDATORS ///////////////////////////
 
@@ -32,6 +33,8 @@ export const getAllPackageJsonDependenciesAndDevDependenciesNames = pathToPackag
       JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8')).devDependencies ?? {},
     ),
   );
+
+/////////////////////////// PREPARE DEPENDENCIES TO INSTALL ///////////////////////////
 
 export const getAllPackageJsonDependenciesAndDevDependenciesAsLatestReadyToInstallList = pathToPackageJsonFile =>
   getAllPackageJsonDependenciesAndDevDependenciesNames(pathToPackageJsonFile)
@@ -150,59 +153,7 @@ export const installTheLatestVersionsOfDevDependencies = devDependenciesNamesArr
     : 'npm i --legacy-peer-deps --save-dev ' +
       devDependenciesNamesArray.map(dependency => `${dependency}@latest`).join(' ');
 
-export const updateAllDependenciesToTheLatestWantedPatchVersion = (dependenciesNamesArrayToBeOmitted = []) => {
-  display('<package.json>: Reading File Synchronously...', '[   OK   ]');
-  const packageJsonFile = fs.readFileSync('./package.json', 'utf-8');
-  display('<package.json>: Reading File Synchronously Success', '[   OK   ]');
-
-  display('<package.json>: Parsing...', '[   OK   ]');
-  const parsedPackageJsonFile = JSON.parse(packageJsonFile);
-  display('<package.json>: Parsing Success', '[   OK   ]');
-
-  let patchReleases = '';
-
-  const dependenciesAIO = Object.assign({}, parsedPackageJsonFile.dependencies, parsedPackageJsonFile.devDependencies);
-
-  Object.keys(dependenciesAIO).map(key => {
-    if (dependenciesAIO[key][0] === '~') {
-      patchReleases += ` ${key}@${dependenciesAIO[key]}`;
-    }
-  });
-
-  // TODO: Not ready yet
-  // return '';
-  return 'npm i --legacy-peer-deps' + patchReleases;
-  //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
-  //--save-exact
-};
-
-export const updateAllDependenciesWithSemVerMinorPrefix = (
-  pathToPackageJsonFile,
-  dependenciesNamesArrayToBeOmitted = [],
-) => {
-  const parsedPackageJsonFile = JSON.parse(fs.readFileSync(pathToPackageJsonFile, 'utf-8'));
-  const allDependencyNames = Object.keys(
-    Object.assign({}, parsedPackageJsonFile.dependencies ?? {}, parsedPackageJsonFile.devDependencies ?? {}),
-  );
-
-  let listOfDependenciesWithSemVerMinorPrefix = '';
-
-  const dependenciesAIO = Object.assign({}, parsedPackageJsonFile.dependencies, parsedPackageJsonFile.devDependencies);
-
-  Object.keys(dependenciesAIO).map(key => {
-    if (!dependenciesNamesArrayToBeOmitted.includes(key)) {
-      if (dependenciesAIO[key][0] === '^') {
-        listOfDependenciesWithSemVerMinorPrefix += ` ${key}@${dependenciesAIO[key].slice(
-          0,
-          dependenciesAIO[key].indexOf('.'),
-        )}`;
-      }
-    }
-  });
-
-  return 'npm i --legacy-peer-deps' + listOfDependenciesWithSemVerMinorPrefix;
-  //--legacy-peer-deps restores peerDependency installation behavior from NPM v4 thru v6 for v7+
-};
+/////////////////////////// REMOVERS ///////////////////////////
 
 /**
  *   ┌ ─ ┬ ─ ┐
@@ -290,4 +241,58 @@ export const removePrefixesFromAllDependenciesInPackageJson = (pathToPackageJson
   display('├ File saved', '[   OK   ]');
   display('│');
   display('└─── Finished');
+};
+
+/////////////////////////// VERSION UPDATERS ///////////////////////////
+
+export const increasePackageJsonMajorVersion = pathToPackageJsonFile => {
+  if (!fileExists(pathToPackageJsonFile)) throwError(`${pathToPackageJsonFile} file does not exist`);
+  const parsedPackageJsonFile = readAndParseJsonFile(pathToPackageJsonFile);
+  const version = parsedPackageJsonFile.version.split('.');
+  const prefixEnd = version[0].search(/\d/);
+  if (prefixEnd > 0) {
+    const prefix = version[0].slice(0, prefixEnd);
+    const majorVersionNumber = +version[0].slice(prefixEnd) + 1;
+    version[0] = `${prefix}${majorVersionNumber}`;
+  } else {
+    version[0] = +version[0] + 1;
+  }
+  version[1] = 0;
+  const postfixStart = version[2].search(/\D/);
+  if (postfixStart > 0) version[2] = `0${version[2].slice(postfixStart)}`;
+  else version[2] = 0;
+
+  parsedPackageJsonFile.version = version.join('.');
+  stringifyAndSaveJsonFile(parsedPackageJsonFile, pathToPackageJsonFile);
+};
+
+export const increasePackageJsonMinorVersion = pathToPackageJsonFile => {
+  if (!fileExists(pathToPackageJsonFile)) throwError(`${pathToPackageJsonFile} file does not exist`);
+  const parsedPackageJsonFile = readAndParseJsonFile(pathToPackageJsonFile);
+  const version = parsedPackageJsonFile.version.split('.');
+  version[1] = +version[1] + 1;
+  const postfixStart = version[2].search(/\D/);
+  if (postfixStart > 0) {
+    version[2] = `0${version[2].slice(postfixStart)}`;
+  } else {
+    version[2] = 0;
+  }
+  parsedPackageJsonFile.version = version.join('.');
+  stringifyAndSaveJsonFile(parsedPackageJsonFile, pathToPackageJsonFile);
+};
+
+export const increasePackageJsonPatchVersion = pathToPackageJsonFile => {
+  if (!fileExists(pathToPackageJsonFile)) throwError(`${pathToPackageJsonFile} file does not exist`);
+  const parsedPackageJsonFile = readAndParseJsonFile(pathToPackageJsonFile);
+  const version = parsedPackageJsonFile.version.split('.');
+  const postfixStart = version[2].search(/\D/);
+  if (postfixStart > 0) {
+    const patchVersionNumber = +version[2].slice(0, postfixStart) + 1;
+    const postfix = version[2].slice(postfixStart);
+    version[2] = `${patchVersionNumber}${postfix}`;
+  } else {
+    version[2] = +version[2] + 1;
+  }
+  parsedPackageJsonFile.version = version.join('.');
+  stringifyAndSaveJsonFile(parsedPackageJsonFile, pathToPackageJsonFile);
 };

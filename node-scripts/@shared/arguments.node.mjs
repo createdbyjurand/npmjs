@@ -1,12 +1,10 @@
-import {display, displayInTheMiddle} from './display.node.mjs';
+import {display, displayArray, displayInTheMiddle} from './display.node.mjs';
 import {throwError} from './error.node.mjs';
 
-displayInTheMiddle(`arguments.node.mjs version 1.2.0`);
+displayInTheMiddle(`arguments.node.mjs version 1.2.1`);
 
 export const displayArguments = processArgv => {
-  displayInTheMiddle('process.argv START');
-  console.log(processArgv);
-  displayInTheMiddle('process.argv END');
+  displayArray(processArgv, 'process.argv');
 };
 
 /////////////////////////// VERIFIERS ///////////////////////////
@@ -46,28 +44,3 @@ export const getArgumentValueOrCrash = (processArgv, argumentName) =>
 
 export const getArgumentValuesOrCrash = (processArgv, argumentName) =>
   getArgumentValueOrCrash(processArgv, argumentName).split(',');
-
-/////////////////////////// EXPERIMENTAL ///////////////////////////
-
-export const argumentExperimental = {
-  exists: {
-    only: (
-      () => (processArgv, argumentName) =>
-        processArgv.includes(`--${argumentName}`)
-    )(),
-    orCrash: (
-      () => (processArgv, argumentName) =>
-        processArgv.includes(`--${argumentName}`)
-    )(),
-  },
-  value: {
-    exists: (
-      () => (processArgv, argumentName) =>
-        processArgv.includes(`--${argumentName}=`)
-    )(),
-    isNotEmpty: (processArgv, argumentName) => processArgv.includes(`--${argumentName}=`),
-  },
-  parse: {
-    asDependencies: () => '',
-  },
-};

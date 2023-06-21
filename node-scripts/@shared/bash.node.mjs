@@ -1,7 +1,7 @@
 import {run} from './run.node.mjs';
 import {displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`bash.node.mjs version 0.0.0`);
+displayInTheMiddle(`bash.node.mjs version 1.0.0`);
 
 const handleArgs = args => (args === '' ? '' : ` ${args}`);
 
@@ -31,11 +31,11 @@ export const shoptGlobstar = (args = '') => `shopt${handleArgs(args)} globstar`;
  */
 export const bashVersion = `bash --version`;
 
-run(shoptNullglob());
-run(shoptFailglob());
-run(shoptExtglob());
-run(shoptGlobstar());
-run(bashVersion);
+// run(shoptNullglob());
+// run(shoptFailglob());
+// run(shoptExtglob());
+// run(shoptGlobstar());
+// run(bashVersion);
 
 export const executeCommandOnAllFilesInADirectory = path => {
   const p = path || `./*`;

@@ -5,9 +5,9 @@ import {
   argumentWithValueExists,
   display,
   displayArguments,
+  displayArray,
   displayHeaderCBJ,
   displayInTheMiddle,
-  displayList,
   displayLogoCBJ,
   getAllPackageJsonDependenciesAsLatestReadyToInstallList,
   getAllPackageJsonDependenciesAsLatestReadyToInstallListExcept,
@@ -74,7 +74,7 @@ if (except) {
   const arrayOfDependencyNames = getArgumentValuesOrCrash(process.argv, 'except');
 
   display('');
-  displayList(arrayOfDependencyNames, 'Dependencies that will be ignored');
+  displayArray(arrayOfDependencyNames, 'Dependencies that will be ignored');
 
   if (packageJsonHasDependencies && (all || deps)) {
     dependenciesToInstall = getAllPackageJsonDependenciesAsLatestReadyToInstallListExcept(
@@ -101,7 +101,7 @@ if (overwrite) {
   const dependenciesToOverwrite = getArgumentValuesOrCrash(process.argv, 'overwrite');
 
   display('');
-  displayList(dependenciesToOverwrite, 'Dependencies that will be overwritten');
+  displayArray(dependenciesToOverwrite, 'Dependencies that will be overwritten');
 
   if (packageJsonHasDependencies && (all || deps)) {
     display('');

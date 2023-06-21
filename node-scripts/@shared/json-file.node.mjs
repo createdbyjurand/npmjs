@@ -1,7 +1,7 @@
 import fs from 'fs';
 import {displayInTheMiddle} from './display.node.mjs';
 
-displayInTheMiddle(`json-file.node.mjs version  0.4.1`);
+displayInTheMiddle(`json-file.node.mjs version  1.0.0`);
 
 export const readAndParseJsonFile = pathToJsonFile => JSON.parse(fs.readFileSync(pathToJsonFile, 'utf-8'));
 

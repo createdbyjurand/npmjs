@@ -2,7 +2,7 @@ import fs from 'fs';
 import {displayInTheMiddle, displayWarning} from './display.node.mjs';
 import {run} from './run.node.mjs';
 
-displayInTheMiddle(`directories.node.mjs version 0.0.2`);
+displayInTheMiddle(`directories.node.mjs version 1.0.0`);
 
 export const runFunctionOnFilesWithSpecificExtensionsInDirectoryRecursively = (path, f, extensionsArray) => {
   const directory = fs.readdirSync(path);

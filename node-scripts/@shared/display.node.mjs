@@ -161,14 +161,31 @@ export const displayLogoCBJ = () =>
  * @param {*} title string
  * @returns void
  */
-export const displayList = (array, title) => {
-  display(`┌─── ${title}`);
+export const displayArray = (array, title) => {
+  display(`┌───  ${title} START`);
   display('│');
   for (let element of array) {
-    display(`├ ${element}`);
+    display(`├─  ${element}`);
   }
   display('│');
-  display('└─── Finished');
+  display(`└───  ${title} END`);
 };
 
-displayInTheMiddle(`display.node.mjs version 3.0.0`);
+/**
+ * @param {JSON} json
+ * @param {string} title
+ * @returns void
+ */
+export const displayJSON = (json, title) => {
+  displayInTheMiddle(`${title} START`);
+  console.log(json);
+  displayInTheMiddle(`${title} END`);
+};
+
+export const displayValue = (variable, value) => {
+  variable += '';
+  value += '';
+  console.log(`${variable} ${COLOR.fgGreen}${value}${COLOR.reset}`);
+};
+
+displayInTheMiddle(`display.node.mjs version 3.1.0`);
