@@ -5,7 +5,6 @@ import fs from 'fs';
 import imageSize from 'image-size';
 import {
   argumentWithValueExists,
-  argumentWithValueExistsOrCrash,
   display,
   displayArguments,
   displayHeaderCBJ,
@@ -48,11 +47,9 @@ for (const [i, dirEnt] of dirSync.entries()) {
   if (!dirEnt.isDirectory() && dirEnt.path !== source && isImage(dirEnt.name)) {
     // https://github.com/image-size/image-size
     const dimensions = imageSize(`${dirEnt.path}\\${dirEnt.name}`);
-    const directory = dirEnt.path.slice(source.length + 1);
-    const folder = dirEnt.path
-      .split('\\')
-      .join('/')
-      .replace(/^src\//g, '');
+    const relativePath = dirEnt.path.split('\\').join('/');
+    const folder = relativePath.replace(/^src\//g, '');
+    const folderParts = folder.split('/');
 
     const element = {
       src: `${folder}/${dirEnt.name}`,
@@ -67,11 +64,15 @@ for (const [i, dirEnt] of dirSync.entries()) {
       folder,
       hash: crypto
         .createHash('sha256')
-        .update(fs.readFileSync(`src/${folder}/${dirEnt.name}`))
+        .update(fs.readFileSync(`${relativePath}/${dirEnt.name}`))
         .digest('hex'),
     };
-    if (assetsJson[directory]) assetsJson[directory][dirEnt.name] = element;
-    else assetsJson[directory] = {[dirEnt.name]: element};
+
+    let currentObject = assetsJson;
+    folderParts.reduce((acc, part) => {
+      if (!acc[part]) acc[part] = {};
+      return acc[part];
+    }, currentObject)[dirEnt.name] = element;
   }
 }
 
