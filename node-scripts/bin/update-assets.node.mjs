@@ -25,8 +25,8 @@ displayHeaderCBJ();
 display('');
 displayArguments(process.argv);
 
-const source = argumentWithValueExistsOrCrash(process.argv, 'source'); // src/assets
-const target = argumentWithValueExistsOrCrash(process.argv, 'target'); // src/app/db/assets.json
+const source = getArgumentValueOrCrash(process.argv, 'source'); // src/assets
+const target = getArgumentValueOrCrash(process.argv, 'target'); // src/app/db/assets.json
 const thumb_width_exists = argumentWithValueExists(process.argv, 'thumb_width');
 const thumb_height_exists = argumentWithValueExists(process.argv, 'thumb_height'); // 170
 
