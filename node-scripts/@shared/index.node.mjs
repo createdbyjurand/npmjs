@@ -7,6 +7,7 @@ export * from './display.node.mjs';
 export * from './error.node.mjs';
 export * from './files.none.mjs';
 export * from './generate.node.mjs';
+export * from './images.node.mjs';
 export * from './json-file.node.mjs';
 export * from './modules.node.mjs';
 export * from './node.node.mjs';
