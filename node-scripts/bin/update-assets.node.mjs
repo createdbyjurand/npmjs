@@ -48,7 +48,7 @@ for (const [i, dirEnt] of dirSync.entries()) {
     // https://github.com/image-size/image-size
     const dimensions = imageSize(`${dirEnt.path}\\${dirEnt.name}`);
     const relativePath = dirEnt.path.split('\\').join('/');
-    const folder = relativePath.replace(/^src\//g, '');
+    const folder = relativePath.replace(source + '/', '');
     const folderParts = folder.split('/');
 
     const element = {
