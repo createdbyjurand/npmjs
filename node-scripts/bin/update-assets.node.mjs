@@ -48,11 +48,12 @@ for (const [i, dirEnt] of dirSync.entries()) {
     // https://github.com/image-size/image-size
     const dimensions = imageSize(`${dirEnt.path}\\${dirEnt.name}`);
     const relativePath = dirEnt.path.split('\\').join('/');
+    const src = `${relativePath.replace(/^src\//g, '')}/${dirEnt.name}`;
     const folder = relativePath.replace(source + '/', '');
     const folderParts = folder.split('/');
 
     const element = {
-      src: `${folder}/${dirEnt.name}`,
+      src,
       width: dimensions.width,
       height: dimensions.height,
       thumbWidth: thumb_height_exists ? Math.round((dimensions.width * thumb_height) / dimensions.height) : thumb_width,
