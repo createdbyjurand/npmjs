@@ -10,6 +10,7 @@ import {
   displayHeaderCBJ,
   displayInTheMiddle,
   displayLogoCBJ,
+  displayValue,
   getArgumentValueOrCrash,
   isImage,
   throwError,
@@ -25,7 +26,7 @@ display('');
 displayArguments(process.argv);
 
 const source = getArgumentValueOrCrash(process.argv, 'source'); // src/assets
-const target = getArgumentValueOrCrash(process.argv, 'target'); // src/app/db/assets.json
+const target = getArgumentValueOrCrash(process.argv, 'target'); // src/app/db/assets.json || src/app/db/assets.ts
 const thumb_width_exists = argumentWithValueExists(process.argv, 'thumb_width');
 const thumb_height_exists = argumentWithValueExists(process.argv, 'thumb_height'); // 170
 
@@ -77,16 +78,33 @@ for (const [i, dirEnt] of dirSync.entries()) {
   }
 }
 
-console.log(assetsJson);
+const extension = target.split('.').pop();
+display('');
+displayValue('extension', extension);
 
-/**
- * JSON.stringify(parsedReleaseVersionNumberJson, null, 4);
- * @param null - represents the replacer function. (in this case we don't want to alter the process)
- * @param 4 - represents the spaces to indent.
- */
-const stringified = JSON.stringify(assetsJson, null, 4);
-
-fs.writeFileSync(target, stringified, 'utf-8');
+if (extension === 'json') {
+  display('');
+  console.log(assetsJson);
+  /**
+   * JSON.stringify(parsedReleaseVersionNumberJson, null, 4);
+   * @param null - represents the replacer function. (in this case we don't want to alter the process)
+   * @param 4 - represents the spaces to indent.
+   */
+  const stringified = JSON.stringify(assetsJson, null, 4);
+  fs.writeFileSync(target, stringified, 'utf-8');
+} else if (extension === 'ts') {
+  /**
+   * JSON.stringify(parsedReleaseVersionNumberJson, null, 4);
+   * @param null - represents the replacer function. (in this case we don't want to alter the process)
+   * @param 4 - represents the spaces to indent.
+   */
+  const stringified = JSON.stringify(assetsJson, null, 2);
+  const srcDir = source.split('/').pop();
+  const ts = `export const ${srcDir} = ${stringified}`;
+  display('');
+  console.log(ts);
+  fs.writeFileSync(target, ts, 'utf-8');
+}
 
 display('');
 display('update-assets.node.mjs script reached end', '[  DONE  ]');
