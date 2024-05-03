@@ -79,7 +79,7 @@ for (const [i, dirEnt] of dirSync.entries()) {
   }
 }
 
-displayJSON(assetsJson);
+displayJSON(assetsJson, 'assets');
 
 const extension = target.split('.').pop();
 display('');
