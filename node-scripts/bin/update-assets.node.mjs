@@ -9,6 +9,7 @@ import {
   displayArguments,
   displayHeaderCBJ,
   displayInTheMiddle,
+  displayJSON,
   displayLogoCBJ,
   displayValue,
   getArgumentValueOrCrash,
@@ -78,13 +79,13 @@ for (const [i, dirEnt] of dirSync.entries()) {
   }
 }
 
+displayJSON(assetsJson);
+
 const extension = target.split('.').pop();
 display('');
 displayValue('extension', extension);
 
 if (extension === 'json') {
-  display('');
-  console.log(assetsJson);
   /**
    * JSON.stringify(parsedReleaseVersionNumberJson, null, 4);
    * @param null - represents the replacer function. (in this case we don't want to alter the process)
@@ -92,7 +93,14 @@ if (extension === 'json') {
    */
   const stringified = JSON.stringify(assetsJson, null, 4);
   fs.writeFileSync(target, stringified, 'utf-8');
-} else if (extension === 'ts') {
+} else if (
+  extension === 'ts' ||
+  extension === 'js' ||
+  extension === 'mjs' ||
+  extension === 'cjs' ||
+  extension === 'tsx' ||
+  extension === 'jsx'
+) {
   /**
    * JSON.stringify(parsedReleaseVersionNumberJson, null, 4);
    * @param null - represents the replacer function. (in this case we don't want to alter the process)
@@ -101,8 +109,6 @@ if (extension === 'json') {
   const stringified = JSON.stringify(assetsJson, null, 2);
   const srcDir = source.split('/').pop();
   const ts = `export const ${srcDir} = ${stringified}`;
-  display('');
-  console.log(ts);
   fs.writeFileSync(target, ts, 'utf-8');
 }
 
