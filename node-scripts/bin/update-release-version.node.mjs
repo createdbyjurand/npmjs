@@ -5,7 +5,6 @@ import {
   argumentWithValueExists,
   display,
   displayArguments,
-  displayCommand,
   displayError,
   displayHeaderCBJ,
   displayInTheMiddle,

@@ -4,6 +4,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import imageSize from 'image-size';
 import {
+  argumentExists,
   argumentWithValueExists,
   display,
   displayArguments,
@@ -25,6 +26,9 @@ displayHeaderCBJ();
 
 display('');
 displayArguments(process.argv);
+
+const src_remove_src = argumentExists(process.argv, 'src_remove_src');
+const src_remove_source = argumentExists(process.argv, 'src_remove_source');
 
 const source = getArgumentValueOrCrash(process.argv, 'source'); // src/assets || public
 const target = getArgumentValueOrCrash(process.argv, 'target'); // src/app/db/assets.json || src/app/db/assets.ts
@@ -54,7 +58,12 @@ for (const [i, dirEnt] of dirSync.entries()) {
     // https://github.com/image-size/image-size
     const dimensions = imageSize(`${dirEnt.path}\\${dirEnt.name}`);
     const relativePath = dirEnt.path.split('\\').join('/');
-    const src = `${relativePath.replace(/^src\//g, '')}/${dirEnt.name}`;
+
+    let src = relativePath;
+    if (src_remove_source) src = src.replace(new RegExp(`^${source}/`), '');
+    if (src_remove_src) src = src.replace(/^src\//g, '');
+    src += `/${dirEnt.name}`;
+
     const folder = relativePath.replace(source + '/', '');
     const folderParts = folder.split('/');
 
