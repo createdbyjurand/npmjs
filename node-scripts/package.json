@@ -4,12 +4,11 @@
         "rebuild-modules@createdbyjurand": "./bin/rebuild-modules.node.mjs",
         "uglify-directory@createdbyjurand": "./bin/uglify-directory.node.mjs",
         "update-assets@createdbyjurand": "./bin/update-assets.node.mjs",
-        "update-public@createdbyjurand": "./bin/update-public.node.mjs",
         "update-dependencies@createdbyjurand": "./bin/update-dependencies.node.mjs",
         "update-release-version@createdbyjurand": "./bin/update-release-version.node.mjs"
     },
     "description": "@createdbyjurand/node-scripts",
     "license": "ISC",
     "name": "@createdbyjurand/node-scripts",
-    "version": "1.8.0-SNAPSHOT"
+    "version": "1.9.0-SNAPSHOT"
 }

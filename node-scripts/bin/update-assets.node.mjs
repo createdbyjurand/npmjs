@@ -26,8 +26,12 @@ displayHeaderCBJ();
 display('');
 displayArguments(process.argv);
 
-const source = getArgumentValueOrCrash(process.argv, 'source'); // src/assets
+const source = getArgumentValueOrCrash(process.argv, 'source'); // src/assets || public
 const target = getArgumentValueOrCrash(process.argv, 'target'); // src/app/db/assets.json || src/app/db/assets.ts
+
+const variable_exists = argumentWithValueExists(process.argv, 'variable');
+const variable = variable_exists ? getArgumentValueOrCrash(process.argv, 'variable') : null;
+
 const thumb_width_exists = argumentWithValueExists(process.argv, 'thumb_width');
 const thumb_height_exists = argumentWithValueExists(process.argv, 'thumb_height'); // 170
 
@@ -108,7 +112,7 @@ if (extension === 'json') {
    */
   const stringified = JSON.stringify(assetsJson, null, 2);
   const srcDir = source.split('/').pop();
-  const ts = `export const ${srcDir} = ${stringified}`;
+  const ts = `export const ${variable || srcDir} = ${stringified}`;
   fs.writeFileSync(target, ts, 'utf-8');
 }
 
