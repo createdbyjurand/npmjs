@@ -20,7 +20,7 @@ import {
   removePrefixesFromAllDependenciesInPackageJson,
   run,
 } from '../@shared/index.node.mjs';
-import packageJson from '../package.json' assert {type: 'json'};
+import packageJson from '../package.json' with {type: 'json'};
 
 displayInTheMiddle(`update-dependencies.node.mjs version ${packageJson.version}`);
 

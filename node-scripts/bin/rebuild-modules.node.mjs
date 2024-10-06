@@ -9,7 +9,7 @@ import {
 import {display, displayInTheMiddle} from '../@shared/display.node.mjs';
 import {availableExtensions, rebuildModules} from '../@shared/modules.node.mjs';
 import {run} from '../@shared/run.node.mjs';
-import packageJson from '../package.json' assert {type: 'json'};
+import packageJson from '../package.json' with {type: 'json'};
 
 displayInTheMiddle(`rebuild-modules.node.mjs version ${packageJson.version}`);
 
