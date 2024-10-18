@@ -1,18 +1,15 @@
 {
+    "engines": {
+        "node": ">=8.3.0"
+    },
     "env": {
         "es2021": true,
         "jest/globals": true,
         "node": true
     },
     "extends": ["eslint:recommended", "plugin:node/recommended", "plugin:markdown/recommended", "prettier"],
-    "overrides": [],
-    "parser": "@babel/eslint-parser",
     "parserOptions": {
-        "babelOptions": {
-            "plugins": ["@babel/plugin-syntax-import-assertions"]
-        },
         "ecmaVersion": "latest",
-        "requireConfigFile": false,
         "sourceType": "module"
     },
     "plugins": ["jest", "markdown"],
