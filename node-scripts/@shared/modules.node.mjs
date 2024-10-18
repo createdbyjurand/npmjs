@@ -39,7 +39,7 @@ export const rebuildModules = options => {
     } else if (element === `index.${extension}`) {
       deleteFile(currentPath);
       display(`[ ${currentPath} ] Deleted`, '[   OK   ]');
-    } else if (element.split('.').at(-2) === 'test') {
+    } else if (/\.(test|d)\.\w+$/.test(element)) {
       // skip test files
     } else if (element.endsWith('.cjs') || element.endsWith('.mjs')) {
       indexFileContent.push(`export * from './${element}';`);
