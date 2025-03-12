@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "declaration": false,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "dist/cjs",
+        "target": "es5"
+    },
+    "extends": "./tsconfig.json"
+}

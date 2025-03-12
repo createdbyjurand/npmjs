@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "strict": true,
+        "target": "esnext"
+    },
+    "exclude": ["node_modules", "dist"],
+    "include": ["src"]
+}

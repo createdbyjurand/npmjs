@@ -1,0 +1,25 @@
+{
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "description": "HTTP status codes enum for TypeScript and JavaScript",
+    "exports": {
+        ".": {
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js",
+            "types": "./dist/types/index.d.ts"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "http",
+        "status",
+        "codes"
+    ],
+    "license": "ISC",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "name": "@createdbyjurand/status-codes",
+    "types": "dist/types/index.d.ts",
+    "version": "3.0.0-SNAPSHOT"
+}
