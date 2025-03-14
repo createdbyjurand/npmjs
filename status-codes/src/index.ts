@@ -1,1 +1,1 @@
-export * from './EStatusCode';
+export * from './StatusCode';

@@ -21,5 +21,5 @@
     "module": "dist/esm/index.js",
     "name": "@createdbyjurand/status-codes",
     "types": "dist/types/index.d.ts",
-    "version": "3.0.0-SNAPSHOT"
+    "version": "4.0.0-SNAPSHOT"
 }

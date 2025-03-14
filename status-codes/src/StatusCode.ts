@@ -1,4 +1,4 @@
-export enum EStatusCode {
+export enum StatusCode {
   /* 1   ********* INFO *********/
   /* 100 */ INFO_CONTINUE = 100,
   /* 101 */ INFO_SWITCHING_PROTOCOLS = 101,
@@ -98,7 +98,7 @@ export enum EStatusCode {
  * });
  */
 export const statusCodeNames: Record<number, string> = Object.fromEntries(
-  Object.entries(EStatusCode).map(([key, value]) => [
+  Object.entries(StatusCode).map(([key, value]) => [
     value,
     key
       .replace(/^(INFO_|SUCCESS_|REDIRECT_|CLIENT_ERROR_|SERVER_ERROR_)/, '') // Remove category prefixes
@@ -109,4 +109,62 @@ export const statusCodeNames: Record<number, string> = Object.fromEntries(
 );
 
 export const isValidStatusCode = (code: string | number): boolean =>
-  Object.values(EStatusCode).includes(Number(code)) || Object.values(statusCodeNames).includes(String(code));
+  Object.values(StatusCode).includes(Number(code)) || Object.values(statusCodeNames).includes(String(code));
+
+/// Category Checking Functions
+
+/**
+ * Checks if status code is informational (100-199)
+ */
+export const isInformational = (code: number): boolean => code >= 100 && code < 200;
+
+/**
+ * Checks if status code indicates success (200-299)
+ */
+export const isSuccess = (code: number): boolean => code >= 200 && code < 300;
+
+/**
+ * Checks if status code indicates redirection (300-399)
+ */
+export const isRedirect = (code: number): boolean => code >= 300 && code < 400;
+
+/**
+ * Checks if status code indicates client error (400-499)
+ */
+export const isClientError = (code: number): boolean => code >= 400 && code < 500;
+
+/**
+ * Checks if status code indicates server error (500-599)
+ */
+export const isServerError = (code: number): boolean => code >= 500 && code < 600;
+
+/// Specific Status Helpers
+
+/**
+ * Checks if status code requires authentication
+ */
+export const requiresAuthentication = (code: number): boolean => code === StatusCode.CLIENT_ERROR_UNAUTHORIZED;
+
+/**
+ * Checks if status code indicates resource not found
+ */
+export const isNotFound = (code: number): boolean => code === StatusCode.CLIENT_ERROR_NOT_FOUND;
+
+/**
+ * Checks if status code indicates rate limiting
+ */
+export const isRateLimited = (code: number): boolean => code === StatusCode.CLIENT_ERROR_TOO_MANY_REQUESTS;
+
+/// Reverse Lookup
+
+/**
+ * Get status code by name (case insensitive)
+ * @example
+ * getStatusCodeByName('not found'); // Returns 404
+ * getStatusCodeByName('Not Found'); // Returns 404
+ */
+export const getStatusCodeByName = (name: string): number | undefined => {
+  const normalizedName = name.toLowerCase();
+  const entry = Object.entries(statusCodeNames).find(([_, statusName]) => statusName.toLowerCase() === normalizedName);
+  return entry ? Number(entry[0]) : undefined;
+};

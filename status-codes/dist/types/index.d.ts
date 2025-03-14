@@ -1,2 +1,2 @@
-export * from './EStatusCode';
+export * from './StatusCode';
 //# sourceMappingURL=index.d.ts.map

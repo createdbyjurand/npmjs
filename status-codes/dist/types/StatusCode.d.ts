@@ -1,4 +1,4 @@
-export declare enum EStatusCode {
+export declare enum StatusCode {
     INFO_CONTINUE = 100,
     INFO_SWITCHING_PROTOCOLS = 101,
     INFO_PROCESSING = 102,
@@ -93,4 +93,43 @@ export declare enum EStatusCode {
  */
 export declare const statusCodeNames: Record<number, string>;
 export declare const isValidStatusCode: (code: string | number) => boolean;
-//# sourceMappingURL=EStatusCode.d.ts.map
+/**
+ * Checks if status code is informational (100-199)
+ */
+export declare const isInformational: (code: number) => boolean;
+/**
+ * Checks if status code indicates success (200-299)
+ */
+export declare const isSuccess: (code: number) => boolean;
+/**
+ * Checks if status code indicates redirection (300-399)
+ */
+export declare const isRedirect: (code: number) => boolean;
+/**
+ * Checks if status code indicates client error (400-499)
+ */
+export declare const isClientError: (code: number) => boolean;
+/**
+ * Checks if status code indicates server error (500-599)
+ */
+export declare const isServerError: (code: number) => boolean;
+/**
+ * Checks if status code requires authentication
+ */
+export declare const requiresAuthentication: (code: number) => boolean;
+/**
+ * Checks if status code indicates resource not found
+ */
+export declare const isNotFound: (code: number) => boolean;
+/**
+ * Checks if status code indicates rate limiting
+ */
+export declare const isRateLimited: (code: number) => boolean;
+/**
+ * Get status code by name (case insensitive)
+ * @example
+ * getStatusCodeByName('not found'); // Returns 404
+ * getStatusCodeByName('Not Found'); // Returns 404
+ */
+export declare const getStatusCodeByName: (name: string) => number | undefined;
+//# sourceMappingURL=StatusCode.d.ts.map
