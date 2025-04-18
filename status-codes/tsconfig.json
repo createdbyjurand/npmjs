@@ -4,6 +4,7 @@
         "forceConsistentCasingInFileNames": true,
         "module": "nodenext",
         "moduleResolution": "nodenext",
+        "removeComments": true,
         "strict": true,
         "target": "esnext"
     },

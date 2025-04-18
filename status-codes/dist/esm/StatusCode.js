@@ -1,166 +1,129 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStatusCodeByName = exports.isRateLimited = exports.isNotFound = exports.requiresAuthentication = exports.isServerError = exports.isClientError = exports.isRedirect = exports.isSuccess = exports.isInformational = exports.isValidStatusCode = exports.statusCodeNames = exports.StatusCode = void 0;
+exports.getStatusCodeByName = exports.isRateLimited = exports.isNotFound = exports.requiresAuthentication = exports.isServerError = exports.isClientError = exports.isRedirect = exports.isSuccess = exports.isInformational = exports.isValidStatusCode = exports.statusCodeNames = exports.StatusCodes = exports.StatusCode = void 0;
 var StatusCode;
 (function (StatusCode) {
-    /* 1   ********* INFO *********/
-    /* 100 */ StatusCode[StatusCode["INFO_CONTINUE"] = 100] = "INFO_CONTINUE";
-    /* 101 */ StatusCode[StatusCode["INFO_SWITCHING_PROTOCOLS"] = 101] = "INFO_SWITCHING_PROTOCOLS";
-    /* 102 */ StatusCode[StatusCode["INFO_PROCESSING"] = 102] = "INFO_PROCESSING";
-    /* 103 */ StatusCode[StatusCode["INFO_EARLY_HINTS"] = 103] = "INFO_EARLY_HINTS";
-    /* 2   ********* SUCCESS *********/
-    /* 200 */ StatusCode[StatusCode["SUCCESS_OK"] = 200] = "SUCCESS_OK";
-    /* 201 */ StatusCode[StatusCode["SUCCESS_CREATED"] = 201] = "SUCCESS_CREATED";
-    /* 202 */ StatusCode[StatusCode["SUCCESS_ACCEPTED"] = 202] = "SUCCESS_ACCEPTED";
-    /* 203 */ StatusCode[StatusCode["SUCCESS_NON_AUTHORITATIVE_INFORMATION"] = 203] = "SUCCESS_NON_AUTHORITATIVE_INFORMATION";
-    /* 204 */ StatusCode[StatusCode["SUCCESS_NO_CONTENT"] = 204] = "SUCCESS_NO_CONTENT";
-    /* 205 */ StatusCode[StatusCode["SUCCESS_RESET_CONTENT"] = 205] = "SUCCESS_RESET_CONTENT";
-    /* 206 */ StatusCode[StatusCode["SUCCESS_PARTIAL_CONTENT"] = 206] = "SUCCESS_PARTIAL_CONTENT";
-    /* 207 */ StatusCode[StatusCode["SUCCESS_MULTI_STATUS"] = 207] = "SUCCESS_MULTI_STATUS";
-    /* 208 */ StatusCode[StatusCode["SUCCESS_ALREADY_REPORTED"] = 208] = "SUCCESS_ALREADY_REPORTED";
-    /* 226 */ StatusCode[StatusCode["SUCCESS_IM_USED"] = 226] = "SUCCESS_IM_USED";
-    /* 3   ********* REDIRECT *********/
-    /* 300 */ StatusCode[StatusCode["REDIRECT_MULTIPLE_CHOICES"] = 300] = "REDIRECT_MULTIPLE_CHOICES";
-    /* 301 */ StatusCode[StatusCode["REDIRECT_MOVED_PERMANENTLY"] = 301] = "REDIRECT_MOVED_PERMANENTLY";
-    /* 302 */ StatusCode[StatusCode["REDIRECT_FOUND"] = 302] = "REDIRECT_FOUND";
-    /* 303 */ StatusCode[StatusCode["REDIRECT_SEE_OTHER"] = 303] = "REDIRECT_SEE_OTHER";
-    /* 304 */ StatusCode[StatusCode["REDIRECT_NOT_MODIFIED"] = 304] = "REDIRECT_NOT_MODIFIED";
-    /* 305 */ StatusCode[StatusCode["REDIRECT_USE_PROXY"] = 305] = "REDIRECT_USE_PROXY";
-    /* 306 */ StatusCode[StatusCode["REDIRECT_SWITCH_PROXY"] = 306] = "REDIRECT_SWITCH_PROXY";
-    /* 307 */ StatusCode[StatusCode["REDIRECT_TEMPORARY_REDIRECT"] = 307] = "REDIRECT_TEMPORARY_REDIRECT";
-    /* 308 */ StatusCode[StatusCode["REDIRECT_PERMANENT_REDIRECT"] = 308] = "REDIRECT_PERMANENT_REDIRECT";
-    /* 4   ********* CLIENT_ERROR *********/
-    /* 400 */ StatusCode[StatusCode["CLIENT_ERROR_BAD_REQUEST"] = 400] = "CLIENT_ERROR_BAD_REQUEST";
-    /* 401 */ StatusCode[StatusCode["CLIENT_ERROR_UNAUTHORIZED"] = 401] = "CLIENT_ERROR_UNAUTHORIZED";
-    /* 402 */ StatusCode[StatusCode["CLIENT_ERROR_PAYMENT_REQUIRED"] = 402] = "CLIENT_ERROR_PAYMENT_REQUIRED";
-    /* 403 */ StatusCode[StatusCode["CLIENT_ERROR_FORBIDDEN"] = 403] = "CLIENT_ERROR_FORBIDDEN";
-    /* 404 */ StatusCode[StatusCode["CLIENT_ERROR_NOT_FOUND"] = 404] = "CLIENT_ERROR_NOT_FOUND";
-    /* 405 */ StatusCode[StatusCode["CLIENT_ERROR_METHOD_NOT_ALLOWED"] = 405] = "CLIENT_ERROR_METHOD_NOT_ALLOWED";
-    /* 406 */ StatusCode[StatusCode["CLIENT_ERROR_NOT_ACCEPTABLE"] = 406] = "CLIENT_ERROR_NOT_ACCEPTABLE";
-    /* 407 */ StatusCode[StatusCode["CLIENT_ERROR_PROXY_AUTHENTICATION_REQUIRED"] = 407] = "CLIENT_ERROR_PROXY_AUTHENTICATION_REQUIRED";
-    /* 408 */ StatusCode[StatusCode["CLIENT_ERROR_REQUEST_TIMEOUT"] = 408] = "CLIENT_ERROR_REQUEST_TIMEOUT";
-    /* 409 */ StatusCode[StatusCode["CLIENT_ERROR_CONFLICT"] = 409] = "CLIENT_ERROR_CONFLICT";
-    /* 410 */ StatusCode[StatusCode["CLIENT_ERROR_GONE"] = 410] = "CLIENT_ERROR_GONE";
-    /* 411 */ StatusCode[StatusCode["CLIENT_ERROR_LENGTH_REQUIRED"] = 411] = "CLIENT_ERROR_LENGTH_REQUIRED";
-    /* 412 */ StatusCode[StatusCode["CLIENT_ERROR_PRECONDITION_FAILED"] = 412] = "CLIENT_ERROR_PRECONDITION_FAILED";
-    /* 413 */ StatusCode[StatusCode["CLIENT_ERROR_PAYLOAD_TOO_LARGE"] = 413] = "CLIENT_ERROR_PAYLOAD_TOO_LARGE";
-    /* 414 */ StatusCode[StatusCode["CLIENT_ERROR_URI_TOO_LONG"] = 414] = "CLIENT_ERROR_URI_TOO_LONG";
-    /* 415 */ StatusCode[StatusCode["CLIENT_ERROR_UNSUPPORTED_MEDIA_TYPE"] = 415] = "CLIENT_ERROR_UNSUPPORTED_MEDIA_TYPE";
-    /* 416 */ StatusCode[StatusCode["CLIENT_ERROR_RANGE_NOT_SATISFIABLE"] = 416] = "CLIENT_ERROR_RANGE_NOT_SATISFIABLE";
-    /* 417 */ StatusCode[StatusCode["CLIENT_ERROR_EXPECTATION_FAILED"] = 417] = "CLIENT_ERROR_EXPECTATION_FAILED";
-    /* 418 */ StatusCode[StatusCode["CLIENT_ERROR_IM_A_TEAPOT"] = 418] = "CLIENT_ERROR_IM_A_TEAPOT";
-    /* 420 */ StatusCode[StatusCode["CLIENT_ERROR_ENHANCE_YOUR_CALM"] = 420] = "CLIENT_ERROR_ENHANCE_YOUR_CALM";
-    /* 421 */ StatusCode[StatusCode["CLIENT_ERROR_MISDIRECTED_REQUEST"] = 421] = "CLIENT_ERROR_MISDIRECTED_REQUEST";
-    /* 422 */ StatusCode[StatusCode["CLIENT_ERROR_UNPROCESSABLE_ENTITY"] = 422] = "CLIENT_ERROR_UNPROCESSABLE_ENTITY";
-    /* 423 */ StatusCode[StatusCode["CLIENT_ERROR_LOCKED"] = 423] = "CLIENT_ERROR_LOCKED";
-    /* 424 */ StatusCode[StatusCode["CLIENT_ERROR_FAILED_DEPENDENCY"] = 424] = "CLIENT_ERROR_FAILED_DEPENDENCY";
-    /* 425 */ StatusCode[StatusCode["CLIENT_ERROR_TOO_EARLY"] = 425] = "CLIENT_ERROR_TOO_EARLY";
-    /* 426 */ StatusCode[StatusCode["CLIENT_ERROR_UPGRADE_REQUIRED"] = 426] = "CLIENT_ERROR_UPGRADE_REQUIRED";
-    /* 428 */ StatusCode[StatusCode["CLIENT_ERROR_PRECONDITION_REQUIRED"] = 428] = "CLIENT_ERROR_PRECONDITION_REQUIRED";
-    /* 429 */ StatusCode[StatusCode["CLIENT_ERROR_TOO_MANY_REQUESTS"] = 429] = "CLIENT_ERROR_TOO_MANY_REQUESTS";
-    /* 431 */ StatusCode[StatusCode["CLIENT_ERROR_REQUEST_HEADER_FIELDS_TOO_LARGE"] = 431] = "CLIENT_ERROR_REQUEST_HEADER_FIELDS_TOO_LARGE";
-    /* 440 */ StatusCode[StatusCode["CLIENT_ERROR_LOGIN_TIME_OUT"] = 440] = "CLIENT_ERROR_LOGIN_TIME_OUT";
-    /* 444 */ StatusCode[StatusCode["CLIENT_ERROR_NO_RESPONSE"] = 444] = "CLIENT_ERROR_NO_RESPONSE";
-    /* 449 */ StatusCode[StatusCode["CLIENT_ERROR_RETRY_WITH"] = 449] = "CLIENT_ERROR_RETRY_WITH";
-    /* 450 */ StatusCode[StatusCode["CLIENT_ERROR_BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS"] = 450] = "CLIENT_ERROR_BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS";
-    /* 451 */ StatusCode[StatusCode["CLIENT_ERROR_UNAVAILABLE_FOR_LEGAL_REASONS"] = 451] = "CLIENT_ERROR_UNAVAILABLE_FOR_LEGAL_REASONS";
-    /* 499 */ StatusCode[StatusCode["CLIENT_ERROR_CLIENT_CLOSED_REQUEST"] = 499] = "CLIENT_ERROR_CLIENT_CLOSED_REQUEST";
-    /* 5   ********* SERVER_ERROR *********/
-    /* 500 */ StatusCode[StatusCode["SERVER_ERROR_INTERNAL_SERVER_ERROR"] = 500] = "SERVER_ERROR_INTERNAL_SERVER_ERROR";
-    /* 501 */ StatusCode[StatusCode["SERVER_ERROR_NOT_IMPLEMENTED"] = 501] = "SERVER_ERROR_NOT_IMPLEMENTED";
-    /* 502 */ StatusCode[StatusCode["SERVER_ERROR_BAD_GATEWAY"] = 502] = "SERVER_ERROR_BAD_GATEWAY";
-    /* 503 */ StatusCode[StatusCode["SERVER_ERROR_SERVICE_UNAVAILABLE"] = 503] = "SERVER_ERROR_SERVICE_UNAVAILABLE";
-    /* 504 */ StatusCode[StatusCode["SERVER_ERROR_GATEWAY_TIMEOUT"] = 504] = "SERVER_ERROR_GATEWAY_TIMEOUT";
-    /* 505 */ StatusCode[StatusCode["SERVER_ERROR_HTTP_VERSION_NOT_SUPPORTED"] = 505] = "SERVER_ERROR_HTTP_VERSION_NOT_SUPPORTED";
-    /* 506 */ StatusCode[StatusCode["SERVER_ERROR_VARIANT_ALSO_NEGOTIATES"] = 506] = "SERVER_ERROR_VARIANT_ALSO_NEGOTIATES";
-    /* 507 */ StatusCode[StatusCode["SERVER_ERROR_INSUFFICIENT_STORAGE"] = 507] = "SERVER_ERROR_INSUFFICIENT_STORAGE";
-    /* 508 */ StatusCode[StatusCode["SERVER_ERROR_LOOP_DETECTED"] = 508] = "SERVER_ERROR_LOOP_DETECTED";
-    /* 509 */ StatusCode[StatusCode["SERVER_ERROR_BANDWIDTH_LIMIT_EXCEEDED"] = 509] = "SERVER_ERROR_BANDWIDTH_LIMIT_EXCEEDED";
-    /* 510 */ StatusCode[StatusCode["SERVER_ERROR_NOT_EXTENDED"] = 510] = "SERVER_ERROR_NOT_EXTENDED";
-    /* 511 */ StatusCode[StatusCode["SERVER_ERROR_NETWORK_AUTHENTICATION_REQUIRED"] = 511] = "SERVER_ERROR_NETWORK_AUTHENTICATION_REQUIRED";
-    /* 598 */ StatusCode[StatusCode["SERVER_ERROR_NETWORK_READ_TIMEOUT"] = 598] = "SERVER_ERROR_NETWORK_READ_TIMEOUT";
-    /* 599 */ StatusCode[StatusCode["SERVER_ERROR_NETWORK_CONNECT_TIMEOUT"] = 599] = "SERVER_ERROR_NETWORK_CONNECT_TIMEOUT";
+    StatusCode[StatusCode["CONTINUE"] = 100] = "CONTINUE";
+    StatusCode[StatusCode["SWITCHING_PROTOCOLS"] = 101] = "SWITCHING_PROTOCOLS";
+    StatusCode[StatusCode["PROCESSING"] = 102] = "PROCESSING";
+    StatusCode[StatusCode["EARLY_HINTS"] = 103] = "EARLY_HINTS";
+    StatusCode[StatusCode["OK"] = 200] = "OK";
+    StatusCode[StatusCode["CREATED"] = 201] = "CREATED";
+    StatusCode[StatusCode["ACCEPTED"] = 202] = "ACCEPTED";
+    StatusCode[StatusCode["NON_AUTHORITATIVE_INFORMATION"] = 203] = "NON_AUTHORITATIVE_INFORMATION";
+    StatusCode[StatusCode["NO_CONTENT"] = 204] = "NO_CONTENT";
+    StatusCode[StatusCode["RESET_CONTENT"] = 205] = "RESET_CONTENT";
+    StatusCode[StatusCode["PARTIAL_CONTENT"] = 206] = "PARTIAL_CONTENT";
+    StatusCode[StatusCode["MULTI_STATUS"] = 207] = "MULTI_STATUS";
+    StatusCode[StatusCode["ALREADY_REPORTED"] = 208] = "ALREADY_REPORTED";
+    StatusCode[StatusCode["IM_USED"] = 226] = "IM_USED";
+    StatusCode[StatusCode["MULTIPLE_CHOICES"] = 300] = "MULTIPLE_CHOICES";
+    StatusCode[StatusCode["MOVED_PERMANENTLY"] = 301] = "MOVED_PERMANENTLY";
+    StatusCode[StatusCode["FOUND"] = 302] = "FOUND";
+    StatusCode[StatusCode["SEE_OTHER"] = 303] = "SEE_OTHER";
+    StatusCode[StatusCode["NOT_MODIFIED"] = 304] = "NOT_MODIFIED";
+    StatusCode[StatusCode["USE_PROXY"] = 305] = "USE_PROXY";
+    StatusCode[StatusCode["SWITCH_PROXY"] = 306] = "SWITCH_PROXY";
+    StatusCode[StatusCode["TEMPORARY_REDIRECT"] = 307] = "TEMPORARY_REDIRECT";
+    StatusCode[StatusCode["PERMANENT_REDIRECT"] = 308] = "PERMANENT_REDIRECT";
+    StatusCode[StatusCode["BAD_REQUEST"] = 400] = "BAD_REQUEST";
+    StatusCode[StatusCode["UNAUTHORIZED"] = 401] = "UNAUTHORIZED";
+    StatusCode[StatusCode["PAYMENT_REQUIRED"] = 402] = "PAYMENT_REQUIRED";
+    StatusCode[StatusCode["FORBIDDEN"] = 403] = "FORBIDDEN";
+    StatusCode[StatusCode["NOT_FOUND"] = 404] = "NOT_FOUND";
+    StatusCode[StatusCode["METHOD_NOT_ALLOWED"] = 405] = "METHOD_NOT_ALLOWED";
+    StatusCode[StatusCode["NOT_ACCEPTABLE"] = 406] = "NOT_ACCEPTABLE";
+    StatusCode[StatusCode["PROXY_AUTHENTICATION_REQUIRED"] = 407] = "PROXY_AUTHENTICATION_REQUIRED";
+    StatusCode[StatusCode["REQUEST_TIMEOUT"] = 408] = "REQUEST_TIMEOUT";
+    StatusCode[StatusCode["CONFLICT"] = 409] = "CONFLICT";
+    StatusCode[StatusCode["GONE"] = 410] = "GONE";
+    StatusCode[StatusCode["LENGTH_REQUIRED"] = 411] = "LENGTH_REQUIRED";
+    StatusCode[StatusCode["PRECONDITION_FAILED"] = 412] = "PRECONDITION_FAILED";
+    StatusCode[StatusCode["PAYLOAD_TOO_LARGE"] = 413] = "PAYLOAD_TOO_LARGE";
+    StatusCode[StatusCode["URI_TOO_LONG"] = 414] = "URI_TOO_LONG";
+    StatusCode[StatusCode["UNSUPPORTED_MEDIA_TYPE"] = 415] = "UNSUPPORTED_MEDIA_TYPE";
+    StatusCode[StatusCode["RANGE_NOT_SATISFIABLE"] = 416] = "RANGE_NOT_SATISFIABLE";
+    StatusCode[StatusCode["EXPECTATION_FAILED"] = 417] = "EXPECTATION_FAILED";
+    StatusCode[StatusCode["IM_A_TEAPOT"] = 418] = "IM_A_TEAPOT";
+    StatusCode[StatusCode["ENHANCE_YOUR_CALM"] = 420] = "ENHANCE_YOUR_CALM";
+    StatusCode[StatusCode["MISDIRECTED_REQUEST"] = 421] = "MISDIRECTED_REQUEST";
+    StatusCode[StatusCode["UNPROCESSABLE_ENTITY"] = 422] = "UNPROCESSABLE_ENTITY";
+    StatusCode[StatusCode["LOCKED"] = 423] = "LOCKED";
+    StatusCode[StatusCode["FAILED_DEPENDENCY"] = 424] = "FAILED_DEPENDENCY";
+    StatusCode[StatusCode["TOO_EARLY"] = 425] = "TOO_EARLY";
+    StatusCode[StatusCode["UPGRADE_REQUIRED"] = 426] = "UPGRADE_REQUIRED";
+    StatusCode[StatusCode["PRECONDITION_REQUIRED"] = 428] = "PRECONDITION_REQUIRED";
+    StatusCode[StatusCode["TOO_MANY_REQUESTS"] = 429] = "TOO_MANY_REQUESTS";
+    StatusCode[StatusCode["REQUEST_HEADER_FIELDS_TOO_LARGE"] = 431] = "REQUEST_HEADER_FIELDS_TOO_LARGE";
+    StatusCode[StatusCode["LOGIN_TIME_OUT"] = 440] = "LOGIN_TIME_OUT";
+    StatusCode[StatusCode["NO_RESPONSE"] = 444] = "NO_RESPONSE";
+    StatusCode[StatusCode["RETRY_WITH"] = 449] = "RETRY_WITH";
+    StatusCode[StatusCode["BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS"] = 450] = "BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS";
+    StatusCode[StatusCode["UNAVAILABLE_FOR_LEGAL_REASONS"] = 451] = "UNAVAILABLE_FOR_LEGAL_REASONS";
+    StatusCode[StatusCode["CLIENT_CLOSED_REQUEST"] = 499] = "CLIENT_CLOSED_REQUEST";
+    StatusCode[StatusCode["INTERNAL_SERVER_ERROR"] = 500] = "INTERNAL_SERVER_ERROR";
+    StatusCode[StatusCode["NOT_IMPLEMENTED"] = 501] = "NOT_IMPLEMENTED";
+    StatusCode[StatusCode["BAD_GATEWAY"] = 502] = "BAD_GATEWAY";
+    StatusCode[StatusCode["SERVICE_UNAVAILABLE"] = 503] = "SERVICE_UNAVAILABLE";
+    StatusCode[StatusCode["GATEWAY_TIMEOUT"] = 504] = "GATEWAY_TIMEOUT";
+    StatusCode[StatusCode["HTTP_VERSION_NOT_SUPPORTED"] = 505] = "HTTP_VERSION_NOT_SUPPORTED";
+    StatusCode[StatusCode["VARIANT_ALSO_NEGOTIATES"] = 506] = "VARIANT_ALSO_NEGOTIATES";
+    StatusCode[StatusCode["INSUFFICIENT_STORAGE"] = 507] = "INSUFFICIENT_STORAGE";
+    StatusCode[StatusCode["LOOP_DETECTED"] = 508] = "LOOP_DETECTED";
+    StatusCode[StatusCode["BANDWIDTH_LIMIT_EXCEEDED"] = 509] = "BANDWIDTH_LIMIT_EXCEEDED";
+    StatusCode[StatusCode["NOT_EXTENDED"] = 510] = "NOT_EXTENDED";
+    StatusCode[StatusCode["NETWORK_AUTHENTICATION_REQUIRED"] = 511] = "NETWORK_AUTHENTICATION_REQUIRED";
+    StatusCode[StatusCode["NETWORK_READ_TIMEOUT"] = 598] = "NETWORK_READ_TIMEOUT";
+    StatusCode[StatusCode["NETWORK_CONNECT_TIMEOUT"] = 599] = "NETWORK_CONNECT_TIMEOUT";
 })(StatusCode || (exports.StatusCode = StatusCode = {}));
-/**
- * @example
- * // Get the name of a specific status code
- * console.log(statusCodeNames[400]); // "Bad Request"
- * console.log(statusCodeNames[404]); // "Not Found"
- * console.log(statusCodeNames[500]); // "Internal Server Error"
- *
- * @example
- * // Use with response objects
- * if (response.status === 200) {
- *   console.log(`Success: ${statusCodeNames[response.status]}`);
- * }
- *
- * @example
- * // Iterate through all status code names
- * Object.entries(statusCodeNames).forEach(([code, name]) => {
- *   console.log(`${code}: ${name}`);
- * });
- */
+exports.StatusCodes = Object.entries(StatusCode)
+    .filter(([key, value]) => typeof value === 'number')
+    .reduce((acc, [key, value]) => {
+    const code = value;
+    if (code >= 100 && code <= 199) {
+        (acc.INFO ??= {})[key] = code;
+    }
+    else if (code >= 200 && code <= 299) {
+        (acc.SUCCESS ??= {})[key] = code;
+    }
+    else if (code >= 300 && code <= 399) {
+        (acc.REDIRECT ??= {})[key] = code;
+    }
+    else if (code >= 400 && code <= 499) {
+        (acc.CLIENT_ERROR ??= {})[key] = code;
+    }
+    else if (code >= 500 && code <= 599) {
+        (acc.SERVER_ERROR ??= {})[key] = code;
+    }
+    return acc;
+}, {});
 exports.statusCodeNames = Object.fromEntries(Object.entries(StatusCode).map(([key, value]) => [
     value,
     key
-        .replace(/^(INFO_|SUCCESS_|REDIRECT_|CLIENT_ERROR_|SERVER_ERROR_)/, '') // Remove category prefixes
-        .replace(/_/g, ' ') // Replace underscores with spaces
-        .toLowerCase() // Convert to lowercase
-        .replace(/\b\w/g, char => char.toUpperCase()), // Capitalize each word
+        .replace(/_/g, ' ')
+        .toLowerCase()
+        .replace(/\b\w/g, char => char.toUpperCase()),
 ]));
 const isValidStatusCode = (code) => Object.values(StatusCode).includes(Number(code)) || Object.values(exports.statusCodeNames).includes(String(code));
 exports.isValidStatusCode = isValidStatusCode;
-/// Category Checking Functions
-/**
- * Checks if status code is informational (100-199)
- */
 const isInformational = (code) => code >= 100 && code < 200;
 exports.isInformational = isInformational;
-/**
- * Checks if status code indicates success (200-299)
- */
 const isSuccess = (code) => code >= 200 && code < 300;
 exports.isSuccess = isSuccess;
-/**
- * Checks if status code indicates redirection (300-399)
- */
 const isRedirect = (code) => code >= 300 && code < 400;
 exports.isRedirect = isRedirect;
-/**
- * Checks if status code indicates client error (400-499)
- */
 const isClientError = (code) => code >= 400 && code < 500;
 exports.isClientError = isClientError;
-/**
- * Checks if status code indicates server error (500-599)
- */
 const isServerError = (code) => code >= 500 && code < 600;
 exports.isServerError = isServerError;
-/// Specific Status Helpers
-/**
- * Checks if status code requires authentication
- */
-const requiresAuthentication = (code) => code === StatusCode.CLIENT_ERROR_UNAUTHORIZED;
+const requiresAuthentication = (code) => code === StatusCode.UNAUTHORIZED;
 exports.requiresAuthentication = requiresAuthentication;
-/**
- * Checks if status code indicates resource not found
- */
-const isNotFound = (code) => code === StatusCode.CLIENT_ERROR_NOT_FOUND;
+const isNotFound = (code) => code === StatusCode.NOT_FOUND;
 exports.isNotFound = isNotFound;
-/**
- * Checks if status code indicates rate limiting
- */
-const isRateLimited = (code) => code === StatusCode.CLIENT_ERROR_TOO_MANY_REQUESTS;
+const isRateLimited = (code) => code === StatusCode.TOO_MANY_REQUESTS;
 exports.isRateLimited = isRateLimited;
-/// Reverse Lookup
-/**
- * Get status code by name (case insensitive)
- * @example
- * getStatusCodeByName('not found'); // Returns 404
- * getStatusCodeByName('Not Found'); // Returns 404
- */
 const getStatusCodeByName = (name) => {
-    const normalizedName = name.toLowerCase();
+    const normalizedName = name.toLowerCase().replace(/_/g, ' ');
     const entry = Object.entries(exports.statusCodeNames).find(([_, statusName]) => statusName.toLowerCase() === normalizedName);
     return entry ? Number(entry[0]) : undefined;
 };
