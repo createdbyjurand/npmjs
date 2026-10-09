@@ -1,6 +1,7 @@
 /* eslint no-console: "off" */
 
 import fs from 'fs';
+import {afterAll, beforeAll, describe, expect, test} from 'vitest';
 import {getAllPackageJsonDevDependenciesAsLatestReadyToInstallListExcept} from '../@shared/package-json.node.mjs';
 // import rewire from 'rewire';
 // https://www.elvenware.com/teach/assignments/NodeJsMocksWithRewire.html

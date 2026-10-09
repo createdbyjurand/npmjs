@@ -1,6 +1,7 @@
 /* eslint no-console: "off" */
 
 import fs from 'fs';
+import {afterAll, beforeAll, describe, expect, test} from 'vitest';
 import {increaseMajorVersion, increaseMinorVersion, increasePatchVersion} from '../@shared/versioning.node.mjs';
 
 describe('versioning.node.mjs', () => {
