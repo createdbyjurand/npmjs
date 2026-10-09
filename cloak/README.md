@@ -42,8 +42,6 @@ The limits keep individual calls from requesting excessive work.
 Generation builds each string directly, without enumerating layouts or retrying rejected strings.
 Hyphen layouts are not equally likely, and random strings are not guaranteed to be unique.
 
-The old `generateCloakAi` and `generateCloaksAi` names are aliases with the same defaults.
-`generateCloaks` now returns an array; the old terminal row and spacing arguments are removed.
 Importing the package does not print or generate anything.
 
 ## License

@@ -1,4 +1,2 @@
-export * from './generate-cloak-ai.ts';
-export * from './generate-cloak.ts';
-export * from './generate-cloaks-ai.ts';
-export * from './generate-cloaks.ts';
+export {generateCloak} from './generate-cloak.ts';
+export {generateCloaks} from './generate-cloaks.ts';
