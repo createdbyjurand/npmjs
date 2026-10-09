@@ -1,0 +1,18 @@
+{
+    "author": "Jurand Niemczycki <createdbyjurand@gmail.com>",
+    "description": "@createdbyjurand/cloak",
+    "engines": {
+        "node": ">=26"
+    },
+    "exports": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+    },
+    "files": [
+        "dist"
+    ],
+    "license": "ISC",
+    "name": "@createdbyjurand/cloak",
+    "type": "module",
+    "version": "0.0.0-SNAPSHOT"
+}

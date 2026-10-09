@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "module": "nodenext",
+        "noEmitOnError": true,
+        "outDir": "./dist",
+        "rewriteRelativeImportExtensions": true,
+        "rootDir": "./src",
+        "strict": true,
+        "lib": ["esnext"],
+        "types": ["node"],
+        "verbatimModuleSyntax": true
+    },
+    "exclude": ["src/**/*.test.ts"],
+    "include": ["src/**/*.ts"]
+}
