@@ -36,11 +36,11 @@ describe('generateCloaks', () => {
     expect(() => generateCloaks(1, 4, 4, 1, 1)).toThrow(RangeError);
   });
 
-  it('exports only the two generators and generates without printing', async () => {
+  it('exports the generators and console helper without printing on import', async () => {
     const log = vi.spyOn(console, 'log').mockImplementation(() => {});
     vi.resetModules();
     const api = await import('./index.ts');
-    expect(Object.keys(api).sort()).toEqual(['generateCloak', 'generateCloaks']);
+    expect(Object.keys(api).sort()).toEqual(['consoleLogCloaks', 'generateCloak', 'generateCloaks']);
     api.generateCloaks();
     expect(log).not.toHaveBeenCalled();
   });

@@ -44,6 +44,26 @@ Hyphen layouts are not equally likely, and random strings are not guaranteed to 
 
 Importing the package does not print or generate anything.
 
+## Console display
+
+```js
+import {consoleLogCloaks} from '@createdbyjurand/cloak';
+
+consoleLogCloaks(); // Fill the terminal with aligned columns of 36-character cloaks.
+consoleLogCloaks(5, 2, 12, 16, 3, 6); // Rows, spaces between columns, then length and gap settings.
+```
+
+Columns fit the terminal width, with at least one cloak per row.
+Shorter cloaks are padded so columns stay aligned.
+Without terminal dimensions, the display uses 80 columns and 24 rows.
+The total number of cloaks must not exceed 1000, matching `generateCloaks`.
+
+Run directly from the repository root:
+
+```sh
+node cloak/src/console-log-cloaks.ts
+```
+
 ## License
 
 ISC
