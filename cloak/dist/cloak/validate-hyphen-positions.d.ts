@@ -1,1 +1,0 @@
-export declare const validateHyphenPositions: (stringLength: number, hyphenPositions: number[], minimumNumberOfCharactersBetweenHyphens: number, maximumNumberOfCharactersBetweenHyphens: number) => boolean;
